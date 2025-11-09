@@ -1,0 +1,755 @@
+"district","state","pct_lang_eo","pct_lang_spanish","pct_lang_indo","pct_lang_aapi","pct_lang_other"
+"Ansonia School District","CT",83.8,13,2.1,0.9,NA
+"Ashford School District","CT",100,0.5,NA,NA,NA
+"Avon School District","CT",73.4,2.8,11,10.6,2.1
+"Barkhamsted School District","CT",88.9,4.3,6.8,NA,NA
+"Berlin School District","CT",88.7,1.1,9.9,NA,0.3
+"Bethel School District","CT",80.3,5.7,11.6,2.4,NA
+"Bloomfield School District","CT",87.4,8.2,2,NA,2.5
+"Bolton School District","CT",91.5,NA,4.6,NA,3.3
+"Bozrah School District","CT",82.7,3.7,14.8,NA,NA
+"Branford School District","CT",86.2,5.4,4.8,3.6,0.1
+"Bridgeport School District","CT",48.7,36.6,11.8,1.4,1.6
+"Bristol School District","CT",82.1,14.5,1.5,1.8,0.1
+"Brookfield School District","CT",87.2,2.6,6.8,3.4,NA
+"Brooklyn School District","CT",95.9,2.5,1.7,NA,NA
+"Canterbury School District","CT",95.9,NA,NA,4.1,NA
+"Canton School District","CT",97.2,2.8,NA,0.2,NA
+"Chaplin School District","CT",98.1,3.8,NA,NA,NA
+"Cheshire School District","CT",89.9,1.6,3.3,4.7,0.5
+"Clinton School District","CT",88.9,1.6,3.7,6.1,NA
+"Colchester School District","CT",94.7,1.8,2,1.4,NA
+"Colebrook School District","CT",95,5,NA,NA,NA
+"Columbia School District","CT",100,NA,NA,NA,NA
+"Coventry School District","CT",99,1,NA,NA,NA
+"Cromwell School District","CT",84.8,1,12.6,1.7,NA
+"Danbury School District","CT",50.6,35.5,12.4,1.4,0.1
+"Darien School District","CT",91.2,3.1,3.4,2.3,NA
+"Derby School District","CT",69.2,23.8,5,1.5,0.9
+"East Granby School District","CT",95.9,NA,2.5,1,NA
+"East Haddam School District","CT",94.7,0.8,4.9,NA,NA
+"East Hampton School District","CT",97,NA,3,NA,NA
+"East Hartford School District","CT",68.9,24.2,2,1.7,3.2
+"East Haven School District","CT",79.3,15.1,5.2,0.4,NA
+"East Lyme School District","CT",88.7,1.6,4.7,4.7,0.4
+"East Windsor School District","CT",93.9,6.1,NA,NA,NA
+"Eastford School District","CT",100,NA,NA,NA,NA
+"Easton School District","CT",89.9,1.9,7,1.3,NA
+"Ellington School District","CT",92.2,5.4,2.4,NA,NA
+"Enfield School District","CT",90.5,4.9,2.7,0.6,1.3
+"Essex School District","CT",97,0.5,NA,NA,2.4
+"Fairfield School District","CT",88.6,2.4,6.1,0.6,2.2
+"Farmington School District","CT",74.6,3.7,7.7,13.9,0.2
+"Franklin School District","CT",100,NA,NA,NA,NA
+"Glastonbury School District","CT",80.4,6.6,3.6,8.7,0.7
+"Granby School District","CT",93,1.9,5.1,NA,NA
+"Greenwich School District","CT",76.4,11.1,7.4,4.8,0.3
+"Griswold School District","CT",100,NA,NA,NA,NA
+"Groton School District","CT",88.2,6.7,3,2.1,NA
+"Guilford School District","CT",94,1,1.6,1.6,1.8
+"Hamden School District","CT",84.3,6.6,1.2,1.3,6.6
+"Hampton School District","CT",79.2,15.1,5.7,NA,NA
+"Hartford School District","CT",59.5,35.5,2.5,0.5,1.9
+"Hartland School District","CT",98.1,3.8,NA,NA,NA
+"Hebron School District","CT",97.5,2.5,NA,NA,NA
+"Killingly School District","CT",89.5,4,6.2,0.3,NA
+"Lebanon School District","CT",89.6,4.1,3.6,2.7,NA
+"Ledyard School District","CT",96.1,1,1.3,1.6,NA
+"Lisbon School District","CT",95.5,4.5,NA,NA,NA
+"Litchfield School District","CT",91.7,2.2,1.7,4.3,NA
+"Madison School District","CT",94,0.8,3.3,2,NA
+"Manchester School District","CT",80.8,8,5.4,2.4,3.3
+"Mansfield School District","CT",84.6,2.1,4,8.5,0.8
+"Marlborough School District","CT",79.7,18.2,NA,2.2,NA
+"Meriden School District","CT",69.9,26.7,0.7,2.7,NA
+"Middletown School District","CT",87.4,7.2,4.1,0.6,0.6
+"Milford School District","CT",88.6,3.2,2.8,5.1,0.3
+"Monroe School District","CT",87.9,4.5,4.2,3.5,NA
+"Montville School District","CT",88,1.9,6.6,2.5,0.8
+"Naugatuck School District","CT",75,7,16.1,0.4,1.4
+"New Britain School District","CT",54.6,31.6,8.3,0.6,4.8
+"New Canaan School District","CT",89.2,0.5,6,4,0.2
+"New Fairfield School District","CT",88.6,10.2,1,NA,NA
+"New Hartford School District","CT",98,2,NA,NA,NA
+"New Haven School District","CT",60,31.6,5.5,0.4,2.4
+"New London School District","CT",49.4,42.1,5.2,1.8,1.5
+"New Milford School District","CT",86.4,8.1,2.9,2.6,NA
+"Newington School District","CT",70.8,10.7,14.2,4,0.5
+"Newtown School District","CT",83.7,11.1,4.3,0.8,NA
+"Norfolk School District","CT",100,1.4,NA,NA,NA
+"North Branford School District","CT",96.5,0.8,NA,1.1,1.9
+"North Haven School District","CT",86.4,7.1,5.3,1,0.2
+"Norwalk School District","CT",55.9,37.1,5.6,1.2,0.2
+"Norwich School District","CT",80.4,10.7,5.2,3.7,NA
+"Old Saybrook School District","CT",84,9.4,5.3,1.2,NA
+"Orange School District","CT",83.3,2.1,6.6,5.6,2.3
+"Oxford School District","CT",91.2,8.8,NA,NA,NA
+"Plainfield School District","CT",91.3,6.4,NA,2.2,NA
+"Plainville School District","CT",87,3.9,4.9,3.5,0.8
+"Plymouth School District","CT",90.3,9.4,0.2,NA,NA
+"Pomfret School District","CT",97.7,2.3,0.5,NA,NA
+"Portland School District","CT",98.8,NA,1.2,NA,NA
+"Preston School District","CT",98.1,1.9,NA,NA,NA
+"Putnam School District","CT",88.8,9.5,1.7,NA,NA
+"Redding School District","CT",89.7,4.6,3.9,1.4,NA
+"Regional High School District 01","CT",86.7,8.7,0.7,2.7,1.4
+"Regional High School District 04","CT",94.5,4.3,NA,NA,1
+"Regional High School District 05","CT",85.4,1.3,5.9,5.2,2.1
+"Regional High School District 07","CT",95.7,2.4,1.9,NA,NA
+"Regional High School District 08","CT",90.7,7.9,NA,1.4,NA
+"Regional High School District 09","CT",89.8,3.3,5.5,1.3,NA
+"Regional High School District 11","CT",91.1,6.8,2.1,NA,NA
+"Regional High School District 19","CT",90.3,1.3,2.5,5.4,0.5
+"Regional School District 06","CT",93.4,6.2,0.3,NA,NA
+"Regional School District 10","CT",92.6,0.8,1.8,0.3,4.5
+"Regional School District 12","CT",76.8,17.9,3.2,1.6,NA
+"Regional School District 13","CT",99.7,0.3,0.3,NA,NA
+"Regional School District 14","CT",92.6,1.6,4.9,NA,0.5
+"Regional School District 15","CT",94.3,1.9,0.5,2.8,0.6
+"Regional School District 16","CT",79.2,15.9,4.5,0.4,NA
+"Regional School District 17","CT",98.3,1.7,NA,NA,NA
+"Regional School District 18","CT",93.4,3,3,0.3,NA
+"Ridgefield School District","CT",81.4,2.5,14.3,1.8,NA
+"Rocky Hill School District","CT",63.4,5.2,17.4,8.6,5
+"Salem School District","CT",95.7,4.3,NA,NA,NA
+"Seymour School District","CT",88,7.6,4.2,NA,NA
+"Shelton School District","CT",84.1,5.5,9.3,1,NA
+"Sherman School District","CT",88,3.6,8.4,NA,NA
+"Simsbury School District","CT",92.8,2.2,3.1,2,NA
+"Somers School District","CT",99.4,0.8,NA,NA,NA
+"South Windsor School District","CT",71.5,2.7,13.5,12,0.4
+"Southington School District","CT",88.3,1.5,7.2,2.3,0.6
+"Sprague School District","CT",97.2,0.7,1.8,NA,NA
+"Stafford School District","CT",97.8,0.5,NA,0.5,1.1
+"Stamford School District","CT",55.7,33.3,7.9,2.4,0.6
+"Sterling School District","CT",100,NA,NA,NA,NA
+"Stonington School District","CT",96,NA,3.2,0.4,0.4
+"Stratford School District","CT",81.2,11.1,4.7,2.2,0.7
+"Suffield School District","CT",93.8,1.1,2.9,2.2,NA
+"Thomaston School District","CT",94.7,5.3,NA,NA,NA
+"Thompson School District","CT",92,5.2,0.9,1.4,NA
+"Tolland School District","CT",97.1,2,NA,0.9,NA
+"Torrington School District","CT",84.2,12.7,0.5,2.6,0.1
+"Trumbull School District","CT",83.2,2.4,12,2.2,0.1
+"Vernon School District","CT",90.9,2.6,3.9,1.2,1.5
+"Voluntown School District","CT",100,NA,NA,NA,NA
+"Wallingford School District","CT",83.5,8.8,5.4,2.2,0.2
+"Waterbury School District","CT",61.3,30.3,5.2,1,2
+"Waterford School District","CT",98,0.4,1.1,0.4,0.1
+"Watertown School District","CT",76,10.8,11.2,NA,1.9
+"West Hartford School District","CT",77.6,11,5.3,4.7,1.4
+"West Haven School District","CT",67.8,20.3,3.1,1.1,7.7
+"Weston School District","CT",85.6,2.9,7.2,3.5,0.8
+"Westport School District","CT",89.7,3.2,4.7,2.2,0.2
+"Wethersfield School District","CT",89.1,2.6,8,0.5,NA
+"Wilton School District","CT",93.6,1.4,2.9,1.9,NA
+"Winchester School District","CT",89.4,9.2,NA,1.5,NA
+"Windham School District","CT",63.5,36.6,NA,NA,NA
+"Windsor Locks School District","CT",86.4,4.8,5.5,3.9,NA
+"Windsor School District","CT",93,3.1,1.1,0.9,1.8
+"Wolcott School District","CT",93.1,1.8,3.6,0.9,0.7
+"Woodbridge School District","CT",86.5,0.8,4.4,5.7,2.6
+"Woodstock School District","CT",99,1,NA,NA,NA
+"Abington School District","MA",91.1,0.1,8.8,NA,NA
+"Acton-Boxborough Regional School District","MA",70.3,1.8,10.4,11.5,6
+"Acushnet School District","MA",85.2,2.9,11.9,NA,NA
+"Agawam School District","MA",86.2,1.2,11.8,0.6,0.4
+"Amesbury School District","MA",94.9,2.5,2.3,0.2,NA
+"Amherst School District","MA",88.2,5.3,2.3,4.2,NA
+"Amherst-Pelham School District","MA",89.9,5,1.8,3.3,0.1
+"Andover School District","MA",81.9,6.7,4.6,5.7,1.2
+"Arlington School District","MA",80.2,2,9,7.7,1.1
+"Ashburnham-Westminster School District","MA",97.3,0.8,1.9,NA,NA
+"Ashland School District","MA",67.1,5.7,18.6,8.2,0.4
+"Athol-Royalston School District","MA",94.6,4.5,0.5,NA,0.5
+"Attleboro School District","MA",87.8,6.4,4.3,0.3,1.2
+"Auburn School District","MA",92.4,0.7,2.8,2.7,1.4
+"Avon School District","MA",80.8,0.5,12.6,3.3,2.6
+"Ayer-Shirley School District","MA",93.3,4,1.5,0.5,1
+"Barnstable School District","MA",72.3,8.7,16.7,0.6,1.7
+"Bedford School District","MA",81.5,0.4,6.7,8.8,2.6
+"Belchertown School District","MA",85.6,7.6,2.8,4.3,NA
+"Bellingham School District","MA",96.9,1.5,0.8,0.8,NA
+"Belmont School District","MA",70.3,5.1,10.8,12.6,1.2
+"Berkley School District","MA",100,0.3,NA,NA,NA
+"Berkshire Hills School District","MA",95.5,2.8,1.2,0.3,0.3
+"Berlin-Boylston School District","MA",93.1,2.4,2.4,2.4,NA
+"Beverly School District","MA",82.6,5,6.8,2.1,3.5
+"Billerica School District","MA",90,0.3,9.1,0.4,NA
+"Blackstone-Millville School District","MA",94.5,3.6,1,NA,1
+"Boston School District","MA",58.3,25.6,9.1,4.2,2.8
+"Bourne School District","MA",95.1,0.9,2.9,1.1,NA
+"Boxford School District","MA",90.4,1.7,7,0.9,NA
+"Braintree School District","MA",75.5,1,6.2,16.9,0.5
+"Brewster School District","MA",92.5,4.1,3.4,NA,NA
+"Bridgewater-Raynham School District","MA",92.6,2.9,3.8,NA,0.8
+"Brockton School District","MA",56.4,8.7,33.8,1,0.2
+"Brookline School District","MA",65.4,5.7,9.8,12.3,6.9
+"Burlington School District","MA",81.9,1.1,12.7,3.9,0.5
+"Cambridge School District","MA",69.3,5.5,14.1,4.8,6.3
+"Canton School District","MA",88.3,2.1,5,4.7,NA
+"Carlisle School District","MA",92.8,NA,2.7,4.5,NA
+"Carver School District","MA",93.5,3.3,3.3,NA,NA
+"Central Berkshire School District","MA",96,1.1,2.7,0.2,NA
+"Chelmsford School District","MA",85,1.8,10,1.9,1.3
+"Chelsea School District","MA",25.1,66.1,1.7,1.8,5.3
+"Chesterfield-Goshen School District","MA",100,NA,NA,NA,NA
+"Chicopee School District","MA",71.4,20.7,6.4,NA,1.5
+"Clarksburg School District","MA",100,NA,NA,NA,NA
+"Clinton School District","MA",74.3,13.4,8.7,NA,3.3
+"Cohasset School District","MA",96.8,0.6,1.7,0.9,NA
+"Concord School District","MA",82.7,5.1,9.8,1.2,1
+"Concord-Carlisle School District","MA",85,4,8.2,1.9,0.8
+"Conway School District","MA",95.7,4.3,NA,NA,NA
+"Danvers School District","MA",88.5,3,5.4,2,1.1
+"Dartmouth School District","MA",89.7,3,6.3,1,NA
+"Dedham School District","MA",88.9,2.1,5.5,1.6,1.9
+"Dennis-Yarmouth School District","MA",81.7,5.4,11,1.5,0.4
+"Dighton-Rehoboth School District","MA",94.6,1.2,4.4,NA,NA
+"Douglas School District","MA",98.6,1.4,NA,NA,NA
+"Dover School District","MA",88.1,1.5,4.1,6.3,NA
+"Dover-Sherborn School District","MA",85.8,0.8,6.1,7.2,NA
+"Dracut School District","MA",89.6,3.1,1.8,1,4.5
+"Dudley-Charlton Regional School District","MA",92.6,1.7,3.4,1.3,0.9
+"Duxbury School District","MA",95.9,2.8,1.2,0.1,NA
+"East Bridgewater School District","MA",94.1,0.6,3.2,0.6,1.5
+"East Longmeadow School District","MA",92.6,4.8,2,0.3,0.3
+"Easthampton School District","MA",86,3.2,1.8,3.4,5.9
+"Easton School District","MA",85.5,7.1,6.5,0.4,0.5
+"Erving School District","MA",100,NA,1.6,NA,NA
+"Everett School District","MA",35.1,29.5,29.4,4,2.1
+"Fairhaven School District","MA",97.1,0.8,1.3,1.1,NA
+"Fairhaven/New Bedford School Districts in Acushnet (9-12)","MA",85.2,2.9,11.9,NA,NA
+"Fall River School District","MA",64.9,16.2,17.9,1,NA
+"Falmouth School District","MA",88.4,0.9,5.8,3.9,1
+"Farmington River Regional School District","MA",98.2,NA,NA,1.5,NA
+"Fitchburg School District","MA",69.7,27.4,0.9,0.4,1.6
+"Foxborough School District","MA",84.7,0.5,1.8,4.7,8.1
+"Framingham School District","MA",54.5,21.4,21.9,1.8,0.4
+"Franklin School District","MA",92,1,5,1.6,0.5
+"Freetown-Lakeville School District","MA",95,0.9,3.1,0.9,0.3
+"Frontier School District","MA",91.2,5.7,3.4,NA,NA
+"Gardner School District","MA",92,7.4,NA,NA,0.6
+"Gateway School District","MA",98.6,NA,1,0.4,NA
+"Georgetown School District","MA",100,NA,NA,NA,NA
+"Gill-Montague School District in Erving (7-12)","MA",100,NA,1.6,NA,NA
+"Gill-Montague School District","MA",93.4,1.4,0.7,4.9,NA
+"Gloucester School District","MA",82.2,7.7,5.2,1.8,3.1
+"Grafton School District","MA",89,9.6,0.3,0.9,NA
+"Granby School District","MA",100,NA,NA,NA,NA
+"Greenfield School District","MA",91.6,6.1,0.4,0.8,1
+"Groton-Dunstable School District","MA",91.6,1.8,4.3,2.3,NA
+"Hadley School District","MA",89.2,NA,4.1,7.4,NA
+"Halifax School District","MA",86.9,1,12.1,NA,NA
+"Hamilton-Wenham School District","MA",95.9,1,2.5,0.5,NA
+"Hampden-Wilbraham School District","MA",97.9,1,0.3,0.7,NA
+"Hampshire School District","MA",93.5,1.8,1.2,3.9,NA
+"Hanover School District","MA",93.6,NA,4.2,1.9,0.3
+"Harvard School District","MA",82.5,14.6,2.8,NA,NA
+"Haverhill School District","MA",73.2,22.7,3.1,0.4,0.5
+"Hingham School District","MA",95.9,1.5,1.8,0.4,0.2
+"Holbrook School District","MA",97,0.5,2.5,NA,NA
+"Holliston School District","MA",80,2.7,15.2,1.9,0.4
+"Holyoke School District","MA",49.9,48.7,0.4,0.3,0.7
+"Hoosac Valley School District","MA",91.4,6.7,1.9,NA,NA
+"Hopedale School District","MA",100,NA,NA,NA,NA
+"Hopkinton School District","MA",79.7,0.7,9,8.4,2.1
+"Hudson School District","MA",79.4,6.7,11.3,0.8,1.9
+"Hull School District","MA",98.3,NA,1.7,NA,NA
+"Ipswich School District","MA",92.6,2.9,4.2,0.2,NA
+"King Philip School District","MA",92.4,3.1,4,0.2,0.4
+"Kingston School District","MA",99.3,0.5,0.2,NA,NA
+"Lawrence School District","MA",25.1,74.2,0.3,0.2,0.3
+"Lee School District","MA",97.8,NA,2.2,NA,NA
+"Lee/Berkshire Hills in Farmington River Regional (7-12)","MA",98.2,NA,NA,1.5,NA
+"Leicester School District","MA",94,0.8,5.1,NA,NA
+"Leominster School District","MA",77.7,13.2,6.8,1.7,0.6
+"Leverett School District","MA",100,NA,NA,NA,NA
+"Lexington School District","MA",59.7,2.8,13.2,21.2,3.1
+"Lincoln School District","MA",90.6,3.2,2.3,1.3,2.3
+"Lincoln-Sudbury School District","MA",90.1,1.4,3.9,3.9,0.6
+"Littleton School District","MA",91.4,0.6,2.3,4.9,0.6
+"Longmeadow School District","MA",90,0.3,8.1,1.2,0.1
+"Lowell School District","MA",64.7,11.3,9.6,12.6,1.8
+"Ludlow School District","MA",84.1,3.4,8.1,4.1,0.4
+"Lunenburg School District","MA",92.9,5.3,1.8,NA,NA
+"Lynn School District","MA",44.2,45.6,5.6,2.5,1.9
+"Lynnfield School District","MA",85.3,6,3.6,5.4,NA
+"Malden School District","MA",54.8,10.8,18.8,12.7,2.8
+"Manchester Essex Regional School District","MA",94.1,NA,3.4,2.6,NA
+"Mansfield School District","MA",92.2,0.1,5.4,2.2,NA
+"Marblehead School District","MA",86.8,4.8,5.3,3.2,NA
+"Marion School District","MA",100,NA,NA,NA,NA
+"Marlborough School District","MA",54.5,19.1,23.6,1.4,1.2
+"Marshfield School District","MA",97.5,0.8,1.7,NA,NA
+"Martha's Vineyard School District","MA",78.1,0.1,21.3,0.8,NA
+"Masconomet School District","MA",93.1,0.8,5.3,0.7,NA
+"Mashpee School District","MA",97.2,1.7,1.1,NA,NA
+"Maynard School District","MA",93.8,3.1,3.1,NA,NA
+"Medfield School District","MA",89.5,4.5,1.4,2.1,2.5
+"Medford School District","MA",68.6,8.9,16.1,5.1,1.3
+"Medway School District","MA",93.3,0.2,0.7,3.4,2.2
+"Melrose School District","MA",79.3,4.9,7.1,3.9,4.8
+"Mendon-Upton School District","MA",76.4,10.6,6.4,NA,6.6
+"Methuen School District","MA",61,27.8,8.2,2,1.2
+"Middleborough School District","MA",90.6,NA,7.7,NA,1.7
+"Middleton School District","MA",91.6,0.3,6.6,1.4,NA
+"Milford School District","MA",47.4,14.7,36.4,1.1,0.4
+"Millbury School District","MA",92,1.8,5.5,NA,0.7
+"Millis School District","MA",89.3,4.4,4.1,NA,2.2
+"Milton School District","MA",84.3,1.1,12.2,2,0.3
+"Mohawk Trail School District","MA",97.3,1.6,1.1,NA,NA
+"Monomoy Regional School District","MA",93.9,NA,5.8,0.2,NA
+"Monson School District","MA",98.1,NA,1.9,NA,NA
+"Mount Greylock School District","MA",91,NA,4.5,2.4,1.7
+"Nantucket School District","MA",77.1,14.1,4.6,4,NA
+"Narragansett School District","MA",99,1.3,NA,NA,NA
+"Nashoba School District","MA",91.2,1.7,3,4.3,NA
+"Natick School District","MA",84.4,4.3,4.5,5.4,1.4
+"Nauset School District","MA",87.1,2.6,9.3,1.1,NA
+"Needham School District","MA",89,3.1,5.7,1.5,0.7
+"New Bedford School District","MA",68.2,21.8,8.7,0.9,0.5
+"New Salem-Wendell School District","MA",97.9,NA,NA,1.7,NA
+"Newburyport School District","MA",93.5,0.6,5.9,NA,NA
+"Newton School District","MA",75.8,3.2,8.9,8.4,3.8
+"Norfolk School District","MA",95.1,1.1,3.4,NA,0.4
+"North Adams School District in Clarksburg (9-12)","MA",100,NA,NA,NA,NA
+"North Adams School District","MA",85.3,5.6,7,1.3,1.1
+"North Andover School District","MA",90.5,1.8,5.6,1.5,0.5
+"North Attleborough School District","MA",90.2,2.7,1.4,3.1,2.7
+"North Brookfield School District","MA",100,NA,NA,NA,NA
+"North Middlesex School District","MA",95.8,0.5,1.6,1.8,0.3
+"North Reading School District","MA",89.9,1.3,7.6,1.3,NA
+"Northampton School District","MA",88.7,8.7,2,0.6,0.1
+"Northborough School District","MA",85.9,1.1,7.6,5.3,NA
+"Northborough-Southborough School District","MA",84.4,1.8,6.8,7,NA
+"Northbridge School District","MA",91.3,4.6,1.1,1.8,1.1
+"Norton School District","MA",98.1,0.5,1,NA,0.5
+"Norwell School District","MA",92.8,2.8,3.2,1,NA
+"Norwood School District","MA",73.7,9.5,10.3,3.6,2.9
+"Old Rochester School District","MA",98.4,0.4,1.4,NA,NA
+"Orange School District","MA",93.8,6.2,NA,NA,NA
+"Oxford School District","MA",89.1,2.7,8,NA,NA
+"Palmer School District","MA",94.7,NA,1.2,3.8,NA
+"Peabody School District","MA",78.1,8.5,12.5,NA,0.9
+"Pelham School District","MA",88.9,8.9,NA,NA,1.8
+"Pembroke School District","MA",95.5,1.1,3.1,0.4,NA
+"Pentucket School District","MA",98.3,1,NA,0.8,NA
+"Pioneer Valley School District","MA",98.3,0.5,0.5,0.5,NA
+"Pittsfield School District","MA",91.2,4.8,0.7,0.9,2.4
+"Plainville School District","MA",83.7,9.8,6.5,NA,NA
+"Plymouth School District","MA",92.3,2,3.6,1.5,0.5
+"Plympton School District","MA",100,NA,NA,NA,NA
+"Quabbin School District","MA",95.4,4.4,0.2,NA,NA
+"Quaboag Regional School District","MA",98.8,NA,1.2,NA,NA
+"Quincy School District","MA",62.7,1.6,7.4,27.3,1.1
+"Ralph C. Mahar School District","MA",94.9,4.7,0.3,0.3,NA
+"Randolph School District","MA",75.6,5.6,8.8,8.5,1.5
+"Reading School District","MA",88.9,1.9,4.1,5,NA
+"Revere School District","MA",36.3,46.2,10.3,2.7,4.5
+"Rochester School District","MA",97.1,1,1.4,NA,NA
+"Rockland School District","MA",84.9,2.5,3.5,0.4,8.6
+"Rockport School District","MA",97.9,2.1,NA,NA,NA
+"Salem School District","MA",77.1,12.4,7.8,1.4,1.4
+"Sandwich School District","MA",95.5,1.9,2.6,NA,NA
+"Saugus School District","MA",69.8,13.9,9.9,3.8,2.7
+"Scituate School District","MA",94,0.7,3.8,1.5,NA
+"Seekonk School District","MA",94.6,NA,5.6,NA,NA
+"Sharon School District","MA",80.3,0.9,11.9,5.2,1.7
+"Sherborn School District","MA",82.2,NA,8.9,8.9,NA
+"Shrewsbury School District","MA",63.7,5,12.4,16.7,2.1
+"Shutesbury School District","MA",97.1,2.3,NA,NA,NA
+"Silver Lake School District","MA",95,0.6,4.4,NA,NA
+"Somerset School District","MA",91.8,NA,5.2,NA,3
+"Somerset-Berkley School District","MA",94.3,0.1,3.6,NA,2.1
+"Somerville School District","MA",57.6,23.3,17.7,1.4,0.1
+"South Hadley School District","MA",96,1.9,NA,2.1,NA
+"Southampton School District","MA",88.6,3.6,NA,7.8,NA
+"Southborough School District","MA",82.3,2.8,5.7,9.4,NA
+"Southbridge School District","MA",65.5,32.6,1.1,0.1,0.6
+"Southern Berkshire School District","MA",96.2,1.3,1.3,0.5,NA
+"Southwick-Tolland-Granville Regional School District","MA",92.6,0.6,4.9,2,NA
+"Spencer-East Brookfield School District","MA",98.2,1.8,NA,NA,NA
+"Springfield School District","MA",61.5,33.3,1.4,1.2,2.6
+"Stoneham School District","MA",82.6,2.4,6.3,4.1,4.6
+"Stoughton School District","MA",78.8,3.2,13.5,2.3,2.2
+"Sturbridge School District","MA",94.5,2.6,1.6,1.6,NA
+"Sudbury School District","MA",90,0.7,4.5,4.8,NA
+"Sutton School District","MA",96.3,3.7,NA,NA,NA
+"Swampscott School District","MA",76.1,6.3,16.1,1.6,NA
+"Swansea School District","MA",89,7.8,3.1,NA,NA
+"Tantasqua School District","MA",95.7,2.6,0.9,0.8,NA
+"Taunton School District","MA",84.4,3.5,9.8,2.3,NA
+"Tewksbury School District","MA",91.8,3.1,4.1,0.7,0.3
+"Topsfield School District","MA",98.7,NA,1.3,NA,NA
+"Triton School District","MA",97,1.6,1.3,NA,NA
+"Tyngsborough School District","MA",87.2,2,4.3,6.4,NA
+"Uxbridge School District","MA",99.5,0.5,NA,NA,NA
+"Wachusett School District","MA",89.9,2.6,4.6,1.8,1.1
+"Wakefield School District","MA",91.5,2.2,3.5,1.3,1.4
+"Wales School District","MA",100,NA,NA,NA,NA
+"Walpole School District","MA",85.6,2.4,10.3,1.2,0.5
+"Waltham School District","MA",69.9,18.9,9,2.2,NA
+"Ware School District","MA",96.1,3,0.9,NA,NA
+"Wareham School District","MA",88.9,0.9,9.1,1.3,NA
+"Watertown School District","MA",65.3,11.6,13.1,1.9,7.8
+"Wayland School District","MA",86,2.4,5.6,3.8,2
+"Webster School District","MA",86.8,10.7,1.7,NA,0.8
+"Wellesley School District","MA",86.5,2.6,4.2,5.3,1.4
+"West Boylston School District","MA",92.2,6.3,1.6,NA,NA
+"West Bridgewater School District","MA",92,1.5,6.5,NA,NA
+"West Springfield School District","MA",69.1,5.9,12.5,4.2,8.1
+"Westborough School District","MA",69,5.6,14.4,6.8,4.1
+"Westfield School District","MA",77.6,8.2,13.3,0.8,NA
+"Westford School District","MA",74.8,4.2,8.6,10.3,2
+"Westhampton School District","MA",100,NA,NA,NA,NA
+"Weston School District","MA",81.4,2.2,11.4,4.4,0.6
+"Westport School District","MA",91.3,0.9,7.8,NA,NA
+"Westwood School District","MA",86.3,0.6,5,7.1,1
+"Weymouth School District","MA",89.1,3.5,3.2,3,1
+"Whately School District","MA",98.2,NA,1.4,NA,NA
+"Whitman-Hanson School District","MA",88.2,1.6,8.9,0.2,1.1
+"Williamsburg School District","MA",94.9,NA,5.1,NA,NA
+"Wilmington School District","MA",92.5,0.4,3.6,3.6,NA
+"Winchendon School District","MA",82.6,1.9,0.8,11.2,3.2
+"Winchester School District","MA",75.4,2.4,13.1,9.1,NA
+"Winthrop School District","MA",62.3,18.8,15.5,1.4,1.9
+"Woburn School District","MA",80.2,5.1,10.7,2.2,1.9
+"Worcester School District","MA",56.4,25.7,7.1,3.2,7.6
+"Wrentham School District","MA",94.9,1.1,3,0.5,0.5
+"Appleton","ME",100,NA,NA,NA,1.6
+"Aroostook Unorganized Territory","ME",55.6,NA,44.4,NA,NA
+"Auburn","ME",98.8,0.7,0.6,NA,NA
+"Augusta","ME",97.7,0.2,1.4,NA,0.7
+"Bangor","ME",90.7,1.6,2.6,1.8,3.1
+"Biddeford","ME",97.8,NA,1.2,0.2,0.6
+"Boothbay-Boothbay Harbor Community School District","ME",100,NA,NA,NA,NA
+"Bremen","ME",100,NA,3.2,NA,NA
+"Brewer","ME",95.3,1.3,3,NA,0.7
+"Brunswick","ME",95.7,0.1,3,0.5,0.5
+"Cape Elizabeth","ME",92.5,NA,5.7,1.8,NA
+"Dayton Public Schools","ME",92.3,2.6,3.8,1,NA
+"Dedham","ME",100,NA,NA,NA,NA
+"Deer Isle-Stonington Community School District","ME",100,NA,NA,NA,NA
+"East Machias","ME",100,NA,NA,NA,NA
+"Ellsworth Public Schools","ME",95.8,NA,3.8,NA,NA
+"Falmouth","ME",96.1,0.2,2.2,NA,1.4
+"Five Town Community School District","ME",85.5,7.7,4.8,2.1,0.2
+"Gorham","ME",95.5,NA,4.7,NA,0.1
+"Great Salt Bay Community School District","ME",90.7,0.5,0.5,7.4,NA
+"Hermon","ME",92.2,NA,7.8,NA,NA
+"Hope","ME",75.4,NA,23,NA,NA
+"Jefferson","ME",94.7,1.1,2.6,NA,NA
+"Kittery","ME",97.9,NA,2.1,NA,NA
+"Lewiston","ME",71.6,2.7,7.8,1.2,16.8
+"Limestone Public Schools","ME",94.6,1.4,1.4,3.6,1.4
+"Lisbon","ME",100,NA,NA,NA,NA
+"Mount Desert Community School District","ME",98.3,1.7,NA,NA,NA
+"Portland","ME",76.7,1.4,9.5,1.2,11.3
+"Regional School Unit 01","ME",100,NA,NA,NA,NA
+"Regional School Unit 02","ME",94.2,1.7,2.7,1.2,NA
+"Regional School Unit 04","ME",96.9,1,NA,2,NA
+"Regional School Unit 05","ME",95.8,0.2,2.5,1.5,NA
+"Regional School Unit 10","ME",99.8,0.2,0.2,NA,NA
+"Regional School Unit 12","ME",99.5,0.2,0.2,NA,NA
+"Regional School Unit 13","ME",91.8,7.9,0.2,NA,NA
+"Regional School Unit 14","ME",96,1,1.8,1.3,NA
+"Regional School Unit 16","ME",98.9,NA,0.4,0.4,0.2
+"Regional School Unit 18","ME",97.7,0.6,1.8,NA,NA
+"Regional School Unit 19","ME",98.8,0.2,0.2,0.6,0.4
+"Regional School Unit 20","ME",93.6,5.1,2.6,NA,NA
+"Regional School Unit 21","ME",96.4,1.3,2.5,NA,NA
+"Regional School Unit 22","ME",95.9,0.6,1.2,NA,2.4
+"Regional School Unit 24","ME",97.4,1,1,NA,0.4
+"Regional School Unit 25","ME",98.8,0.8,0.3,NA,NA
+"Regional School Unit 26","ME",96.6,NA,1.7,1.7,NA
+"Regional School Unit 34","ME",91.8,0.3,4.9,NA,2.9
+"Regional School Unit 38","ME",96.8,NA,1.2,2,NA
+"Regional School Unit 39","ME",98.3,NA,1.7,NA,NA
+"Regional School Unit 50","ME",89.7,NA,10.3,0.8,NA
+"Regional School Unit 56","ME",97.5,NA,NA,2.5,NA
+"Regional School Unit 71","ME",90.6,0.3,5.2,3.9,NA
+"Regional School Unit 73","ME",98.1,NA,1.5,0.3,NA
+"Regional School Unit 89","ME",70.4,NA,28.2,NA,NA
+"Saco Public Schools","ME",94.4,NA,1.9,NA,3.7
+"Sanford","ME",97.4,0.9,1.2,0.5,NA
+"Scarborough","ME",95.2,2.9,1.2,0.3,0.4
+"School Administrative District 01","ME",95.4,1.2,1.8,0.9,0.6
+"School Administrative District 03","ME",75.3,1.1,23.1,0.5,NA
+"School Administrative District 04","ME",97,NA,3,NA,NA
+"School Administrative District 06","ME",98.4,NA,0.3,1.5,NA
+"School Administrative District 09","ME",98.8,0.2,1.2,NA,NA
+"School Administrative District 11","ME",94,3.6,2.4,NA,NA
+"School Administrative District 15","ME",100,NA,NA,0.2,NA
+"School Administrative District 17","ME",95,NA,5,NA,NA
+"School Administrative District 23","ME",100,NA,NA,NA,NA
+"School Administrative District 27","ME",96,NA,4,NA,NA
+"School Administrative District 28","ME",83.8,12.2,1.3,2.6,NA
+"School Administrative District 29","ME",97.3,1.9,0.3,NA,NA
+"School Administrative District 30","ME",96.4,NA,NA,3.6,NA
+"School Administrative District 31","ME",97.8,2.2,0.9,NA,NA
+"School Administrative District 32","ME",97.8,NA,1.7,NA,NA
+"School Administrative District 33","ME",91.4,NA,11.4,NA,NA
+"School Administrative District 35","ME",100,NA,NA,NA,NA
+"School Administrative District 37","ME",94.3,5,NA,0.6,NA
+"School Administrative District 40","ME",98.9,0.2,1.1,NA,NA
+"School Administrative District 41","ME",95,NA,5,NA,NA
+"School Administrative District 42","ME",100,1.2,1.2,NA,NA
+"School Administrative District 44","ME",100,NA,NA,NA,NA
+"School Administrative District 45","ME",95.5,1.8,1.8,NA,NA
+"School Administrative District 46","ME",100,NA,NA,NA,NA
+"School Administrative District 49","ME",99.5,NA,0.5,NA,NA
+"School Administrative District 51","ME",97.8,1.7,0.4,NA,NA
+"School Administrative District 52","ME",99.8,NA,0.2,NA,NA
+"School Administrative District 53","ME",96.2,2.7,1.1,NA,NA
+"School Administrative District 54","ME",99.5,0.2,0.2,NA,NA
+"School Administrative District 55","ME",98.8,NA,0.3,0.8,NA
+"School Administrative District 57","ME",98.2,1.6,0.1,0.1,NA
+"School Administrative District 58","ME",97.3,0.7,1.8,NA,NA
+"School Administrative District 60","ME",98.2,NA,1.3,0.5,NA
+"School Administrative District 61","ME",100,NA,NA,NA,0.2
+"School Administrative District 63","ME",95,1.1,NA,3.9,NA
+"School Administrative District 64","ME",98,0.3,1.6,NA,NA
+"School Administrative District 67","ME",98.5,NA,1.5,NA,NA
+"School Administrative District 68","ME",97.7,1.2,NA,0.5,NA
+"School Administrative District 70","ME",94.2,0.6,5.8,NA,NA
+"School Administrative District 72","ME",98.5,NA,0.7,0.3,0.3
+"School Administrative District 74","ME",98,NA,1.3,0.5,NA
+"School Administrative District 75","ME",99.1,0.4,0.2,0.6,NA
+"Sebago Public Schools","ME",93.9,NA,4.1,1.6,NA
+"South Portland","ME",87.3,0.1,9.3,0.1,3.3
+"Vassalboro","ME",98.8,NA,1.2,NA,NA
+"Waterville","ME",99,0.6,0.4,0.2,NA
+"Wells-Ogunquit Community School District","ME",94.2,NA,NA,1,4.8
+"Westbrook","ME",92.9,NA,3.5,3.5,NA
+"Winslow","ME",95.8,1.5,1.2,1.9,NA
+"Winthrop","ME",100,NA,NA,NA,NA
+"Woodland","ME",100,NA,NA,NA,NA
+"Yarmouth","ME",98.3,1.8,NA,NA,NA
+"York","ME",95.8,3.3,0.9,NA,NA
+"Allenstown School District","NH",94.2,5.8,NA,NA,NA
+"Amherst School District","NH",95.8,2.7,1.7,NA,NA
+"Auburn School District","NH",99,NA,1,NA,NA
+"Barnstead School District","NH",100,NA,NA,NA,NA
+"Barrington School District","NH",98.2,NA,1.8,NA,NA
+"Bedford School District","NH",88.9,1.6,6.1,3.2,NA
+"Berlin School District","NH",97.8,NA,2.2,NA,NA
+"Bow School District","NH",96,3.3,0.3,NA,NA
+"Brentwood School District","NH",94.5,NA,3,NA,2.4
+"Brookline School District","NH",94.4,2.2,3.4,NA,NA
+"Chester School District","NH",100,NA,NA,NA,NA
+"Chichester School District","NH",97.7,NA,NA,2.3,NA
+"Claremont School District","NH",97,NA,1,2.2,NA
+"Concord School District","NH",91.5,0.8,5.2,1.6,0.9
+"Contoocook Valley School District","NH",97.5,1.3,1.3,0.1,NA
+"Conway School District","NH",95.1,4.5,0.3,NA,NA
+"Cornish School District","NH",100,NA,NA,NA,NA
+"Deerfield School District","NH",100,NA,NA,NA,NA
+"Derry School District","NH",94.5,3.9,1.3,0.4,NA
+"Dover School District","NH",95,2.5,1.8,0.5,0.1
+"Dresden School District","NH",91.9,1.2,3.5,1.5,1.9
+"Dunbarton School District","NH",100,NA,NA,NA,NA
+"East Kingston School District","NH",100,NA,NA,NA,NA
+"Epping School District","NH",98.3,NA,1.7,NA,NA
+"Epsom School District","NH",98.2,NA,1.8,NA,NA
+"Exeter Regional Cooperative School District","NH",93.8,1.4,1.7,2.7,0.4
+"Exeter School District","NH",89.9,2,2.6,5.2,NA
+"Fall Mountain Regional School District","NH",96.2,NA,0.5,0.8,2.4
+"Franklin School District","NH",99.2,0.8,NA,NA,NA
+"Fremont School District","NH",100,NA,NA,NA,NA
+"Gilford School District","NH",93,NA,7,NA,NA
+"Goffstown School District","NH",97.5,1.2,0.8,0.6,NA
+"Gorham Randolph Shelburne Cooperative School District","NH",97.2,NA,2.8,1.1,NA
+"Governor Wentworth Regional School District","NH",97.2,0.5,2.6,NA,NA
+"Greenland School District","NH",95.2,2.7,2.7,NA,NA
+"Hampstead School District","NH",95.8,NA,NA,4.6,NA
+"Hampton Falls School District","NH",69.4,5.9,21.2,2.4,NA
+"Hampton School District","NH",99.7,NA,0.2,NA,NA
+"Hanover School District","NH",91.9,1.2,3.5,1.5,1.9
+"Hillsboro-Deering Cooperative School District","NH",96.7,3.3,NA,0.3,NA
+"Hollis School District","NH",90.1,NA,9.9,NA,NA
+"Hollis-Brookline Cooperative School District","NH",92.3,1.1,6.6,NA,NA
+"Hooksett School District","NH",95.9,NA,1.3,0.6,2.1
+"Hopkinton School District","NH",100,NA,NA,NA,NA
+"Hudson School District","NH",93.5,2.1,2.9,1.6,NA
+"Inter-Lakes School District","NH",99.5,0.4,NA,0.4,NA
+"Jaffrey-Rindge Cooperative School District","NH",98.3,NA,1.7,NA,NA
+"John Stark Regional School District","NH",98.8,1.2,NA,NA,NA
+"Kearsarge Regional School District","NH",98.7,0.5,0.8,0.2,NA
+"Keene School District","NH",95.4,NA,2.2,1.2,1.2
+"Kensington School District","NH",98.3,1.4,NA,NA,NA
+"Laconia School District","NH",92,0.2,5.8,0.2,1.8
+"Lafayette Regional School District","NH",97.8,1.8,NA,NA,NA
+"Lebanon School District","NH",91.3,NA,5.2,3.6,NA
+"Lincoln-Woodstock School District","NH",67,9.9,NA,24.2,NA
+"Lisbon Regional School District","NH",100,NA,NA,NA,NA
+"Litchfield School District","NH",97.9,0.9,1.2,NA,NA
+"Londonderry School District","NH",96.4,1.3,1.7,0.7,NA
+"Lyme School District","NH",98.1,NA,NA,1.5,NA
+"Madison School District","NH",100,NA,NA,NA,NA
+"Manchester School District","NH",74.8,14,5.6,2.2,3.5
+"Marlborough School District","NH",95.7,2.9,NA,NA,NA
+"Mascenic Regional School District","NH",96.1,3.9,NA,NA,NA
+"Mascoma Valley Regional School District","NH",99.1,0.4,0.4,NA,NA
+"Mason School District","NH",100,NA,NA,NA,NA
+"Merrimack School District","NH",96.6,0.2,2.9,0.3,NA
+"Merrimack Valley School District","NH",96,1.5,0.5,NA,2
+"Middleton School District","NH",95.6,NA,NA,1.8,NA
+"Milford School District","NH",89.7,NA,10.1,NA,NA
+"Milton School District","NH",94.2,NA,NA,1.9,3.8
+"Monadnock Regional School District","NH",100,NA,NA,NA,NA
+"Mont Vernon School District","NH",90.2,2.2,7.6,NA,NA
+"Nashua School District","NH",76.4,15.3,3.5,4.4,0.5
+"New Boston School District","NH",99.2,1.2,NA,NA,NA
+"Newfields School District","NH",97,NA,1.2,NA,NA
+"Newfound Area School District","NH",98.3,1,0.3,NA,NA
+"Newmarket School District","NH",96.6,NA,3,NA,NA
+"Northwood School District","NH",100,NA,NA,NA,NA
+"Nottingham School District","NH",93.2,4.9,NA,1.9,NA
+"Oyster River Cooperative School District","NH",86,1.6,5.7,6.3,0.4
+"Pelham School District","NH",97.8,1.5,NA,0.7,NA
+"Pembroke School District","NH",100,NA,NA,NA,NA
+"Pemi-Baker Regional School District","NH",95.2,2.7,1,1.2,0.2
+"Portsmouth School District","NH",89.3,0.2,5,4.8,0.8
+"Profile School District","NH",95.4,1.8,2.8,NA,NA
+"Prospect Mountain High School Joint Maintenance Agreement District","NH",100,NA,NA,NA,NA
+"Raymond School District","NH",92.1,1.6,6.3,NA,NA
+"Rochester School District","NH",98.9,0.3,0.9,NA,NA
+"Rollinsford School District","NH",100,NA,NA,NA,NA
+"Rye School District","NH",94.7,2.6,NA,NA,2.6
+"Salem School District","NH",92,7,NA,NA,0.9
+"Sanborn Regional School District","NH",97.8,1.9,NA,NA,NA
+"Seabrook School District","NH",100,NA,0.4,NA,NA
+"Shaker Regional School District","NH",98,1.7,NA,NA,0.2
+"Somersworth School District","NH",97.1,1.5,NA,NA,1.5
+"Souhegan Cooperative School District","NH",94.5,2.6,2.8,NA,NA
+"South Hampton School District","NH",100,NA,NA,NA,NA
+"Stoddard School District","NH",97.4,NA,2.1,NA,NA
+"Strafford School District","NH",100,NA,NA,NA,NA
+"Stratham School District","NH",96.8,2,NA,1.2,NA
+"Timberlane Regional School District","NH",98.5,1,NA,0.4,NA
+"Weare School District","NH",100,NA,NA,NA,NA
+"Westmoreland School District","NH",93.6,NA,4.3,NA,NA
+"White Mountain Regional School District","NH",100,NA,NA,NA,NA
+"Wilton-Lyndeborough School District","NH",99.2,0.6,NA,NA,NA
+"Winchester School District","NH",100,NA,NA,NA,NA
+"Windham School District","NH",94.4,NA,4.9,0.7,NA
+"Winnacunnet Cooperative School District","NH",93.2,4.1,2.4,0.2,NA
+"Winnisquam Regional School District","NH",98.8,NA,1.2,NA,NA
+"Barrington School District","RI",93.4,1.8,3,1.4,0.4
+"Bristol-Warren Regional School District","RI",91.2,1.7,7.1,NA,NA
+"Burrillville School District","RI",79.6,12.9,7.4,NA,NA
+"Central Falls School District","RI",36.6,60,3.4,NA,NA
+"Chariho Regional School District","RI",95.5,NA,4.4,0.1,NA
+"Coventry School District","RI",97.9,1.6,0.3,0.3,NA
+"Cranston School District","RI",78.2,16.5,1.4,3.8,0.1
+"Cumberland School District","RI",85,7.8,3.1,2.5,1.6
+"East Greenwich School District","RI",87.4,5.1,4.7,2.8,NA
+"East Providence School District","RI",80.8,14.2,4.9,0.2,NA
+"Exeter-West Greenwich Regional School District","RI",96.2,0.2,1.9,1.6,NA
+"Foster Elementary School District","RI",95.9,NA,3.4,0.5,NA
+"Foster-Glocester Regional School District","RI",98.9,NA,1,0.2,NA
+"Glocester Elementary School District","RI",100,NA,NA,NA,NA
+"Johnston School District","RI",77.9,15,2.9,0.6,3.5
+"Lincoln School District","RI",88.4,3.6,4.4,3.6,NA
+"Middletown School District","RI",89.1,1.7,7,2.2,NA
+"Narragansett School District","RI",94.6,0.7,4.7,NA,NA
+"Newport School District","RI",89.2,8.6,1.3,NA,1.1
+"North Kingstown School District","RI",95.2,0.6,1.3,2.8,NA
+"North Providence School District","RI",78.2,9.7,3.7,3.7,4.7
+"North Smithfield School District","RI",98,NA,0.9,1.1,NA
+"Pawtucket School District","RI",59.5,24.8,14.1,0.8,0.7
+"Portsmouth School District","RI",96.4,2.2,1.1,0.1,NA
+"Providence School District","RI",46.8,48.1,2.3,1.4,1.4
+"Scituate School District","RI",87.5,10.8,NA,1.7,NA
+"Smithfield School District","RI",92.7,5.5,2,NA,NA
+"South Kingstown School District","RI",92.2,3.5,0.7,3.6,NA
+"Tiverton School District","RI",95.7,1.4,3,NA,NA
+"Warwick School District","RI",93.3,2.2,3.1,1.3,NA
+"West Warwick School District","RI",92.7,3.1,2.5,1.7,NA
+"Westerly School District","RI",97,0.9,0.8,0.2,1.3
+"Woonsocket School District","RI",72.6,19.4,5.5,1.9,0.7
+"Addison Central Unified School District","VT",94.5,0.9,3.7,1.2,NA
+"Addison Northwest Unified School District","VT",100,NA,NA,NA,NA
+"Arlington School District","VT",96.7,2.2,NA,NA,NA
+"Barre Unified Union School District #97","VT",98.8,NA,1.2,NA,NA
+"Barstow Unified School District","VT",97.1,NA,1.1,1.1,NA
+"Bellows Falls UHSD #27","VT",98.8,1.2,NA,NA,NA
+"Blue Mountain USD #21","VT",93.9,1,1,3.7,NA
+"Burlington School District","VT",86,1.3,4.4,0.7,7.6
+"Cabot School District","VT",100,NA,1.1,NA,NA
+"Caledonia Cooperative Unified School District","VT",93.7,3.1,3.1,NA,0.6
+"Cambridge School District","VT",96.6,NA,NA,NA,3.4
+"Champlain Islands Unified Union School District #66","VT",96.1,1.6,1.6,NA,NA
+"Champlain Valley Unified School District","VT",94.8,1.1,3,1,NA
+"Colchester School District","VT",95.5,NA,4.3,NA,NA
+"Danville School District","VT",98.6,NA,1.1,NA,NA
+"Derby School District","VT",94.1,NA,5.9,NA,NA
+"Enosburgh-Richford Unified Union School District #88","VT",100,NA,NA,NA,NA
+"Essex-Westford Educational Community Unified School District","VT",88.6,2.4,7.9,0.4,0.9
+"First Branch Unified School District","VT",97.3,0.7,2.7,NA,NA
+"Georgia School District","VT",95.7,NA,4,0.3,NA
+"Granville Hancock Unified School District","VT",96.2,NA,3.1,NA,NA
+"Green Mountain Unified School District","VT",96.1,3.2,0.5,NA,NA
+"Hartford School District","VT",97,2,NA,NA,1
+"Harwood Unified School District","VT",96.6,0.2,1.5,1.5,NA
+"Hazen UHSD #26","VT",99.1,NA,NA,0.7,NA
+"Kingdom East Unified Union School District","VT",96.8,2,0.2,0.9,NA
+"Lake Region UHSD #24","VT",97.1,NA,2.6,NA,0.3
+"Lake Region Union Elementary Middle School District","VT",97.1,NA,2.6,NA,0.3
+"Lamoille North Modified USD #058A","VT",95.6,0.3,3.7,NA,NA
+"Lamoille North Modified USD #058B","VT",95.9,0.2,2.4,NA,1.2
+"Lamoille South Unified Union School District #90","VT",98.7,0.8,0.5,NA,NA
+"Ludlow Mt. Holly Unified Union School District","VT",100,NA,NA,NA,NA
+"Maple Run Unified School District","VT",98.6,1.2,0.2,NA,NA
+"Mettawee School District","VT",87.3,11.1,3.2,NA,NA
+"Mill River Unified School District","VT",99.5,0.4,NA,NA,NA
+"Milton Incorporated School District","VT",100,NA,NA,NA,NA
+"Missisquoi Valley School District #89","VT",100,NA,NA,NA,NA
+"Montpelier Roxbury Unified Union School District","VT",96.6,0.7,2,0.3,NA
+"Mount Anthony UHSD #14 (6-12)","VT",98.9,NA,1.4,NA,NA
+"Mount Anthony UHSD #14","VT",100,NA,NA,NA,NA
+"Mount Ascutney School District #86","VT",98.5,2.3,NA,NA,NA
+"Mount Mansfield Unified Union School District #401","VT",99,0.4,0.4,NA,NA
+"Mt. Abraham Unified School District","VT",98.7,0.6,0.6,0.3,NA
+"North Bennington Incorporated School District","VT",100,NA,NA,NA,NA
+"North Country Junior/Senior UHSD #22 (7-12)","VT",96.8,0.6,2.9,NA,NA
+"North Country Senior UHSD #22","VT",96.6,NA,3.4,NA,NA
+"Northeast Kingdom Choice School District","VT",98.5,1.2,NA,NA,NA
+"Northern Mountain Valley Unified Union School District #85","VT",97.4,1.3,0.3,0.3,NA
+"Norwich School District","VT",94.7,NA,5.3,NA,NA
+"Orange Southwest Unified School District","VT",97.3,1.6,1.1,NA,NA
+"Orleans Southwest Union Elementary School District #94","VT",98.3,0.7,NA,0.7,NA
+"Otter Valley Unified Union School District #53","VT",99.3,NA,0.3,0.7,NA
+"Oxbow Unified Union School District #91","VT",100,NA,NA,NA,NA
+"Paine Mountain School District","VT",97.7,NA,0.9,1.4,NA
+"Quarry Valley Unified Union School District #70","VT",97.6,1.9,0.4,NA,NA
+"Rivendell Interstate School District","VT",88.9,11.1,NA,NA,NA
+"Rockingham School District","VT",98.4,1.6,NA,NA,NA
+"Rutland City School District","VT",94.6,NA,5.6,NA,NA
+"Rutland Town School District","VT",100,NA,NA,NA,NA
+"Sharon School District","VT",100,NA,1.5,NA,NA
+"Slate Valley Unified Union School District #62","VT",99.4,NA,0.6,NA,NA
+"South Burlington School District","VT",79.8,3.1,5.8,8.8,2.4
+"South Hero School District","VT",100,NA,NA,NA,NA
+"Southwest Vermont Union Elementary School District #87 (PK-5)","VT",98.9,NA,1.4,NA,NA
+"Southwest Vermont Union Elementary School District #87","VT",100,NA,NA,NA,NA
+"Springfield School District","VT",100,NA,NA,NA,NA
+"St. Johnsbury School District","VT",94.7,1.9,NA,1.9,1.9
+"Stamford School District","VT",100,NA,NA,NA,NA
+"Taconic and Green Regional School District","VT",94.1,1.8,0.6,3.2,NA
+"Thetford School District","VT",97.8,NA,2.2,NA,NA
+"Troy School District","VT",92.2,NA,9.8,NA,NA
+"Twin Valley Unified School District","VT",95.9,4.1,NA,0.8,NA
+"Twinfield USD #33","VT",99,NA,NA,NA,0.8
+"Waits River Valley USD #36","VT",100,NA,NA,NA,NA
+"Washington Central Unified Union School District #92","VT",99.7,NA,NA,0.2,NA
+"Wells Spring Unified Union School District","VT",85.2,NA,11.1,3,NA
+"West River Valley Modified Union Education District #72A","VT",100,NA,NA,NA,NA
+"West River Valley Modified Union Education District #72B","VT",100,NA,NA,NA,NA
+"White River Unified School District","VT",100,NA,NA,NA,NA
+"Windham Northeast Union Elementary School District #95","VT",99.2,0.6,NA,NA,NA
+"Windham Southeast Unified Union School District #96","VT",96.7,0.1,2.2,0.7,NA
+"Windsor Central Unified Union School District","VT",96.4,1.8,0.4,NA,0.9
+"Winooski School District","VT",62.2,NA,10.1,16.5,11.2
+"Wolcott School District","VT",95.7,NA,4.3,NA,NA

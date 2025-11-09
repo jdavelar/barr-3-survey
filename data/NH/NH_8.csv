@@ -1,0 +1,234 @@
+﻿Report ID : 6,,,,,,,,,,
+Type of Data: Final,,,,,,,,,,
+Report Date:2/23/2024,,,,,,,,,,
+Run Date: 10/1/2025,,,,,,,,,,
+,,,,,,,,,,
+"New Hampshire Department of Education
+Division of Education Analytics and Resources
+Bureau of Educational Statistics
+25 Hall Street, Concord, NH 03301",,,,,,,,,,
+,,,,,,,,,,
+"School Administrative Unit Enrollments In New Hampshire Public Schools
+As of October 1, 2023",,,,,,,,,,
+,,,,,,,,,,
+SAU #,SAU Name,District #,District Name,Pre-School,Kindergarten,Elementary,Middle,High,Post Grad,Total
+,,,State Total,"4,440","10,893","67,411","30,097","52,172",69,"165,082"
+1,Contoocook Valley ,112,Contoocook Valley,89,110,525,563,651,2,"1,940"
+2,Inter-Lakes Cooperative ,23,Ashland,0,7,142,0,0,0,149
+2,Inter-Lakes Cooperative ,269,Inter-Lakes Cooperative,34,54,557,0,281,2,928
+3,Berlin ,51,Berlin,0,64,352,246,338,5,"1,005"
+4,Newfound Area ,388,Newfound Area,0,45,311,282,378,3,"1,019"
+4,Pasquaney ,388,Pasquaney,30,29,95,0,0,0,154
+5,Oyster River ,423,Oyster River Coop,26,119,510,618,837,1,"2,111"
+6,Claremont ,101,Claremont,65,108,595,338,484,8,"1,598"
+6,Claremont ,539,Unity,2,8,83,0,0,0,93
+7,Colebrook ,105,Colebrook,14,22,157,0,111,0,304
+7,Colebrook ,437,Pittsburg,0,4,43,0,30,0,77
+7,Colebrook ,501,Stewartstown,6,3,44,0,0,0,53
+8,Concord ,111,Concord,116,245,"1,350",774,"1,447",1,"3,933"
+9,Conway ,35,Bartlett,14,16,139,0,0,0,169
+9,Conway ,113,Conway,0,69,504,253,689,1,"1,516"
+9,Conway ,271,Jackson,0,1,37,0,0,0,38
+10,Derry Cooperative ,131,Derry Cooperative,129,303,"1,616","1,037",0,0,"3,085"
+11,Dover ,141,Dover,53,231,937,972,"1,387",0,"3,580"
+12,Londonderry ,319,Londonderry,113,205,"1,442",948,"1,288",0,"3,996"
+13,Tamworth ,187,Freedom,0,4,44,0,0,0,48
+13,Tamworth ,333,Madison,0,16,98,0,0,0,114
+13,Tamworth ,525,Tamworth,0,19,163,0,0,0,182
+14,Epping ,165,Epping,43,70,354,184,219,0,870
+15,Hooksett ,29,Auburn,0,62,591,0,0,0,653
+15,Hooksett ,79,Candia,0,37,233,0,0,0,270
+15,Hooksett ,261,Hooksett,23,130,693,422,0,0,"1,268"
+16,Exeter ,63,Brentwood,15,39,241,0,0,0,295
+16,Exeter ,153,East Kingston,0,20,98,0,0,0,118
+16,Exeter ,172,Exeter Region Cooperative,0,0,0,923,"1,375",0,"2,298"
+16,Exeter ,173,Exeter,36,113,658,0,0,0,807
+16,Exeter ,281,Kensington,1,32,110,0,0,0,143
+16,Exeter ,387,Newfields,0,21,100,0,0,0,121
+16,Exeter ,511,Stratham,21,79,420,0,0,0,520
+17,Sanborn Regional ,476,Sanborn Regional,29,84,467,245,521,0,"1,346"
+18,Franklin ,185,Franklin,33,63,519,0,271,1,887
+19,Goffstown ,199,Goffstown,66,118,705,866,"1,034",0,"2,789"
+19,Goffstown ,377,New Boston,22,41,415,0,0,0,478
+20,Gorham ,171,Errol,0,2,11,0,0,0,13
+20,Gorham ,203,Gorham Randolph Shelburne Cooperative,0,19,128,84,139,0,370
+20,Gorham ,355,Milan,18,13,85,0,0,0,116
+21,Winnacunnet ,227,Hampton Falls,9,20,156,0,0,0,185
+21,Winnacunnet ,405,North Hampton,5,14,251,0,0,0,270
+21,Winnacunnet ,485,Seabrook,38,59,548,0,0,0,645
+21,Winnacunnet ,495,South Hampton,0,8,75,0,0,0,83
+21,Winnacunnet ,581,Winnacunnet Cooperative,0,0,0,0,"1,036",1,"1,037"
+23,Haverhill Cooperative ,39,Bath,0,6,41,0,0,0,47
+23,Haverhill Cooperative ,238,Haverhill Cooperative,33,39,125,240,228,0,665
+23,Haverhill Cooperative ,435,Piermont,6,3,49,0,0,0,58
+23,Haverhill Cooperative ,549,Warren,6,4,61,0,0,0,71
+24,Henniker ,245,Henniker,20,38,340,0,0,0,398
+24,Henniker ,275,John Stark Regional,0,0,0,0,624,0,624
+24,Henniker ,503,Stoddard,0,7,47,0,0,0,54
+24,Henniker ,555,Weare,15,85,248,477,0,0,825
+25,Bedford ,41,Bedford,74,193,"1,720",680,"1,393",5,"4,065"
+26,Merrimack ,351,Merrimack,116,267,"1,547",511,"1,085",0,"3,526"
+27,Litchfield ,315,Litchfield,41,80,320,351,379,0,"1,171"
+28,Pelham ,425,Pelham,57,123,572,338,555,0,"1,645"
+29,Keene ,95,Chesterfield,0,26,222,0,0,0,248
+29,Keene ,235,Harrisville,0,5,42,0,0,0,47
+29,Keene ,279,Keene,93,163,833,601,"1,329",0,"3,019"
+29,Keene ,339,Marlborough,15,11,131,0,0,0,157
+29,Keene ,341,Marlow,5,9,43,0,0,0,57
+29,Keene ,375,Nelson,0,8,55,0,0,0,63
+29,Keene ,563,Westmoreland,0,16,101,0,0,0,117
+30,Laconia ,285,Laconia,67,122,644,397,582,1,"1,813"
+31,Newmarket ,399,Newmarket,31,85,583,0,279,2,980
+32,Plainfield ,441,Plainfield,0,9,187,0,0,0,196
+33,Raymond ,453,Raymond,43,70,259,421,334,0,"1,127"
+34,Hillsboro-Deering ,251,Hillsboro-Deering Cooperative,42,64,343,220,371,0,"1,040"
+34,Hillsboro-Deering ,551,Washington,0,10,30,0,0,0,40
+35,SAU #35 Office,53,Bethlehem,8,16,116,0,0,0,140
+35,SAU #35 Office,288,Lafayette Regional,0,15,79,0,0,0,94
+35,SAU #35 Office,291,Landaff,12,2,10,0,0,0,24
+35,SAU #35 Office,306,Lisbon Regional,14,16,116,55,76,0,277
+35,SAU #35 Office,450,Profile,0,0,0,73,142,1,216
+36,White Mountains Regional ,568,White Mountains Regional,42,49,509,0,370,0,970
+37,Manchester ,335,Manchester,380,839,"4,167","2,993","3,472",0,"11,851"
+39,Amherst ,17,Amherst,58,107,532,644,0,0,"1,341"
+39,Amherst ,367,Mont Vernon,0,32,199,0,0,0,231
+39,Amherst ,493,Souhegan Cooperative,0,0,0,0,691,0,691
+40,Milford ,357,Milford,47,136,695,448,685,0,"2,011"
+41,Hollis-Brookline ,71,Brookline,20,73,483,0,0,0,576
+41,Hollis-Brookline ,259,Hollis,26,86,569,0,0,0,681
+41,Hollis-Brookline ,260,Hollis-Brookline Cooperative,0,0,0,369,745,0,"1,114"
+42,Nashua ,371,Nashua,312,662,"3,586","1,998","3,214",0,"9,772"
+43,Newport ,401,Newport,23,38,246,149,288,3,747
+44,Northwood ,411,Northwood,37,40,325,0,0,0,402
+45,Moultonborough ,369,Moultonborough,40,38,166,92,140,0,476
+46,SAU #46 Office,19,Andover,0,18,174,0,0,0,192
+46,SAU #46 Office,352,Merrimack Valley,31,158,791,479,756,0,"2,215"
+47,Jaffrey-Rindge ,274,Jaffrey-Rindge Cooperative,77,95,431,257,368,0,"1,228"
+48,Plymouth ,75,Campton,1,27,253,0,0,0,281
+48,Plymouth ,257,Holderness,0,9,141,0,0,0,150
+48,Plymouth ,428,Pemi-Baker Regional,0,0,0,0,638,4,642
+48,Plymouth ,447,Plymouth,0,37,347,0,0,0,384
+48,Plymouth ,467,Rumney,0,9,77,0,0,0,86
+48,Plymouth ,531,Thornton,0,14,159,0,0,0,173
+48,Plymouth ,553,Waterville Valley,0,2,41,0,0,0,43
+48,Plymouth ,559,Wentworth,0,12,62,0,0,0,74
+49,Governor Wentworth Regional ,208,Governor Wentworth Regional,47,129,845,362,733,0,"2,116"
+50,Greenland ,215,Greenland,0,37,334,0,0,0,371
+50,Greenland ,381,New Castle,0,5,21,0,0,0,26
+50,Greenland ,391,Newington,0,6,42,0,0,0,48
+50,Greenland ,471,Rye,23,40,337,0,0,0,400
+51,Pittsfield ,439,Pittsfield,16,28,179,112,159,0,494
+52,Portsmouth ,449,Portsmouth,18,146,782,472,"1,022",3,"2,443"
+53,Pembroke ,9,Allenstown,0,38,297,0,0,0,335
+53,Pembroke ,99,Chichester,0,22,166,0,0,0,188
+53,Pembroke ,127,Deerfield,34,40,421,0,0,0,495
+53,Pembroke ,167,Epsom,0,37,333,0,0,0,370
+53,Pembroke ,427,Pembroke,0,55,594,0,761,0,"1,410"
+54,Rochester ,461,Rochester,65,246,"1,306",774,"1,405",0,"3,796"
+55,Hampstead ,223,Hampstead,32,72,361,344,0,0,809
+56,Somersworth ,491,Somersworth,44,94,478,309,406,0,"1,331"
+57,Salem ,473,Salem,124,247,"1,298",772,"1,095",0,"3,536"
+58,Northumberland ,407,Northumberland,0,17,170,0,119,0,306
+58,Northumberland ,499,Stark,0,5,24,0,0,0,29
+58,Northumberland ,509,Stratford,4,4,48,0,0,0,56
+59,Winnisquam Regional ,582,Winnisquam Regional,31,70,362,368,390,1,"1,222"
+60,Fall Mountain Regional ,174,Fall Mountain Regional,75,95,763,0,486,0,"1,419"
+61,Farmington ,175,Farmington,28,57,437,0,232,0,754
+62,Mascoma Valley ,343,Mascoma Valley Regional,70,90,579,0,336,0,"1,075"
+63,Wilton ,572,Wilton-Lyndeborough Cooperative,11,39,243,117,131,0,541
+64,Milton ,359,Milton,25,38,198,101,162,0,524
+65,Kearsarge Regional ,276,Kearsarge Regional,53,97,623,404,476,7,"1,660"
+66,Hopkinton ,263,Hopkinton,43,46,393,168,300,0,950
+67,Bow ,57,Bow,22,89,417,530,611,0,"1,669"
+67,Bow ,149,Dunbarton,0,31,211,0,0,0,242
+68,Lincoln-Woodstock ,305,Lincoln-Woodstock Cooperative,0,18,93,61,74,0,246
+69,Middleton SAU,353,Middleton,7,17,128,0,0,0,152
+70,Hanover ,142,Dresden,0,0,364,0,683,0,"1,047"
+70,Hanover ,233,Hanover,0,46,392,0,0,0,438
+71,Lempster ,299,Lempster,8,14,101,0,0,0,123
+72,Alton ,15,Alton,42,46,330,0,0,0,418
+73,Gilford ,191,Gilford,0,50,259,294,489,0,"1,092"
+74,Barrington ,33,Barrington,57,99,418,396,0,0,970
+75,Grantham ,211,Grantham,24,30,217,0,0,0,271
+76,Lyme ,327,Lyme,0,18,177,0,0,0,195
+77,Monroe ,365,Monroe,4,8,76,0,0,0,88
+79,Gilmanton ,195,Gilmanton,0,29,330,0,0,0,359
+80,Shaker Regional ,486,Shaker Regional,27,81,329,329,364,0,"1,130"
+81,Hudson ,267,Hudson,102,196,"1,004",696,"1,015",4,"3,017"
+82,Chester ,93,Chester,23,47,444,0,0,0,514
+83,Fremont ,189,Fremont,12,36,315,0,0,0,363
+84,Littleton ,317,Littleton,0,42,272,87,187,0,588
+85,Sunapee ,515,Sunapee,0,27,151,85,131,1,395
+86,Barnstead ,31,Barnstead,32,45,406,0,0,0,483
+87,Mascenic Regional ,342,Mascenic Regional,32,58,290,253,247,0,880
+88,Lebanon ,295,Lebanon,44,89,428,458,610,0,"1,629"
+89,Mason ,345,Mason,11,10,75,0,0,0,96
+90,Hampton ,225,Hampton,0,93,811,0,0,0,904
+92,Hinsdale ,255,Hinsdale,22,35,194,112,160,0,523
+93,Monadnock Regional ,363,Monadnock Regional,53,101,734,251,442,0,"1,581"
+94,Winchester ,573,Winchester,27,33,298,0,0,0,358
+95,Windham ,575,Windham,64,208,"1,305",425,984,0,"2,986"
+99,Croydon ,117,Croydon,0,3,21,0,0,0,24
+100,Cornish ,115,Cornish,20,14,102,0,0,0,136
+101,Wakefield ,543,Wakefield,12,31,382,0,0,0,425
+103,Hill ,247,Hill,11,10,43,0,0,0,64
+104,Rollinsford ,463,Rollinsford,0,24,122,0,0,0,146
+105,Strafford ,507,Strafford,24,38,332,0,0,0,394
+106,Timberlane Regional ,534,Timberlane Regional,138,244,"1,211",731,958,0,"3,282"
+107,Nottingham ,413,Nottingham,26,57,429,0,0,0,512
+,,,Traditional District Total:,"4,429","10,516","64,264","29,559","46,428",57,"155,253"
+Public Interstate Schools,,,,,,,,,,
+SAU #,SAU Name,District #,District Name,Pre-School,Kindergarten,Elementary,Middle,High,Post Grad,Total
+78,Rivendell Interstate ,457,Rivendell,0,0,30,0,50,0,80
+,,,Public Interstate total:,0,0,30,0,50,0,80
+Public Academies and Joint Maintenance Agreements,,,,,,,,,,
+SAU #,SAU Name,District #,District Name,Pre-School,Kindergarten,Elementary,Middle,High,Post Grad,Total
+201,Coe-Brown Northwood Academy,998,Coe-Brown Northwood Academy,0,0,0,0,664,0,664
+202,Pinkerton Academy,999,Pinkerton Academy,0,0,0,0,2978,7,2985
+301,Prospect Mountain JMA,970,Prospect Mountain JMA,0,0,0,0,400,4,404
+,,, Public Academies & JMA's Total:,0,0,0,0,"4,042",11,"4,053"
+Public Charter Schools,,,,,,,,,,
+SAU #,SAU Name,District #,District Name,Pre-School,Kindergarten,Elementary,Middle,High,Post Grad,Total
+411,Academy for Science and Design Charter School,725,Academy for Science and Design Charter School,0,0,0,404,236,0,640
+426,Arts Academy of New Hampshire Chartered Public High School ,702,Arts Academy of New Hampshire Chartered Public High School ,0,0,0,0,121,0,121
+455,Benjamin Franklin Academy Chartered Public School,726,Benjamin Franklin Academy Chartered Public School,0,0,0,45,5,0,50
+452,Coastal Waters Chartered Public School,720,Coastal Waters Chartered Public School,0,8,58,0,16,0,82
+429,Compass Classical Academy Charter School,743,Compass Classical Academy Charter School,0,21,103,0,40,0,164
+410,CSI Charter School,723,CSI Charter School,0,0,0,0,47,0,47
+425,Gate City Charter School For the Arts,742,Gate City Charter School For the Arts,0,17,126,0,0,0,143
+450,Gathering Waters Charter School,750,Gathering Waters Charter School,0,25,191,0,56,0,272
+404,Great Bay Charter School,709,Great Bay Charter School,0,0,0,42,92,0,134
+451,Heartwood Public Charter School,718,Heartwood Public Charter School,0,10,57,0,0,0,67
+432,Kreiva Academy Public Charter School,708,Kreiva Academy Public Charter School,0,0,0,47,104,0,151
+431,LEAF Charter School,706,LEAF Charter School,0,0,0,0,67,0,67
+408,Ledyard Charter School,719,Ledyard Charter School,0,0,0,0,43,1,44
+453,Lionheart Classical Academy Chartered Public School,722,Lionheart Classical Academy Chartered Public School,0,39,236,0,0,0,275
+418,Making Community Connections Charter School,733,Making Community Connections Charter School,0,0,0,0,65,0,65
+430,MicroSociety Academy Charter School Foundation,744,MicroSociety Academy Charter School Foundation,0,35,271,0,0,0,306
+416,Mill Falls Charter School,729,Mill Falls Charter School,0,24,143,0,0,0,167
+427,Mountain Village Charter School,704,Mountain Village Charter School,0,0,114,0,0,0,114
+422,Next Charter School,740,Next Charter School,0,0,0,0,74,0,74
+402,North Country Charter Academy,703,North Country Charter Academy,0,0,0,0,27,0,27
+441,Northeast Woodland Chartered Public School,716,Northeast Woodland Chartered Public School,11,18,137,0,0,0,166
+419,Polaris Charter School,735,Polaris Charter School,0,23,99,0,0,0,122
+454,River View Chartered Public School,724,River View Chartered Public School,0,0,0,0,18,0,18
+420,Robert Frost Charter School,737,Robert Frost Charter School,0,4,20,0,9,0,33
+403,Seacoast Charter School,705,Seacoast Charter School,0,29,259,0,0,0,288
+437,Spark Academy of Advanced Technologies,714,Spark Academy of Advanced Technologies,0,0,0,0,87,0,87
+409,Strong Foundations Charter School,721,Strong Foundations Charter School,0,30,306,0,0,0,336
+407,Surry Village Charter School,717,Surry Village Charter School,0,11,86,0,0,0,97
+417,The Birches Academy of Academics & Art A Public Charter Sch,731,The Birches Academy of Academics & Art A Public Charter Sch,0,35,200,0,0,0,235
+423,The Founders Academy Charter School,741,The Founders Academy Charter School,0,0,263,0,138,0,401
+412,Virtual Learning Academy Charter School,727,Virtual Learning Academy Charter School,0,1,126,0,407,0,534
+434,Windham Academy Public Charter School,712,Windham Academy Public Charter School,0,47,322,0,0,0,369
+,,,Charter Schools Total:,11,377,"3,117",538,"1,652",1,"5,696"
+Foot Notes,,,,,,,,,,
+Academic School year starts July 1 thru Jun 30,,,,,,,,,,
+"Enrollments at the elementary, middle/junior high and high school levels are reported by SAU totals.",,,,,,,,,,
+Rivendell School District counts includes NH resident students only,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+Data Source,,,,,,,,,,
+The data comes from BOY submission through i4SEE.,,,,,,,,,,
+,,,,,,,,,,
