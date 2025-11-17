@@ -575,12 +575,15 @@ write.csv(clean, "data/clean/clean_ct.csv", row.names = FALSE)
 
 #### MERGE WITH STATE CROSSWALK FOR SUPT DATA ####
 # file = state_crosswalk_long
-ne_crosswalk <- import(here("data/Across states/state_crosswalk_long.csv"))
+ne_crosswalk <- import(here("data/Across states/state_crosswalk_long2.csv")) %>% 
+  rename(district = district_name) %>% 
+  mutate(district_code = as.numeric(district_code))
 
 final <- ne_crosswalk %>% 
   filter(state == "Connecticut") %>% 
-  right_join(clean, by = "district") %>% 
-  filter(!is.na(combined_district)) #dropping the 19 districts that were in the CT data but not the New England crosswalk
+  right_join(clean, by = c("district", "district_code")) %>% 
+  filter(!is.na(last_name)) #dropping the 3 districts that were in the CT data but not the New England crosswalk
+# these are private schools serving as HS in some towns
 
 # save
 write.csv(final, "data/clean/final_ct.csv", row.names = FALSE)
