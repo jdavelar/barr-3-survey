@@ -1,0 +1,298 @@
+"lea_state","district_code","district","n_el","n_tot","missing","pct_el"
+"NH","3300003","John Stark Regional School District",0,587,1,0
+"NH","3300017","Exeter Region Coop School District",30,2437,0,0.01
+"NH","3300030","North Country Charter Academy",0,43,1,0
+"NH","3300031","Seacoast Charter School",0,293,1,0
+"NH","3300035","Gorham Randolph Shelburne Coop School District",1,393,2,0
+"NH","3300039","Surry Village Charter School",0,93,1,0
+"NH","3300040","Academy for Science and Design Charter School",15,523,1,0.03
+"NH","3300041","CSI Charter School",0,24,1,0
+"NH","3300042","Strong Foundations Charter School",12,325,0,0.04
+"NH","3300043","Ledyard Charter Academy",0,44,1,0
+"NH","3300048","Great Bay Elearning Charter School",0,143,2,0
+"NH","3300049","Prospect Mountain School District",0,456,1,0
+"NH","3300616","Milton School District",2,517,1,0
+"NH","3301380","Allenstown School District",12,336,0,0.04
+"NH","3301440","Alton School District",0,438,1,0
+"NH","3301470","Amherst School District",11,1281,0,0.01
+"NH","3301500","Andover School District",0,210,1,0
+"NH","3301560","Ashland School District",3,165,0,0.02
+"NH","3301590","Auburn School District",9,629,0,0.01
+"NH","3301620","Barnstead School District",0,484,1,0
+"NH","3301650","Barrington School District",1,923,1,0
+"NH","3301680","Bartlett School District",0,173,1,0
+"NH","3301710","Bath School District",0,65,1,0
+"NH","3301740","Bedford School District",44,4181,0,0.01
+"NH","3301860","Berlin School District",3,1068,2,0
+"NH","3301890","Bethlehem School District",1,140,0,0.01
+"NH","3301950","Bow School District",6,1725,1,0
+"NH","3302010","Brentwood School District",0,277,1,0
+"NH","3302070","Brookline School District",10,575,0,0.02
+"NH","3302100","Campton School District",0,288,1,0
+"NH","3302130","Candia School District",0,274,1,0
+"NH","3302250","Chester School District",2,464,0,0
+"NH","3302280","Chesterfield School District",2,272,0,0.01
+"NH","3302310","Chichester School District",3,196,0,0.02
+"NH","3302340","Claremont School District",7,1625,3,0
+"NH","3302400","Colebrook School District",0,299,2,0
+"NH","3302460","Concord School District",219,4077,0,0.05
+"NH","3302480","Contoocook Valley School District",2,1996,6,0
+"NH","3302490","Conway School District",8,1550,3,0.01
+"NH","3302520","Cornish School District",0,108,1,0
+"NH","3302550","Croydon School District",0,25,1,0
+"NH","3302580","Deerfield School District",1,482,0,0
+"NH","3302610","Derry School District",25,3011,1,0.01
+"NH","3302640","Dover School District",98,3808,0,0.03
+"NH","3302670","Dresden School District",21,1036,0,0.02
+"NH","3302760","Dunbarton School District",0,236,1,0
+"NH","3302790","East Kingston School District",0,136,1,0
+"NH","3302880","Epping School District",6,881,0,0.01
+"NH","3302910","Epsom School District",1,366,0,0
+"NH","3302940","Errol School District",0,8,1,0
+"NH","3302970","Exeter School District",17,816,0,0.02
+"NH","3302990","Fall Mountain Regional School District",3,1380,8,0
+"NH","3303000","Farmington School District",0,781,3,0
+"NH","3303090","Franklin School District",5,943,1,0.01
+"NH","3303120","Freedom School District",1,37,0,0.03
+"NH","3303150","Fremont School District",0,381,1,0
+"NH","3303180","Gilford School District",8,1140,0,0.01
+"NH","3303210","Gilmanton School District",0,333,1,0
+"NH","3303240","Goffstown School District",33,2704,0,0.01
+"NH","3303271","Virtual Learning Academy Charter School",1,573,1,0
+"NH","3303276","Mason School District",0,86,1,0
+"NH","3303280","Mill Falls Charter School District",13,168,0,0.08
+"NH","3303286","The Birches Academy for Academics & Art:A Public Charter Sch",37,216,0,0.17
+"NH","3303287","Robert Frost Charter School",0,49,1,0
+"NH","3303289","Making Community Connections Charter School",0,48,1,0
+"NH","3303290","Polaris Charter School",0,109,0,0
+"NH","3303291","Next Charter School District",0,80,1,0
+"NH","3303296","Granite State Arts Academy Charter School",0,124,1,0
+"NH","3303297","Mountain Village Charter School",0,111,1,0
+"NH","3303298","The Founders Academy Charter School District",4,742,0,0.01
+"NH","3303299","Gate City Charter School For the Arts District",2,155,0,0.01
+"NH","3303301","Compass Classical Academy Charter School",1,138,0,0.01
+"NH","3303302","MicroSociety Academy Charter School of Southern NH",20,263,0,0.08
+"NH","3303303","Lempster School District",0,119,1,0
+"NH","3303305","LEAF Charter School",0,70,1,0
+"NH","3303308","Kreiva Academy Public Charter School District",0,179,1,0
+"NH","3303314","Windham Academy Public Charter School",2,250,0,0.01
+"NH","3303315","Spark Academy of Advanced Technologies",0,56,1,0
+"NH","3303316","Northeast Woodland Chartered Public School",0,155,1,0
+"NH","3303330","Governor Wentworth Reg School District",5,2081,5,0
+"NH","3303360","Grantham School District",5,279,0,0.02
+"NH","3303420","Greenland School District",5,396,0,0.01
+"NH","3303480","Hampstead School District",0,817,2,0
+"NH","3303510","Hampton School District",37,922,0,0.04
+"NH","3303540","Hampton Falls School District",0,180,1,0
+"NH","3303600","Hanover School District",17,497,0,0.03
+"NH","3303630","Harrisville School District",0,54,1,0
+"NH","3303660","Haverhill Cooperative School District",3,633,1,0
+"NH","3303690","Henniker School District",0,382,1,0
+"NH","3303720","Hill School District",0,50,1,0
+"NH","3303750","Hillsboro Deering Coop School District",3,1011,0,0
+"NH","3303780","Hinsdale School District",3,506,1,0.01
+"NH","3303810","Holderness School District",1,148,0,0.01
+"NH","3303840","Hollis School District",9,609,0,0.01
+"NH","3303850","Hollis/Brookline Coop School District",4,1186,0,0
+"NH","3303870","Hooksett School District",33,1201,0,0.03
+"NH","3303900","Hopkinton School District",0,934,4,0
+"NH","3303930","Hudson School District",51,2991,1,0.02
+"NH","3303960","Inter-lakes School District",4,939,2,0
+"NH","3303990","Jackson School District",0,44,1,0
+"NH","3304030","Jaffrey-Rindge Coop School District",4,1223,2,0
+"NH","3304040","Kearsarge Regional School District",5,1693,3,0
+"NH","3304050","Keene School District",16,3027,2,0.01
+"NH","3304080","Kensington School District",0,129,1,0
+"NH","3304140","Laconia School District",245,1736,3,0.14
+"NH","3304150","Lafayette Regional School District",0,91,1,0
+"NH","3304170","Landaff School District",0,13,1,0
+"NH","3304230","Lebanon School District",60,1630,0,0.04
+"NH","3304260","Lincoln-Woodstock School District",9,273,0,0.03
+"NH","3304290","Lisbon Regional School District",0,301,3,0
+"NH","3304350","Litchfield School District",7,1196,0,0.01
+"NH","3304380","Littleton School District",34,703,0,0.05
+"NH","3304410","Londonderry School District",21,4129,1,0.01
+"NH","3304500","Lyme School District",0,197,1,0
+"NH","3304560","Madison School District",5,127,0,0.04
+"NH","3304590","Manchester School District",1989,12005,0,0.17
+"NH","3304620","Marlborough School District",0,148,1,0
+"NH","3304650","Marlow School District",0,46,1,0
+"NH","3304670","Mascenic Regional School District",3,922,1,0
+"NH","3304680","Mascoma Valley Reg School District",7,1103,2,0.01
+"NH","3304740","Merrimack School District",59,3619,0,0.02
+"NH","3304760","Merrimack Valley School District",31,2206,3,0.01
+"NH","3304770","Middleton School District",0,147,1,0
+"NH","3304800","Milan School District",0,95,1,0
+"NH","3304830","Milford School District",43,2138,1,0.02
+"NH","3304890","Monadnock Regional School District",1,1576,6,0
+"NH","3304920","Monroe School District",0,81,1,0
+"NH","3304950","Mont Vernon School District",1,225,0,0
+"NH","3304960","Moultonborough School District",12,497,0,0.02
+"NH","3304980","Nashua School District",1458,10042,2,0.15
+"NH","3305010","Nelson School District",0,61,1,0
+"NH","3305040","New Boston School District",0,475,1,0
+"NH","3305070","New Castle School District",2,29,0,0.07
+"NH","3305190","Newfields School District",0,116,1,0
+"NH","3305220","Newfound Area School District",3,1165,4,0
+"NH","3305250","Newington School District",0,51,1,0
+"NH","3305280","Newmarket School District",10,1006,0,0.01
+"NH","3305310","Newport School District",14,827,0,0.02
+"NH","3305370","North Hampton School District",1,301,0,0
+"NH","3305400","Northumberland School District",0,324,3,0
+"NH","3305430","Northwood School District",0,339,1,0
+"NH","3305460","Nottingham School District",0,472,1,0
+"NH","3305520","Oyster River Coop School District",29,2107,1,0.01
+"NH","3305550","Pelham School District",15,1625,1,0.01
+"NH","3305580","Pembroke School District",1,1400,1,0
+"NH","3305670","Piermont School District",0,50,1,0
+"NH","3305700","Pittsburg School District",0,78,2,0
+"NH","3305730","Pittsfield School District",0,579,3,0
+"NH","3305760","Plainfield School District",4,216,0,0.02
+"NH","3305790","Plymouth School District",3,421,0,0.01
+"NH","3305820","Portsmouth School District",74,2544,1,0.03
+"NH","3305830","Profile School District",0,229,2,0
+"NH","3305880","Raymond School District",4,1187,2,0
+"NH","3305940","Rochester School District",37,3881,1,0.01
+"NH","3305970","Rollinsford School District",0,134,1,0
+"NH","3306000","Rumney School District",0,83,1,0
+"NH","3306030","Rye School District",1,379,1,0
+"NH","3306060","Salem School District",160,3487,1,0.05
+"NH","3306080","Sanborn Regional School District",12,1441,0,0.01
+"NH","3306150","Seabrook School District",13,681,0,0.02
+"NH","3306180","Shaker Regional School District",4,1178,0,0
+"NH","3306240","Somersworth School District",7,1297,0,0.01
+"NH","3306260","Souhegan Cooperative School District",3,701,0,0
+"NH","3306270","South Hampton School District",0,86,1,0
+"NH","3306330","Stark School District",0,25,1,0
+"NH","3306360","Stewartstown School District",0,61,1,0
+"NH","3306390","Stoddard School District",0,62,1,0
+"NH","3306420","Strafford School District",0,412,1,0
+"NH","3306450","Stratford School District",0,59,1,0
+"NH","3306480","Stratham School District",6,517,0,0.01
+"NH","3306540","Sunapee School District",0,381,3,0
+"NH","3306600","Tamworth School District",2,194,0,0.01
+"NH","3306660","Thornton School District",0,188,1,0
+"NH","3306720","Timberlane Regional School District",21,3229,0,0.01
+"NH","3306750","Unity School District",0,91,1,0
+"NH","3306780","Wakefield School District",0,451,0,0
+"NH","3306870","Warren School District",0,62,1,0
+"NH","3306900","Washington School District",0,39,1,0
+"NH","3306910","Waterville Valley School District",4,53,0,0.08
+"NH","3306930","Weare School District",8,859,0,0.01
+"NH","3306990","Wentworth School District",1,69,0,0.01
+"NH","3307020","Westmoreland School District",0,110,1,0
+"NH","3307050","White Mountain Regional School District",9,975,0,0.01
+"NH","3307115","Wilton-Lyndeboro School District",0,540,4,0
+"NH","3307140","Winchester School District",0,348,1,0
+"NH","3307170","Windham School District",51,2971,0,0.02
+"NH","3307230","Winnacunnet Coop School District",8,1133,0,0.01
+"NH","3307300","Winnisquam Regional School District",8,1339,2,0.01
+"NH","3307330","Coe Brown Academy School District",0,691,1,0
+"NH","3307360","Pinkerton Academy School District",11,3119,0,0
+"NH","3399923","Haverhill Cooperative SAU Office",0,31,2,0
+"NH","3399965","Pemi-baker Regional School District",0,676,1,0
+"NH","33SOP01","JUVENILE JUSTICE SERVICES - SYSC",0,83,1,0
+"VT","5000024","Rivendell Interstate School District",0,463,2,0
+"VT","5000390","Barstow Unified School District",2,199,0,0.01
+"VT","5000392","Otter Valley Unified Union School District #53",0,1237,4,0
+"VT","5000393","Mill River Unified School District",0,792,5,0
+"VT","5000395","Essex-Westford Educational Community Unified School District",154,3981,0,0.04
+"VT","5000396","Champlain Valley Unified School District",118,3830,0,0.03
+"VT","5000397","Lamoille North Modified USD #058B",2,773,1,0
+"VT","5000398","Addison Northwest Unified School District",5,933,0,0.01
+"VT","5000399","Maple Run Unified School District",15,2500,0,0.01
+"VT","5000400","Orange Southwest Unified School District",3,882,2,0
+"VT","5000401","Lamoille North Modified USD #058A",3,531,1,0.01
+"VT","5000402","Addison Central Unified School District",13,1657,5,0.01
+"VT","5000403","Harwood Unified School District",3,1958,4,0
+"VT","5000408","Paine Mountain School District",2,991,2,0
+"VT","5000409","Wells Spring Unified Union School District",0,121,2,0
+"VT","5000410","Montpelier Roxbury Unified Union School District",60,1170,0,0.05
+"VT","5000411","Quarry Valley Unified Union School District #70",0,984,5,0
+"VT","5000412","Caledonia Cooperative Unified School District",1,401,2,0
+"VT","5000417","Taconic and Green Regional School District",20,974,3,0.02
+"VT","5000418","Twin Valley Unified School District",0,401,2,0
+"VT","5000419","Mettawee School District",2,129,0,0.02
+"VT","5000421","Kingdom East Unified Union School District",7,1140,3,0.01
+"VT","5000422","Ludlow Mt. Holly Unified Union School District",2,180,0,0.01
+"VT","5000423","Rochester Stockbridge Unified School District",2,108,0,0.02
+"VT","5000425","Mt. Abraham Unified School District",0,1317,6,0
+"VT","5000426","White River Unified School District",2,555,3,0
+"VT","5000427","Green Mountain Unified School District",1,678,2,0
+"VT","5000429","First Branch Unified School District",1,218,1,0
+"VT","5000430","Echo Valley Community School District",0,176,2,0
+"VT","5000431","Windham Southeast School District",22,2154,3,0.01
+"VT","5000432","West River Valley Modified Union Education District #72B",1,279,0,0
+"VT","5000433","Missisquoi Valley School District #89",9,1662,1,0.01
+"VT","5000434","Southwest Vermont Union Elementary School District #87",4,1447,4,0
+"VT","5000435","Champlain Islands Unified Union School District #66",0,212,2,0
+"VT","5000436","Lake Region Union Elementary Middle School District",0,670,5,0
+"VT","5000437","Oxbow Unified Union School District #91",0,899,4,0
+"VT","5000438","Orleans Southwest Union Elementary School District #94",1,338,2,0
+"VT","5000439","Washington Central Unified Union School District #92",5,1369,2,0
+"VT","5000440","Slate Valley Unified Union School District #62",0,1133,4,0
+"VT","5000441","Northern Mountain Valley Unified Union School District #85",15,778,1,0.02
+"VT","5000442","Mount Ascutney School District #86",2,619,0,0
+"VT","5000443","Mount Mansfield Unified Union School District #401",2,2418,4,0
+"VT","5000444","Enosburgh-Richford Unified Union School District #88",7,1107,1,0.01
+"VT","5000445","Barre Unified Union School District #97",5,2284,0,0
+"VT","5000446","Windham Northeast Union Elementary School District #95",0,200,2,0
+"VT","5000447","River Valleys Unified School District #73",1,102,1,0.01
+"VT","5000448","Lamoille South Unified Union School District #90",10,1452,2,0.01
+"VT","5000449","West River Valley Modified Union Education District #72A",2,207,2,0.01
+"VT","5000450","Windsor Central Unified Union School District",0,950,5,0
+"VT","5001770","Alburg School District",0,194,1,0
+"VT","5001830","Arlington School District",1,386,1,0
+"VT","5002610","Brighton School District",0,113,1,0
+"VT","5002820","Burlington School District",372,3066,1,0.12
+"VT","5002850","Cabot School District",0,164,1,0
+"VT","5002910","Cambridge School District",4,259,0,0.02
+"VT","5002940","Canaan School District",0,183,1,0
+"VT","5003060","Charleston School District",0,115,1,0
+"VT","5003240","Colchester School District",79,2158,0,0.04
+"VT","5003360","Coventry School District",1,127,0,0.01
+"VT","5003390","Craftsbury Town School District",0,207,1,0
+"VT","5003450","Danville School District",0,380,1,0
+"VT","5003480","Derby School District",0,457,1,0
+"VT","5003930","Fairfax School District",1,963,1,0
+"VT","5004080","Fletcher School District",0,102,1,0
+"VT","5004140","Georgia School District",4,577,0,0.01
+"VT","5004500","Halifax School District",0,68,1,0
+"VT","5004590","Hartford School District",20,1366,0,0.01
+"VT","5004620","Hartland School District",0,251,1,0
+"VT","5004960","Jay/Westfield Joint Elementary School District",1,72,0,0.01
+"VT","5005050","Lake Region UHSD #24",1,372,0,0
+"VT","5005220","Lowell School District",0,78,1,0
+"VT","5005400","Marlboro School District",0,80,1,0
+"VT","5005610","Milton Incorporated School District",37,1371,0,0.03
+"VT","5005810","Mount Anthony UHSD #14",3,1513,1,0
+"VT","5006000","Newport City School District",2,339,0,0.01
+"VT","5006030","Newport Town School District",1,103,0,0.01
+"VT","5006180","Norwich School District",5,295,0,0.02
+"VT","5006390","Peacham School District",1,70,0,0.01
+"VT","5006780","Readsboro School District",0,51,1,0
+"VT","5006930","Rockingham School District",5,456,2,0.01
+"VT","5007050","Rutland City School District",16,2152,3,0.01
+"VT","5007080","Rutland Town School District",0,332,1,0
+"VT","5007260","Sharon School District",1,127,0,0.01
+"VT","5007470","South Burlington School District",145,2429,0,0.06
+"VT","5007500","South Hero School District",1,149,0,0.01
+"VT","5007530","Springfield School District",15,1112,0,0.01
+"VT","5007650","Saint Johnsbury School District",2,580,0,0
+"VT","5007680","Stamford School District",0,81,1,0
+"VT","5007830","Strafford School District",0,96,1,0
+"VT","5008010","Thetford School District",0,171,1,0
+"VT","5008130","Troy School District",0,165,1,0
+"VT","5008224","Blue Mountain USD #21",0,363,1,0
+"VT","5008225","Twinfield USD #33",3,315,0,0.01
+"VT","5008242","Waits River Valley USD #36",0,259,1,0
+"VT","5008243","Hazen UHSD #26",2,325,0,0.01
+"VT","5008246","Bellows Falls UHSD #27",2,313,0,0.01
+"VT","5008310","Vernon School District",1,156,0,0.01
+"VT","5008700","Weathersfield School District",0,228,1,0
+"VT","5009270","Windham School District",0,17,1,0
+"VT","5009360","Winooski School District",221,698,0,0.32
+"VT","5009390","Wolcott School District",0,122,1,0
+"VT","5009570","North Country Junior UHSD #22",1,240,0,0
+"VT","5009600","North Country Senior UHSD #22",0,671,1,0
+"VT","5099901","Mt. Abraham Unified School District (Supervisory)",0,0,1,NA

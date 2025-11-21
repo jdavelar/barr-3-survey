@@ -1,0 +1,289 @@
+---
+title: "District Goals (Q3)"
+author: "Janette Avelar"
+date: "`r Sys.Date()`"
+always_allow_html: true
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: flatly
+    highlight: tango
+    code_folding: hide
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,    # hides code
+  message = FALSE, # hides messages
+  warning = FALSE,  # hides warnings
+  fig.width = 10, fig.height = 9
+)
+library(here)
+library(rio)
+library(tidyverse)
+library(DT)
+library(kableExtra)
+dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/JA/Barr_Survey_20251117.dta')
+```
+
+# Survey Question
+
+The following list of tables/figures correspond to question #3 in the superintendent survey:  
+What are your district’s long-term goals?  [Check all that apply]  
+- Increase student engagement in school  
+- Create a safe, welcoming school community  
+- Improve academic achievement  
+- Eliminate disparities in outcomes between student groups  
+- Develop students’ durable skills (e.g., collaboration, resilience, leadership, civic engagement)  
+- Expand access to postsecondary education  
+- Strengthen career preparation  
+- Improve instructional quality  
+- Other: ________  
+
+All 307 respondents saw and answered this question - there are no missing values.
+
+Analytic notes:  
+- All variables are 0/1 binary format  
+- -99 is NA due to skipping question  
+- . is NA because the respondent did not see the question
+
+```{r}
+# Create named list to map onto variables in table
+labels <- data.frame(
+  vars = c("student_engage", "safe_community", "improve_academics", "eliminate_disparities", "develop_skills", "expand_access", "career_prep", "instructional_quality", "something_else"),
+  label = c("Increase student engagement in school", "Create a safe, welcoming school community", "Improve academic achievement", "Eliminate disparities in outcomes between student groups", "Develop students’ durable skills", "Expand access to postsecondary education", "Strengthen career preparation", "Improve instructional quality", "Something else")
+)
+```
+
+```{r}
+# Data clean
+clean <- dat %>% 
+  haven::zap_label() %>% 
+  select(id = qcode, starts_with("q3")) %>% 
+  #rename vars
+  rename(
+    student_engage = q3_1,
+    safe_community = q3_2,
+    improve_academics = q3_3,
+    eliminate_disparities = q3_4,
+    develop_skills = q3_5,
+    expand_access = q3_6,
+    career_prep = q3_7,
+    instructional_quality = q3_8,
+    something_else = q3_9
+  ) %>% 
+  #recode missing values
+  mutate(across(everything(), ~na_if(., -99)))
+```
+
+
+# 2.1 Long-term goals: overall frequencies
+
+**Task: % of respondents selecting each goal (multi-select)**
+
+```{r}
+#create interactive table
+table_2.1 <- clean %>% 
+  select(-id) %>% 
+  summarize(across(everything(), ~sum(.))) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "vars",
+               values_to = "n") %>% 
+  mutate(pct = round(n/307, 2)) %>% 
+  left_join(labels, by = "vars") %>% 
+  select(`Goal selected` = label, N = n, `%` = pct)
+datatable(table_2.1, caption = "Table 2.1")
+```
+
+```{r eval = FALSE, include = FALSE}
+#create static table
+write.csv(table_2.1, "output/tables/table_2.1.csv", row.names = FALSE)
+rm(table_2.1)
+```
+
+
+# 2.2 Average number of goals selected per district
+
+**Task: Mean, median,range**
+
+```{r}
+# output table
+table_2.2 <- clean %>% 
+  mutate(n_selected = rowSums(across(2:10))) 
+table_2.2.1 <- psych::describe(table_2.2$n_selected) %>% 
+  round(2) %>% 
+  mutate(var = "Number of goals selected") %>% 
+  select(var, n, mean, sd, median, min, max, range) %>% 
+  remove_rownames()
+kable(table_2.2.1, caption = "Table 2.2a")
+```
+
+```{r eval = FALSE, include = FALSE}
+# static saved table
+write.csv(table_2.2.1, "output/tables/table_2.2a.csv", row.names = FALSE)
+rm(table_2.2, table_2.2.1)
+```
+
+```{r}
+# how many districts chose how many goals
+table_2.2b <- clean %>% 
+  mutate(n_selected = rowSums(across(2:10))) %>% 
+  group_by(n_selected) %>% 
+  summarize(n = n_distinct(id)) %>% 
+  mutate(n_selected = paste0(n_selected, " goal(s) selected")) %>% 
+  rename(`N goals` = n_selected, `N districts` = n)
+datatable(table_2.2b, caption = "Table 2.2b", rownames = FALSE)
+```
+
+```{r, eval = FALSE, include = FALSE}
+# static saved table
+write.csv(table_2.2b, "output/tables/table_2.2b.csv", row.names = FALSE)
+```
+
+
+# 2.3 Cross-tab: top goals by state
+
+**Task: % of districts in each state selecting each goal**
+
+```{r}
+#merge state back in
+state <- dat %>% 
+  haven::zap_label() %>% 
+  select(id = qcode, state) %>% 
+  right_join(clean, by = "id") %>% 
+  #calculate %
+  group_by(state) %>% 
+  mutate(state_total = n_distinct(id)) %>% 
+  select(-id) %>% 
+  group_by(state, state_total) %>% 
+  summarize(across(everything(), ~sum(.)), .groups = "drop") %>% 
+  pivot_longer(cols = c(3:11),
+               names_to = "vars",
+               values_to = "n") %>% 
+  mutate(pct = round(n/state_total, 2)) %>% 
+  select(-state_total) %>% 
+  pivot_wider(names_from = state,
+              values_from = c(n, pct)) %>% 
+  left_join(labels, by = "vars") %>% 
+  select(`Goal selected` = label, n_CT, pct_CT, n_MA, pct_MA, n_NH, pct_NH, n_RI, pct_RI, n_VT, pct_VT) 
+#build display table
+kable(state, 
+      caption = "Table 2.3",
+      col.names = c("Goal selected", rep(c("N", "%"), 5))) %>% 
+  kable_styling(bootstrap_options = "striped",
+                    full_width = F,
+                    position = "left") %>% 
+  add_header_above(
+    header = c(" " = 1, "Connecticut" = 2, "Massachusetts" = 2, "New Hampshire" = 2, "Rhode Island" = 2, "Vermont" = 2),
+    align = "c"
+  )
+```
+
+```{r eval = FALSE, include = FALSE}
+#save static table
+write.csv(state, "output/tables/table_2.3.csv", row.names = FALSE)
+rm(state)
+```
+
+
+# 2.4 Co-occurence of goals
+
+**Task: Cross-tab of goals (e.g., % selecting both "Improve academic achievement" + "Develop durable skills")**
+
+The table below currently has percentages calculated as absolute co-occurrence, i.e., the percentage among the full sample of 307 superintendents who selected both goals. In the case of the diagonal, where the same goal is listed twice, the value represents the percentage of the sample that chose that goal.  
+
+This method is different than conditional co-occurrence where the percentage is calculated among the number selecting the first goal (i.e., the percentage of those who selected Goal 1 that then selected Goal 2).  
+
+```{r}
+# pull varnames
+vars <- clean %>% select(-id) %>% colnames() 
+# create matrix
+mat <- as.matrix(clean[ , vars])
+# generate counts and %
+co_matrix <- t(mat) %*% mat
+pct_matrix <- co_matrix / nrow(clean)
+# prep for table
+mat_labels <- c(
+  student_engage = "Increase student engagement in school",
+  safe_community = "Create a safe, welcoming school community",
+  improve_academics = "Improve academic achievement",
+  eliminate_disparities = "Eliminate disparities in outcomes between student groups",
+  develop_skills = "Develop students’ durable skills",
+  expand_access = "Expand access to postsecondary education",
+  career_prep = "Strengthen career preparation",
+  instructional_quality = "Improve instructional quality",
+  something_else = "Something else"
+)
+
+rownames(co_matrix) <- mat_labels[rownames(co_matrix)]
+colnames(co_matrix) <- mat_labels[colnames(co_matrix)]
+
+rownames(pct_matrix) <- mat_labels[rownames(pct_matrix)]
+colnames(pct_matrix) <- mat_labels[colnames(pct_matrix)]
+
+# counts table
+co_counts_df <- as.data.frame(co_matrix) %>%
+  rownames_to_column("Goal")
+
+datatable(
+  co_counts_df,
+  caption = "Table 2.4a Co-occurrence counts",
+  options = list(pageLength = nrow(co_counts_df))
+)
+
+# percentages table (as %)
+co_pct_df <- as.data.frame(round(pct_matrix, 2)) %>%  # 1 decimal place
+  rownames_to_column("Goal")
+
+datatable(
+  co_pct_df,
+  caption = "Table 2.4b Co-occurrence (% of respondents selecting both)",
+  options = list(pageLength = nrow(co_pct_df))
+)
+```
+
+```{r eval = FALSE, include = FALSE}
+# save tables
+write.csv(co_pct_df, "output/tables/table_2.4b.csv", row.names = FALSE)
+write.csv(co_counts_df, "output/tables/table_2.4a.csv", row.names = FALSE)
+rm(co_counts_df, co_matrix, co_pct_df, mat, pct_matrix)
+```
+
+
+```{r}
+#Interactive table
+table_2.4c <- clean %>% 
+  pivot_longer(cols = c(2:10),
+               names_to = "vars",
+               values_to = "selected") %>% 
+  filter(selected == 1) %>% 
+  left_join(labels, by = "vars") %>% 
+  select(id, goal = label) %>% 
+  group_by(id) %>% 
+  mutate(goal_number = row_number()) %>% 
+  pivot_wider(names_from = goal_number,
+              values_from = goal,
+              names_prefix = "goal_") %>% 
+  unite(collapsed_goals, goal_1:goal_9, sep = " + ", na.rm = TRUE) %>% 
+  ungroup() %>% 
+  group_by(collapsed_goals) %>% 
+  mutate(rate = 1) %>% 
+  summarize(n = sum(rate),
+            pct = round(n/307, 3)) %>% 
+  rename(`All combined goals` = collapsed_goals,
+         N = n,
+         `%` = pct)
+datatable(table_2.4c, caption = "Table 2.4c Full co-occurence table")
+```
+
+```{r eval = FALSE, include = FALSE}
+#Save static table
+write.csv(table_2.4c, "output/tables/table_2.4c.csv", row.names = FALSE)
+```

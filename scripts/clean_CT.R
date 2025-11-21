@@ -427,12 +427,14 @@ rm(ct11, ct21, achieve_elem, achieve_high)
 # File = ct10
 grad <- ct10 %>% 
   #manual clean because of value in row 1
-  select(district = V1, district_code = V2, grad_rate = V5) %>% 
+  select(district = V1, district_code = V2, grad_n = V4, grad_rate = V5) %>% 
   slice(-c(1, 2)) %>% 
   mutate(district_code = as.numeric(str_replace_all(district_code, "[^0-9\\.]", "")),
          grad_rate = na_if(grad_rate, "*"), #suppressed data
          grad_rate = as.numeric(grad_rate),
-         grad_rate = round(grad_rate/100, 2)) %>% 
+         grad_rate = round(grad_rate/100, 2),
+         grad_n = na_if(grad_n, "*"),
+         grad_n = as.numeric(grad_n)) %>% 
   #fill suppressed data manually (looked up non-graduate data and subtracted from total, calculated pct)
   mutate(grad_rate = case_when(
     district_code == 3360015 ~ .04, #unified SD1 non-grad = 44/46
