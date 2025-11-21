@@ -199,8 +199,6 @@ rm(state)
 
 The table below currently has percentages calculated as absolute co-occurrence, i.e., the percentage among the full sample of 307 superintendents who selected both goals. In the case of the diagonal, where the same goal is listed twice, the value represents the percentage of the sample that chose that goal.  
 
-This method is different than conditional co-occurrence where the percentage is calculated among the number selecting the first goal (i.e., the percentage of those who selected Goal 1 that then selected Goal 2).  
-
 ```{r}
 # pull varnames
 vars <- clean %>% select(-id) %>% colnames() 
@@ -253,13 +251,35 @@ datatable(
 # save tables
 write.csv(co_pct_df, "output/tables/table_2.4b.csv", row.names = FALSE)
 write.csv(co_counts_df, "output/tables/table_2.4a.csv", row.names = FALSE)
-rm(co_counts_df, co_matrix, co_pct_df, mat, pct_matrix)
+```
+
+The table below is displaying conditional co-occurrence, where the percentage is calculated among the number selecting the first goal, labeled `Focal goal` in the table. We can interpret the values as the proportion of individuals who selected the focal goal that then also selected Goal 2 (e.g., of those who selected `Increase engagement in school`, 84% also selected `Create a safe, welcoming school community`).  
+
+```{r}
+# alternate pct - this one is conditional co-occurence
+# normalize each row
+cond_matrix <- sweep(co_matrix, 1, diag(co_matrix), FUN = "/")
+# prep for table
+cond_prop_df <- as.data.frame(round(cond_matrix, 2)) %>%
+  tibble::rownames_to_column("Focal goal")
+
+datatable(
+  cond_prop_df,
+  caption = "Table 2.4c Conditional co-occurrence (P(column goal | focal goal), row-wise proportion)",
+  options = list(pageLength = nrow(cond_prop_df))
+)
+```
+
+```{r eval = FALSE, include = FALSE}
+# save table
+write.csv(cond_prop_df, "output/tables/table_2.4c.csv", row.names = FALSE)
+rm(co_counts_df, co_matrix, co_pct_df, mat, pct_matrix, cond_matrix, cond_prop_df)
 ```
 
 
 ```{r}
 #Interactive table
-table_2.4c <- clean %>% 
+table_2.4d <- clean %>% 
   pivot_longer(cols = c(2:10),
                names_to = "vars",
                values_to = "selected") %>% 
@@ -280,10 +300,10 @@ table_2.4c <- clean %>%
   rename(`All combined goals` = collapsed_goals,
          N = n,
          `%` = pct)
-datatable(table_2.4c, caption = "Table 2.4c Full co-occurence table")
+datatable(table_2.4d, caption = "Table 2.4d Full co-occurence table")
 ```
 
 ```{r eval = FALSE, include = FALSE}
 #Save static table
-write.csv(table_2.4c, "output/tables/table_2.4c.csv", row.names = FALSE)
+write.csv(table_2.4d, "output/tables/table_2.4d.csv", row.names = FALSE)
 ```
