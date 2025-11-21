@@ -172,16 +172,16 @@ state <- dat %>%
   pivot_wider(names_from = state,
               values_from = c(n, pct)) %>% 
   left_join(labels, by = "vars") %>% 
-  select(`Goal selected` = label, n_CT, pct_CT, n_MA, pct_MA, n_NH, pct_NH, n_RI, pct_RI, n_VT, pct_VT) 
+  select(`Goal selected` = label, n_CT, pct_CT, n_MA, pct_MA, n_ME, pct_ME, n_NH, pct_NH, n_RI, pct_RI, n_VT, pct_VT) 
 #build display table
 kable(state, 
       caption = "Table 2.3",
-      col.names = c("Goal selected", rep(c("N", "%"), 5))) %>% 
+      col.names = c("Goal selected", rep(c("N", "%"), 6))) %>% 
   kable_styling(bootstrap_options = "striped",
                     full_width = F,
                     position = "left") %>% 
   add_header_above(
-    header = c(" " = 1, "Connecticut" = 2, "Massachusetts" = 2, "New Hampshire" = 2, "Rhode Island" = 2, "Vermont" = 2),
+    header = c(" " = 1, "Connecticut" = 2, "Massachusetts" = 2, "Maine" = 2, "New Hampshire" = 2, "Rhode Island" = 2, "Vermont" = 2),
     align = "c"
   )
 ```
