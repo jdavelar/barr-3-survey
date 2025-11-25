@@ -16,16 +16,14 @@ acs <- import(here("data/Across states/clean_acs_language.csv"))
 fte_cert <- import(here("data/Across states/crdc_fte_cert.csv"))
 messy_sheet <- import(here("data/NH/messy_contact_list.csv"))
 messy_crosswalk <- import(here("data/NH/messy_sheet_crosswalk.csv")) #matches our contact - use this
-#nh1 <- import(here("data/NH/NH_1.csv"))
 nh2 <- import(here("data/NH/NH_2.xlsx"))
 nh3 <- import(here("data/NH/NH_3.csv"))
 nh4 <- import(here("data/NH/NH_4.csv"))
 nh5 <- import(here("data/NH/NH_5.csv"))
 nh6 <- import(here("data/NH/NH_6.csv"))
+nh9 <- import(here("data/NH/NH_9.csv"))
 nh13 <- import(here("data/NH/NH_13.csv"))
 nh17 <- import(here("data/NH/NH_17.csv"))
-# nh18 <- import(here("data/NH/NH_18.csv"))
-# nh20 <- import(here("data/NH/NH_20.csv"))
 
 #### GRADES SERVED ####
 # File name - nh6 & grade_crosswalk
@@ -38,7 +36,8 @@ grades <- nh6 %>%
   janitor::clean_names() %>% 
   slice(-1) %>% 
   select(district_code = dst_id, district = dist_name, school = sch_id, grade_span) %>% 
-  # generate grade spans and code categories
+  mutate(district_code = as.numeric(district_code)) %>% 
+  # generate grade spans
   left_join(grade_crosswalk, by = "grade_span") %>% 
   pivot_longer(cols = c(kindergarten:`12`),
                names_to = "grade",
@@ -47,46 +46,45 @@ grades <- nh6 %>%
   mutate(grade = ifelse(grade == "kindergarten", 0, grade),
          grade = as.numeric(grade)) %>%
   filter(present == 1) %>% 
+  # filter to districts to calculate at meta-district level
+  right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
+  select(district_code = messy_id, district = messy_name, grade, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+# code categories
   group_by(district) %>% 
   mutate(min_grade = min(grade),
          max_grade = max(grade),
          grades_served = case_when(
-           min_grade < 5 & max_grade == 6 ~ "K-6",
+           min_grade < 5 & max_grade >= 4 ~ "K-6",
            min_grade < 5 & max_grade == 8 ~ "K-8",
            min_grade < 5 & max_grade == 12 ~ "K-12",
            min_grade == 6 & max_grade == 8 ~ "6-8",
-           min_grade == 7 & max_grade == 12 ~ "7-12",
+           min_grade > 4 & max_grade == 12 ~ "7-12",
            min_grade == 9 & max_grade == 12 ~ "9-12",
-           TRUE ~ "Unknown"
+           TRUE ~ NA
          )) %>% 
   ungroup() %>% 
-  # manual code the "Unknowns that slipped through
-  mutate(grades_served = case_when(
-    grades_served == "Unknown" & min_grade == 0 & max_grade == 5 ~ "K-6",
-    grades_served == "Unknown" & min_grade == 0 & max_grade == 4 ~ "K-6",
-    grades_served == "Unknown" & min_grade == 6 & max_grade == 12 ~ "7-12",
-    grades_served == "Unknown" & min_grade == 5 & max_grade == 12 ~ "7-12",
-    grades_served == "Unknown" & min_grade == 12 & max_grade == 12 ~ "9-12",
-    grades_served == "Unknown" & min_grade == 0 & max_grade == 1 ~ "K-6",
-    grades_served == "Unknown" & min_grade == 6 & max_grade == 9 ~ "6-8",
-    grades_served == "Unknown" & min_grade == 0 & max_grade == 3 ~ "K-6",
-    grades_served == "Unknown" & min_grade == 1 & max_grade == 10 ~ "K-12",
-    grades_served == "Unknown" & min_grade == 0 & max_grade == 9 ~ "K-8",
-    grades_served == "Unknown" & min_grade == 0 & max_grade == 2 ~ "K-6",
-    grades_served == "Unknown" & min_grade == 10 & max_grade == 12 ~ "9-12",
-    grades_served == "Unknown" & min_grade == 5 & max_grade == 8 ~ "6-8",
-    TRUE ~ grades_served),
-    district_code = as.numeric(district_code)) %>% 
-  ungroup() %>% 
+  # # manual code the "Unknowns that slipped through
+  # mutate(grades_served = case_when(
+  #   grades_served == "Unknown" & min_grade == 0 & max_grade == 5 ~ "K-6",
+  #   grades_served == "Unknown" & min_grade == 0 & max_grade == 4 ~ "K-6",
+  #   grades_served == "Unknown" & min_grade == 6 & max_grade == 12 ~ "7-12",
+  #   grades_served == "Unknown" & min_grade == 5 & max_grade == 12 ~ "7-12",
+  #   grades_served == "Unknown" & min_grade == 12 & max_grade == 12 ~ "9-12",
+  #   grades_served == "Unknown" & min_grade == 0 & max_grade == 1 ~ "K-6",
+  #   grades_served == "Unknown" & min_grade == 6 & max_grade == 9 ~ "6-8",
+  #   grades_served == "Unknown" & min_grade == 0 & max_grade == 3 ~ "K-6",
+  #   grades_served == "Unknown" & min_grade == 1 & max_grade == 10 ~ "K-12",
+  #   grades_served == "Unknown" & min_grade == 0 & max_grade == 9 ~ "K-8",
+  #   grades_served == "Unknown" & min_grade == 0 & max_grade == 2 ~ "K-6",
+  #   grades_served == "Unknown" & min_grade == 10 & max_grade == 12 ~ "9-12",
+  #   grades_served == "Unknown" & min_grade == 5 & max_grade == 8 ~ "6-8",
+  #   TRUE ~ grades_served),
+  #   district_code = as.numeric(district_code)) %>% 
+  # ungroup() %>% 
   #pull unique spans
-  select(district_code, district, grades_served) %>% 
-  distinct() %>% 
-  # filter to districts
-  #right_join(nh_crosswalk, by = c("district", "district_code"))
-  right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, grades_served) %>% 
-  filter(!is.na(district_code))
-
+  select(district_code, district, grades_served, unique_merge_id) %>% 
+  distinct() 
 rm(grade_crosswalk)
 
 #### DISTRICT TYPE ####
@@ -104,7 +102,7 @@ district_type <- messy_sheet %>%
   )) %>% 
   #filter to relevant cols
   right_join(messy_crosswalk, by = c("messy_id", "messy_name")) %>% 
-  select(district_code = messy_id, district = messy_name, district_type) %>% 
+  select(district_code = messy_id, district = messy_name, district_type, unique_merge_id) %>% 
   filter(!is.na(district_code))
 rm(messy_sheet)
 
@@ -126,10 +124,16 @@ nces_geo <- nces_geo_codes %>%
 urbanicity <- nh_crosswalk_alt %>% 
   left_join(nces_geo, by = "district") %>% 
   filter(!is.na(district_code)) %>% 
-  select(district_code, district = nh_matched_district, urbanicity) %>% 
-  right_join(nces_crosswalk, by = c("district_code", "district")) %>% 
-  select(district, district_code, urbanicity) %>% 
-  filter(!is.na(district_code))
+  distinct() %>% 
+  select(district_code, district = nh_matched_district, urbanicity, unique_merge_id) %>% 
+# not uniquely identified - to be able to collapse into single district, will need to address Greenland, Hooksett, Pembroke, & Winnacunnet
+  mutate(urbanicity = case_when(
+    district == "Greenland" ~ "Suburban", #3/4 were suburban, overwrote rural
+    district == "Hooksett" ~ "Rural", #2/3 were rural, overwrote suburban
+    district == "Pembroke" ~ "Rural", #3/5 were rural, overwrote suburban
+    district == "Winnacunnet" ~ "Rural", #3/5 were rural, overwrote suburban
+    TRUE ~ urbanicity
+  ))
 rm(nces_geo, nces_geo_codes, nces_geo_crosswalk, nces_crosswalk)
 
 #### NUMBER OF SCHOOLS IN DISTRICT ####
@@ -147,10 +151,13 @@ num_schools <- nh6 %>%
   summarize(num_schools = n_distinct(school_name), .groups = "drop") %>% 
   mutate(district_code = as.numeric(district_code)) %>% 
   #filter to districts
-  #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, num_schools) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, num_schools, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #final sum with messy version of districts
+  group_by(district, district_code) %>% 
+  mutate(num_schools = sum(num_schools)) %>% 
+  ungroup()
 
 #### NUMBER OF HIGH SCHOOLS IN DISTRICT ####
 # File = nh6
@@ -176,11 +183,14 @@ num_high_schools <- nh6 %>%
   filter(hs == 1) %>% 
   select(-hs) %>% 
   #filter to districts and fill NAs
-  #right_join(nh_crosswalk, by = c("district", "district_code")) %>% 
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, num_high_schools) %>% 
+  select(district_code = messy_id, district = messy_name, num_high_schools, unique_merge_id) %>% 
   filter(!is.na(district_code)) %>% 
-  mutate(num_high_schools = ifelse(is.na(num_high_schools), 0, num_high_schools))
+  mutate(num_high_schools = ifelse(is.na(num_high_schools), 0, num_high_schools)) %>% 
+  #final sum with messy version of districts
+  group_by(district, district_code) %>% 
+  mutate(num_high_schools = sum(num_high_schools)) %>% 
+  ungroup()
 
 #### ENROLLMENT IN 2024-25 ####
 # File = nh5
@@ -195,12 +205,11 @@ enrollment <- nh5 %>%
   select(district_code = district_number, district = district_name, enrollment_2025 = total) %>% 
   mutate(district_code = as.numeric(district_code),
          enrollment_2025 = str_remove_all(enrollment_2025, ","),
-         enrollment_2025 = as.numeric(enrollment_2025)) %>% 
-  # join to check
-  #right_join(nh_crosswalk, by = c("district", "district_code")) #good
-  right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, enrollment_2025) %>% 
-  filter(!is.na(district_code))
+         enrollment_2025 = as.numeric(enrollment_2025))
+# Update 11.23.25 - 
+# Because the "messy sheet" changed the list of districts to include duplicates,
+# I can no longer just merge in old enrollment data to get change. Instead, need
+# to merge both and THEN pull out enrollment and enrollment change
 
 #### 6-YEAR ENROLLMENT CHANGE ####
 # File = nh5 & nh13 (pulled enrollment instead since already constructed)
@@ -216,15 +225,22 @@ enrollment_change <- nh13 %>%
   mutate(district_code = as.numeric(district_code),
          enrollment_2020 = str_remove_all(enrollment_2020, ","),
          enrollment_2020 = as.numeric(enrollment_2020)) %>% 
-  # join to add districts and 2025 totals
-  #right_join(nh_crosswalk, by = c("district", "district_code")) %>% #9 districts were not in 19-20
-  right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, enrollment_2020) %>% 
-  filter(!is.na(district_code)) %>% 
+  # join to add 2025 totals
   left_join(enrollment, by = c("district", "district_code")) %>% 
   # create column
-  mutate(enrollment_change_6yr_pct = round((enrollment_2025 - enrollment_2020)/enrollment_2020, 2)) %>% 
-  select(district, district_code, enrollment_change_6yr_pct)
+  #mutate(enrollment_change_6yr_pct = round((enrollment_2025 - enrollment_2020)/enrollment_2020, 2)) %>% 
+  #select(district, district_code, enrollment_2025, enrollment_change_6yr_pct) %>% 
+  # join to filter districts
+  right_join(nh_crosswalk, by = c("district", "district_code")) %>% #9 districts were not in 19-20
+  right_join(messy_crosswalk, by = c("district", "district_code")) %>%
+  select(district_code = messy_id, district = messy_name, enrollment_2025, enrollment_2020, enrollment_2025, unique_merge_id) %>%
+  filter(!is.na(district_code)) %>% 
+  # re-calculate at meta-district level
+  group_by(district, district_code) %>% 
+  mutate(enrollment_2020 = sum(enrollment_2020),
+         enrollment_2025 = sum(enrollment_2025),
+         enrollment_change_6yr_pct = round((enrollment_2025 - enrollment_2020)/enrollment_2020, 2)) %>% 
+  ungroup()
 rm(nh13, nh5)
 
 #### RACIAL DEMOGRAPHICS ####
@@ -237,38 +253,68 @@ race <- nh4 %>%
   janitor::clean_names() %>% 
   slice(-c(1:3, 167:170, 174:178, 211:223)) %>% 
   mutate(district_number = as.numeric(district_number)) %>% 
-  #create n and pct cols
+  #create n and total cols
   select(district = district_name, 
          district_code = district_number, 
          n_aian = american_indian_or_alaskan_native,
-         pct_aian = x,
+         #pct_aian = x,
          n_aapi = asian_or_pacific_islander,
-         pct_aapi = x_2,
+         #pct_aapi = x_2,
          n_hispanic = hispanic,
-         pct_hispanic = x_3,
+         #pct_hispanic = x_3,
          n_black = black_non_hispanic,
-         pct_black = x_4,
+         #pct_black = x_4,
          n_white = white_non_hispanic,
-         pct_white = x_5,
+         #pct_white = x_5,
          n_multiracial = multi_race,
-         pct_multiracial = x_6,
+         #pct_multiracial = x_6,
          total) %>% 
-  mutate(across(starts_with("pct"), ~str_remove_all(., "%"))) %>% 
+  #mutate(across(starts_with("pct"), ~str_remove_all(., "%"))) %>% 
   mutate(across(starts_with("n"), ~str_remove_all(., ","))) %>% 
-  mutate(across(starts_with("pct"), ~as.numeric(.))) %>% 
+  #mutate(across(starts_with("pct"), ~as.numeric(.))) %>% 
   mutate(across(starts_with("n"), ~as.numeric(.))) %>% 
-  mutate(across(starts_with("pct"), ~round(./100, 2))) %>% 
+  #mutate(across(starts_with("pct"), ~round(./100, 2))) 
+  mutate(total = str_remove_all(total, ","),
+         total = as.numeric(total)) %>% 
   #filter to districts
   #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
   select(-c(district_code, district)) %>% 
   rename(district_code = messy_id,
          district = messy_name) %>% 
-  filter(!is.na(district_code))
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-district level
+  group_by(district, district_code) %>% 
+  mutate(total = sum(total),
+         n_aian = sum(n_aian),
+         n_aapi = sum(n_aapi),
+         n_hispanic = sum(n_hispanic),
+         n_black = sum(n_black),
+         n_white = sum(n_white),
+         n_multiracial = sum(n_multiracial),
+         pct_aian = n_aian/total,
+         pct_aapi = n_aapi/total,
+         pct_hispanic = n_hispanic/total,
+         pct_black = n_black/total,
+         pct_white = n_white/total,
+         pct_multiracial = n_multiracial/total) %>% 
+  ungroup() %>% 
+  mutate(across(starts_with("pct"), ~round(., 2)))
 rm(nh4)
 
 #### PCT LOW INCOME ####
-# File nh3
+# File nh3 & nh9 (enrollment that year to calculate totals)
+enrollment_24 <- nh9 %>% 
+  # simple clean
+  slice(-c(1:9)) %>% 
+  { setNames(., unlist(.[1, ])) } %>% 
+  janitor::clean_names() %>% 
+  slice(-c(1:2, 168:170, 172:174, 178:180, 211:221)) %>% 
+  #pull relevant cols
+  select(district_code = district_number, district = district_name, total) %>% 
+  mutate(district_code = as.numeric(district_code),
+         total = str_remove_all(total, ","),
+         total = as.numeric(total))
 lowinc <- nh3 %>% 
   #simple clean
   janitor::clean_names() %>% 
@@ -286,11 +332,22 @@ lowinc <- nh3 %>%
            TRUE ~ as.numeric(pct_lowinc)
          ),
          pct_lowinc = round(pct_lowinc/100, 2)) %>% 
+  #pull in year totals to generate N
+  left_join(enrollment_24, by = c("district", "district_code")) %>% 
+  mutate(n_lowinc = round(pct_lowinc*total)) %>% 
   #filter to districts
   #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, pct_lowinc) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, n_lowinc, total, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-district level
+  group_by(district) %>% 
+  mutate(n_lowinc = sum(n_lowinc),
+         total = sum(total),
+         pct_lowinc = round(n_lowinc/total, 2)) %>% 
+  select(district, district_code, pct_lowinc, unique_merge_id) %>% 
+  ungroup()
+rm(nh9)
 
 #### PCT ENGLISH LEARNERS ####
 # File crdc EL counts
@@ -353,7 +410,7 @@ test_el <- import(here("data/Across states/2021-22-crdc-data/SCH/Enrollment.csv"
          missing = sum(missing)) %>% 
   select(lea_state, district_code = leaid, district = lea_name, n_el = district_el_tot, n_tot = district_tot, missing) %>% 
   distinct() %>% 
-  mutate(pct_el = round(n_el/n_tot, 2)) %>% 
+  #mutate(pct_el = round(n_el/n_tot, 2)) %>% 
   ungroup()
 #save
 #write.csv(test_el, "data/Across states/crdc_el_counts.csv", row.names = FALSE)
@@ -361,13 +418,21 @@ test_el <- import(here("data/Across states/2021-22-crdc-data/SCH/Enrollment.csv"
 # need to do a manual join
 crdc_crosswalk <- import(here("data/NH/NH_CRDC_crosswalk.csv"))
 el <- test_el %>% 
+  # New Hampshire only
   filter(lea_state == "NH") %>% 
-  select(-n_tot) %>% 
   mutate(district_code = as.numeric(district_code)) %>% 
+  #merge with crosswalk
   rename(crdc_id = district_code, crdc_name = district) %>% 
   right_join(crdc_crosswalk, by = c("crdc_id", "crdc_name")) %>% 
-  select(district, district_code, n_el, pct_el) %>% 
-  filter(!is.na(district_code))
+  select(district, district_code, n_el, n_tot, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-level
+  group_by(district) %>% 
+  mutate(n_el = sum(n_el),
+         n_tot = sum(n_tot),
+         pct_el = round(n_el/n_tot, 2)) %>% 
+  ungroup() %>% 
+  select(district, district_code, n_el, pct_el, unique_merge_id)
 rm(crdc_crosswalk, test_el)
 
 #### PCT SPECIAL EDUCATION ####
@@ -389,11 +454,22 @@ swd <- nh3 %>%
          ),
          pct_sped = round(pct_sped/100, 2),
          district_code = as.numeric(district_code)) %>% 
+  #join totals to calculate n
+  left_join(enrollment_24, by = c("district", "district_code")) %>% 
+  mutate(n_sped = round(pct_sped*total)) %>% 
   # filter to districts
   #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, pct_sped) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, n_sped, total, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-district level
+  group_by(district) %>% 
+  mutate(n_sped = sum(n_sped),
+         total = sum(total),
+         pct_sped = round(n_sped/total, 2)) %>% 
+  ungroup() %>% 
+  select(district, district_code, pct_sped, unique_merge_id)
+rm(enrollment_24)
 
 #### ACHIEVEMENT DATA ####
 # File nh2
@@ -405,45 +481,60 @@ achievement <- nh2 %>%
   filter(subgroup == "All students") %>% 
   filter(subject == "mat" | subject == "rea") %>% 
   filter(grade != "All grades") %>% 
-  select(district, grade, total = total_fay_students, pct_prof = above_prof_percent_lvl_3_4, subject) %>% 
+  select(district, grade, total = total_fay_students, pct_prof = above_prof_percent_lvl_3_4, subject, pct_participate = participate_percent) %>% 
   # try out different imputations methods
   mutate(pct_prof = case_when(
     pct_prof == "< 10 %" ~ 5,
     pct_prof == "> 90 %" ~ 91,
     pct_prof == "* n < 11" ~ NA,
     TRUE ~ as.numeric(pct_prof)),
-    pct_prof = round(pct_prof/100, 2)) %>% 
+    pct_prof = round(pct_prof/100, 2),
+    pct_participate = na_if(pct_participate, "*n < 11"),
+    pct_participate = as.numeric(pct_participate),
+    pct_participate = pct_participate/100) %>% 
   separate(total, into = c("min_n", "max_n"), sep = " - ", remove = FALSE) %>% 
+  # calculate N proficient and total participating (denominator)
   mutate(min_n = as.numeric(min_n),
-          max_n = as.numeric(max_n),
-          n_prof = round((min_n + max_n) / 2)) %>% 
-  select(district, grade, subject, n_prof, pct_prof) %>% 
+         max_n = as.numeric(max_n),
+         total = round((min_n + max_n) / 2),
+         total = total*pct_participate,
+         n_prof = total*pct_prof) %>% 
+  select(district, grade, subject, n_prof, total) %>% 
+  # join with districts
+  right_join(messy_crosswalk, by = c("district")) %>% 
+  select(-c(district, district_code)) %>% 
+  rename(district = messy_name,
+         district_code = messy_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  # re-calculate at meta-district level
+  group_by(district, subject) %>% 
+  mutate(n_prof = round(sum(n_prof)),
+         total = sum(total),
+         pct_prof = round(n_prof/total, 2)) %>% 
+  ungroup() %>% 
+  select(-total) %>% 
+  # pivot to separate subjects and grades
   pivot_wider(names_from = subject,
               values_from = c(n_prof, pct_prof)) %>% 
   mutate(collapse = ifelse(grade == 11, 0, 1),
          est_prof_math = n_prof_mat * pct_prof_mat,
          est_prof_ela = n_prof_rea * pct_prof_rea) %>% 
-  group_by(district, collapse) %>% 
+  group_by(district, district_code, collapse) %>% 
   summarize(n_math_prof = sum(n_prof_mat),
          n_ela_prof = sum(n_prof_rea),
          est_prof_math = sum(est_prof_math),
          est_prof_ela = sum(est_prof_ela),
          pct_math_prof = round(est_prof_math / n_math_prof, 2),
          pct_ela_prof = round(est_prof_ela / n_ela_prof, 2), .groups = "drop") %>% 
-    select(district, collapse, n_ela_prof, pct_ela_prof, n_math_prof, pct_math_prof) %>% 
-    mutate(collapse = ifelse(collapse == 1, "_3_8", "_9_12")) %>% 
-    pivot_longer(cols = c("n_ela_prof", "pct_ela_prof", "n_math_prof", "pct_math_prof"),
+  select(district, district_code, collapse, n_ela_prof, pct_ela_prof, n_math_prof, pct_math_prof) %>% 
+  mutate(collapse = ifelse(collapse == 1, "3_8", "9_12")) %>% 
+  pivot_longer(cols = c("n_ela_prof", "pct_ela_prof", "n_math_prof", "pct_math_prof"),
                  names_to = "indicator",
                  values_to = "outcome") %>% 
-    unite(var_name, indicator, collapse) %>% 
-    pivot_wider(names_from = var_name,
+  unite(var_name, indicator, collapse) %>% 
+  pivot_wider(names_from = var_name,
                 values_from = outcome) %>% 
-    #right_join(nh_crosswalk, by = "district")
-  right_join(messy_crosswalk, by = c("district")) %>% 
-  select(-c(district, district_code)) %>% 
-  rename(district = messy_name,
-         district_code = messy_id) %>% 
-  filter(!is.na(district_code))
+  select(-ends_with("NA")) 
 rm(nh2)
 
 #### GRADUATION RATE ####
@@ -461,10 +552,14 @@ grad <- nh3 %>%
          pct_grad = as.numeric(pct_grad),
          pct_grad = round(pct_grad/100, 2)) %>%  
   # filter to districts
-  #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, pct_grad) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, pct_grad, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #re-calculate at district level
+  group_by(district, district_code) %>% 
+  mutate(pct_grad = mean(pct_grad, na.rm = TRUE),
+         pct_grad = na_if(pct_grad, NaN)) %>% 
+  ungroup()
 # No Ns provided
 
 #### CHRONIC ABSENTEEISM ####
@@ -483,8 +578,13 @@ attendance <- nh17 %>%
   #filter to relevant districts
   #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, pct_reg_attend) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, pct_reg_attend, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-district level
+  group_by(district, district_code) %>% 
+  mutate(pct_reg_attend = round(mean(pct_reg_attend, na.rm = TRUE), 2),
+         pct_reg_attend = na_if(pct_reg_attend, NaN)) %>% 
+  ungroup()
 rm(nh17)
 
 #### PER PUPIL SPENDING ####
@@ -498,12 +598,18 @@ spending <- nh3 %>%
   mutate(district_code = as.numeric(district_code),
          per_pupil_spending = str_remove_all(per_pupil_spending, "[^0-9\\.]"),
          per_pupil_spending = na_if(per_pupil_spending, ""),
-         per_pupil_spending = as.numeric(per_pupil_spending)) %>%  
+         per_pupil_spending = as.numeric(per_pupil_spending),
+         per_pupil_spending = na_if(per_pupil_spending, 0)) %>%  
   # filter to districts
   #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, per_pupil_spending) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, per_pupil_spending, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-district level
+  group_by(district, district_code) %>% 
+  mutate(per_pupil_spending = mean(per_pupil_spending, na.rm = TRUE),
+         per_pupil_spending = na_if(per_pupil_spending, NaN)) %>% 
+  ungroup()
 rm(nh3)
 
 #### PCT OF TURNAROUND SCHOOLS ####
@@ -537,17 +643,21 @@ pct_turnaround <- nh6 %>%
     TRUE ~ 0
   ),
   district_code = as.numeric(district_code)) %>% 
-  #summarize at district level
+  #summarize at district level pre-merging
   group_by(district, district_code) %>% 
   summarize(n_csi_tsi = sum(csi_tsi),
-            n_schools = n_distinct(school),
-            pct_csi_tsi = round(n_csi_tsi/n_schools, 2), .groups = "drop") %>% 
-  select(district, district_code, pct_csi_tsi) %>% 
+            n_schools = n_distinct(school), .groups = "drop") %>% 
   #filter to districts
-  #right_join(nh_crosswalk, by = c("district", "district_code"))
   right_join(messy_crosswalk, by = c("district", "district_code")) %>% 
-  select(district_code = messy_id, district = messy_name, pct_csi_tsi) %>% 
-  filter(!is.na(district_code))
+  select(district_code = messy_id, district = messy_name, n_csi_tsi, n_schools, unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #re-calculate with meta-district
+  group_by(district, district_code) %>% 
+  mutate(n_csi_tsi = sum(n_csi_tsi),
+         n_schools = sum(n_schools),
+         pct_csi_tsi = round(n_csi_tsi/n_schools, 2)) %>% 
+  ungroup() %>% 
+  select(district_code, district, pct_csi_tsi, unique_merge_id)
 rm(nh6)
 
 #### LANGUAGE USE IN CT ####
@@ -559,10 +669,14 @@ language <- acs %>%
   mutate(across(starts_with("pct"), ~round(./100, 2))) %>% 
   # link to districts
   right_join(nh_crosswalk_alt, by = "district") %>% 
-  select(district = nh_matched_district, district_code, starts_with("pct")) %>% 
-  filter(!is.na(district_code))
+  select(district = nh_matched_district, district_code, starts_with("pct"), unique_merge_id) %>% 
+  filter(!is.na(district_code)) %>% 
+  #recalculate at meta-district level
+  group_by(district, district_code) %>% 
+  mutate(across(starts_with("pct"), ~round(mean(., na.rm = TRUE), 2))) %>% 
+  mutate(across(starts_with("pct"), ~na_if(., NaN))) %>% 
+  ungroup()
 rm(acs)
-# Failing at join - the district names don't line up; update crosswalk and re-run
 
 #### FTE OF CERTIFIED TEACHERS ####
 # File = fte_cert
@@ -572,31 +686,39 @@ fte <- fte_cert %>%
   select(district = lea_name, pct_fte_cert) %>%
   #filter to districts
   right_join(nh_crosswalk_alt, by = "district") %>%
-  select(district = nh_matched_district, district_code, pct_fte_cert) %>% 
-  filter(district != "")
+  select(district = nh_matched_district, district_code, pct_fte_cert, unique_merge_id) %>% 
+  filter(district != "") %>% 
+  #re-calculate at meta-district level
+  group_by(district) %>% 
+  mutate(pct_fte_cert = round(mean(pct_fte_cert, 2))) %>% 
+  ungroup()
 rm(fte_cert)
+#n_fte_cert missing
 
 #######################################
 #### MERGING ALL THE DATA TOGETHER ####
 #######################################
 clean <- grades %>% 
-  full_join(district_type, by = c("district", "district_code")) %>% 
-  full_join(urbanicity, by = c("district", "district_code")) %>% 
-  full_join(num_schools, by = c("district", "district_code")) %>% 
-  full_join(num_high_schools, by = c("district", "district_code")) %>% 
-  full_join(enrollment, by = c("district", "district_code")) %>% 
-  full_join(enrollment_change, by = c("district", "district_code")) %>% 
-  full_join(race, by = c("district", "district_code")) %>% 
-  full_join(lowinc, by = c("district", "district_code")) %>% 
-  full_join(el, by = c("district", "district_code")) %>% 
-  full_join(swd, by = c("district", "district_code")) %>% 
+  full_join(district_type, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(urbanicity, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(num_schools, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(num_high_schools, by = c("district", "district_code", "unique_merge_id")) %>% 
+  #full_join(enrollment, by = c("district", "district_code")) %>% 
+  full_join(enrollment_change, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(race, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(lowinc, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(el, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(swd, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(grad, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(attendance, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(spending, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(pct_turnaround, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(language, by = c("district", "district_code", "unique_merge_id")) %>% 
+  full_join(fte, by = c("district", "district_code", "unique_merge_id")) %>% 
+  select(-unique_merge_id) %>% 
+  distinct() %>% 
   full_join(achievement, by = c("district", "district_code")) %>% 
-  full_join(grad, by = c("district", "district_code")) %>% 
-  full_join(attendance, by = c("district", "district_code")) %>% 
-  full_join(spending, by = c("district", "district_code")) %>% 
-  full_join(pct_turnaround, by = c("district", "district_code")) %>% 
-  full_join(language, by = c("district", "district_code")) %>% 
-  full_join(fte, by = c("district", "district_code"))
+  distinct()
 rm(grades, district_type, urbanicity, num_schools, num_high_schools, enrollment, enrollment_change, race, lowinc, el, swd, achievement, grad, attendance, spending, pct_turnaround, language, fte, nh_crosswalk, nh_crosswalk_alt, messy_crosswalk)
 
 #save

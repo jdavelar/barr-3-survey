@@ -1,211 +1,209 @@
-crdc_id,crdc_name,district_code,district
-3300040,Academy for Science and Design Charter School,411,Academy for Science and Design Charter School
-3301380,Allenstown School District,,
-3301440,Alton School District,72,Alton
-3301470,Amherst School District,39,Amherst
-3301500,Andover School District,,
-3301560,Ashland School District,,
-3301590,Auburn School District,,
-3301620,Barnstead School District,86,Barnstead
-3301650,Barrington School District,74,Barrington
-3301680,Bartlett School District,,
-3301710,Bath School District,,
-3301740,Bedford School District,25,Bedford
-3301860,Berlin School District,3,Berlin
-3301890,Bethlehem School District,,
-3301950,Bow School District,67,Bow
-3302010,Brentwood School District,,
-3302070,Brookline School District,,
-3302100,Campton School District,,
-3302130,Candia School District,,
-3302250,Chester School District,82,Chester
-3302280,Chesterfield School District,,
-3302310,Chichester School District,,
-3302340,Claremont School District,6,Claremont
-3307330,Coe Brown Academy School District,201,Coe-Brown Northwood Academy
-3302400,Colebrook School District,7,Colebrook
-3303301,Compass Classical Academy Charter School,429,Compass Classical Academy Charter School
-3302460,Concord School District,8,Concord
-3302480,Contoocook Valley School District,1,Contoocook Valley
-3302490,Conway School District,9,Conway
-3302520,Cornish School District,100,Cornish
-3302550,Croydon School District,99,Croydon
-3300041,CSI Charter School,410,CSI Charter School
-3302580,Deerfield School District,,
-3302610,Derry School District,10,Derry Cooperative
-3302640,Dover School District,11,Dover
-3302670,Dresden School District,,
-3302760,Dunbarton School District,,
-3302790,East Kingston School District,,
-3302880,Epping School District,14,Epping
-3302910,Epsom School District,,
-3302940,Errol School District,,
-3300017,Exeter Region Coop School District,,
-3302970,Exeter School District,16,Exeter
-3302990,Fall Mountain Regional School District,60,Fall Mountain Regional
-3303000,Farmington School District,61,Farmington
-3303090,Franklin School District,18,Franklin
-3303120,Freedom School District,,
-3303150,Fremont School District,83,Fremont
-3303299,Gate City Charter School For the Arts District,425,Gate City Charter School For the Arts
-3303180,Gilford School District,73,Gilford
-3303210,Gilmanton School District,79,Gilmanton
-3303240,Goffstown School District,19,Goffstown
-3300035,Gorham Randolph Shelburne Coop School District,20,Gorham
-3303330,Governor Wentworth Reg School District,49,Governor Wentworth Regional
-3303296,Granite State Arts Academy Charter School,,
-3303360,Grantham School District,75,Grantham
-3300048,Great Bay Elearning Charter School,404,Great Bay Charter School
-3303420,Greenland School District,50,Greenland
-3303480,Hampstead School District,55,Hampstead
-3303540,Hampton Falls School District,90,Hampton
-3303510,Hampton School District,,
-3303600,Hanover School District,70,Hanover
-3303630,Harrisville School District,,
-3399923,Haverhill Cooperative SAU Office,,
-3303660,Haverhill Cooperative School District,23,Haverhill Cooperative
-3303690,Henniker School District,24,Henniker
-3303720,Hill School District,103,Hill
-3303750,Hillsboro Deering Coop School District,34,Hillsboro-Deering
-3303780,Hinsdale School District,92,Hinsdale
-3303810,Holderness School District,,
-3303840,Hollis School District,,
-3303850,Hollis/Brookline Coop School District,41,Hollis-Brookline
-3303870,Hooksett School District,15,Hooksett
-3303900,Hopkinton School District,66,Hopkinton
-3303930,Hudson School District,81,Hudson
-3303960,Inter-lakes School District,2,Inter-Lakes Cooperative
-3303990,Jackson School District,,
-3304030,Jaffrey-Rindge Coop School District,47,Jaffrey-Rindge
-3300003,John Stark Regional School District,,
-NA,JUVENILE JUSTICE SERVICES - SYSC,,
-3304040,Kearsarge Regional School District,65,Kearsarge Regional
-3304050,Keene School District,29,Keene
-3304080,Kensington School District,,
-3303308,Kreiva Academy Public Charter School District,432,Kreiva Academy Public Charter School
-3304140,Laconia School District,30,Laconia
-3304150,Lafayette Regional School District,,
-3304170,Landaff School District,,
-3303305,LEAF Charter School,,
-3304230,Lebanon School District,88,Lebanon
-3300043,Ledyard Charter Academy,408,Ledyard Charter School
-3303303,Lempster School District,71,Lempster
-3304260,Lincoln-Woodstock School District,68,Lincoln-Woodstock
-3304290,Lisbon Regional School District,,
-3304350,Litchfield School District,27,Litchfield
-3304380,Littleton School District,84,Littleton
-3304410,Londonderry School District,12,Londonderry
-3304500,Lyme School District,76,Lyme
-3304560,Madison School District,,
-3303289,Making Community Connections Charter School,418,Making Community Connections Charter School
-3304590,Manchester School District,37,Manchester
-3304620,Marlborough School District,,
-3304650,Marlow School District,,
-3304670,Mascenic Regional School District,87,Mascenic Regional
-3304680,Mascoma Valley Reg School District,62,Mascoma Valley
-3303276,Mason School District,89,Mason
-3304740,Merrimack School District,26,Merrimack
-3304760,Merrimack Valley School District,,
-3303302,MicroSociety Academy Charter School of Southern NH,430,MicroSociety Academy Charter School Foundation
-3304770,Middleton School District,69,Middleton SAU
-3304800,Milan School District,,
-3304830,Milford School District,40,Milford
-3303280,Mill Falls Charter School District,416,Mill Falls Charter School
-3300616,Milton School District,64,Milton
-3304890,Monadnock Regional School District,93,Monadnock Regional
-3304920,Monroe School District,77,Monroe
-3304950,Mont Vernon School District,,
-3304960,Moultonborough School District,45,Moultonborough
-3303297,Mountain Village Charter School,427,Mountain Village Charter School
-3304980,Nashua School District,42,Nashua
-3305010,Nelson School District,,
-3305040,New Boston School District,,
-3305070,New Castle School District,,
-3305190,Newfields School District,,
-3305220,Newfound Area School District,4,Newfound Area
-3305250,Newington School District,,
-3305280,Newmarket School District,31,Newmarket
-3305310,Newport School District,43,Newport
-3303291,Next Charter School District,422,Next Charter School
-3300030,North Country Charter Academy,402,North Country Charter Academy
-3305370,North Hampton School District,,
-3303316,Northeast Woodland Chartered Public School,441,Northeast Woodland Chartered Public School
-3305400,Northumberland School District,58,Northumberland
-3305430,Northwood School District,44,Northwood
-3305460,Nottingham School District,107,Nottingham
-3305520,Oyster River Coop School District,5,Oyster River
-3305550,Pelham School District,28,Pelham
-3305580,Pembroke School District,53,Pembroke
-3399965,Pemi-baker Regional School District,,
-3305670,Piermont School District,,
-3307360,Pinkerton Academy School District,202,Pinkerton Academy
-3305700,Pittsburg School District,,
-3305730,Pittsfield School District,51,Pittsfield
-3305760,Plainfield School District,32,Plainfield
-3305790,Plymouth School District,48,Plymouth
-3303290,Polaris Charter School,419,Polaris Charter School
-3305820,Portsmouth School District,52,Portsmouth
-3305830,Profile School District,,
-3300049,Prospect Mountain School District,301,Prospect Mountain JMA
-3305880,Raymond School District,33,Raymond
-3303287,Robert Frost Charter School,420,Robert Frost Charter School
-3305940,Rochester School District,54,Rochester
-3305970,Rollinsford School District,104,Rollinsford
-3306000,Rumney School District,,
-3306030,Rye School District,,
-3306060,Salem School District,57,Salem
-3306080,Sanborn Regional School District,17,Sanborn Regional
-3306150,Seabrook School District,,
-3300031,Seacoast Charter School,403,Seacoast Charter School
-3306180,Shaker Regional School District,80,Shaker Regional
-3306240,Somersworth School District,56,Somersworth
-3306260,Souhegan Cooperative School District,,
-3306270,South Hampton School District,,
-3303315,Spark Academy of Advanced Technologies,437,Spark Academy of Advanced Technologies
-3306330,Stark School District,,
-3306360,Stewartstown School District,,
-3306390,Stoddard School District,,
-3306420,Strafford School District,105,Strafford
-3306450,Stratford School District,,
-3306480,Stratham School District,,
-3300042,Strong Foundations Charter School,409,Strong Foundations Charter School
-3306540,Sunapee School District,85,Sunapee
-3300039,Surry Village Charter School,407,Surry Village Charter School
-3306600,Tamworth School District,13,Tamworth
-3303286,The Birches Academy for Academics & Art:A Public Charter Sch,417,The Birches Academy of Academics & Art A Public Charter Sch
-3303298,The Founders Academy Charter School District,423,The Founders Academy Charter School
-3306660,Thornton School District,,
-3306720,Timberlane Regional School District,106,Timberlane Regional
-3306750,Unity School District,,
-3303271,Virtual Learning Academy Charter School,412,Virtual Learning Academy Charter School
-3306780,Wakefield School District,101,Wakefield
-3306870,Warren School District,,
-3306900,Washington School District,,
-3306910,Waterville Valley School District,,
-3306930,Weare School District,,
-3306990,Wentworth School District,,
-3307020,Westmoreland School District,,
-3307050,White Mountain Regional School District,36,White Mountains Regional
-3307115,Wilton-Lyndeboro School District,63,Wilton
-3307140,Winchester School District,94,Winchester
-3303314,Windham Academy Public Charter School,95,Windham
-3307170,Windham School District,434,Windham Academy Public Charter School
-3307230,Winnacunnet Coop School District,21,Winnacunnet
-3307300,Winnisquam Regional School District,59,Winnisquam Regional
-96,Sullivan,,
-91,Surry,,
-435,Synergy Academy Chartered Public School,,
-35,SAU #35 Office,,
-46,SAU #46 Office,,
-433,Seacoast Classical Academy Chartered Public School,,
-98,Coos County,,
-102,Goshen,,
-97,Hale's Location c/o Carroll Cty,,
-426,Arts Academy of New Hampshire Chartered Public High School,,
-455,Benjamin Franklin Academy Chartered Public School,,
-450,Gathering Waters Charter School,,
-451,Heartwood Public Charter School,,
-453,Lionheart Classical Academy Chartered Public School,,
-108,Pasquaney,,
-78,Rivendell Interstate,,
-454,River View Chartered Public School,,
+crdc_id,crdc_name,district_code,district,unique_merge_id
+3300040,Academy for Science and Design Charter School,411,Academy for Science and Design Charter School,nhdist1
+3301380,Allenstown School District,53,Pembroke,nhdist2
+3301440,Alton School District,72,Alton,nhdist3
+3301470,Amherst School District,39,Amherst,nhdist4
+3301500,Andover School District,46,SAU #46 Office,nhdist5
+3301560,Ashland School District,48,Plymouth,nhdist7
+3301590,Auburn School District,15,Hooksett,nhdist8
+3301620,Barnstead School District,86,Barnstead,nhdist9
+3301650,Barrington School District,74,Barrington,nhdist10
+3301680,Bartlett School District,9,Conway,nhdist11
+3301710,Bath School District,23,Haverhill Cooperative,nhdist12
+3301740,Bedford School District,25,Bedford,nhdist13
+3301860,Berlin School District,3,Berlin,nhdist15
+3301890,Bethlehem School District,35,SAU #35 Office,nhdist16
+3301950,Bow School District,67,Bow,nhdist17
+3302010,Brentwood School District,16,Exeter,nhdist18
+3302070,Brookline School District,41,Hollis-Brookline,nhdist19
+3302100,Campton School District,48,Plymouth,nhdist20
+3302130,Candia School District,15,Hooksett,nhdist21
+3302250,Chester School District,82,Chester,nhdist22
+3302280,Chesterfield School District,29,Keene,nhdist23
+3302310,Chichester School District,53,Pembroke,nhdist24
+3302340,Claremont School District,6,Claremont,nhdist25
+3307330,Coe Brown Academy School District,201,Coe-Brown Northwood Academy,nhdist27
+3302400,Colebrook School District,7,Colebrook,nhdist28
+3303301,Compass Classical Academy Charter School,429,Compass Classical Academy Charter School,nhdist29
+3302460,Concord School District,8,Concord,nhdist30
+3302480,Contoocook Valley School District,1,Contoocook Valley,nhdist31
+3302490,Conway School District,9,Conway,nhdist32
+3302520,Cornish School District,100,Cornish,nhdist33
+3302550,Croydon School District,99,Croydon,nhdist34
+3300041,CSI Charter School,410,CSI Charter School,nhdist35
+3302580,Deerfield School District,53,Pembroke,nhdist36
+3302610,Derry School District,10,Derry Cooperative,nhdist37
+3302640,Dover School District,11,Dover,nhdist38
+3302670,Dresden School District,70,Hanover,nhdist39
+3302760,Dunbarton School District,67,Bow,nhdist40
+3302790,East Kingston School District,16,Exeter,nhdist41
+3302880,Epping School District,14,Epping,nhdist42
+3302910,Epsom School District,53,Pembroke,nhdist43
+3302940,Errol School District,20,Gorham,nhdist44
+3300017,Exeter Region Coop School District,16,Exeter,nhdist46
+3302970,Exeter School District,16,Exeter,nhdist45
+3302990,Fall Mountain Regional School District,60,Fall Mountain Regional,nhdist47
+3303000,Farmington School District,61,Farmington,nhdist48
+3303090,Franklin School District,18,Franklin,nhdist49
+3303120,Freedom School District,83,Fremont,nhdist50
+3303150,Fremont School District,13,Tamworth,nhdist51
+3303299,Gate City Charter School For the Arts District,425,Gate City Charter School For the Arts,nhdist52
+3303180,Gilford School District,73,Gilford,nhdist54
+3303210,Gilmanton School District,79,Gilmanton,nhdist55
+3303240,Goffstown School District,19,Goffstown,nhdist56
+3300035,Gorham Randolph Shelburne Coop School District,20,Gorham,nhdist57
+3303330,Governor Wentworth Reg School District,49,Governor Wentworth Regional,nhdist58
+3303296,Granite State Arts Academy Charter School,,,
+3303360,Grantham School District,75,Grantham,nhdist59
+3300048,Great Bay Elearning Charter School,404,Great Bay Charter School,nhdist60
+3303420,Greenland School District,50,Greenland,nhdist61
+3303480,Hampstead School District,55,Hampstead,nhdist62
+3303540,Hampton Falls School District,21,Winnacunnet,nhdist64
+3303510,Hampton School District,90,Hampton,nhdist63
+3303600,Hanover School District,70,Hanover,nhdist65
+3303630,Harrisville School District,29,Keene,nhdist66
+3399923,Haverhill Cooperative SAU Office,23,Haverhill Cooperative,nhdist67
+3303660,Haverhill Cooperative School District,23,Haverhill Cooperative,nhdist207
+3303690,Henniker School District,24,Henniker,nhdist69
+3303720,Hill School District,103,Hill,nhdist70
+3303750,Hillsboro Deering Coop School District,34,Hillsboro-Deering,nhdist71
+3303780,Hinsdale School District,92,Hinsdale,nhdist72
+3303810,Holderness School District,48,Plymouth,nhdist73
+3303840,Hollis School District,41,Hollis-Brookline,nhdist74
+3303850,Hollis/Brookline Coop School District,41,Hollis-Brookline,nhdist75
+3303870,Hooksett School District,15,Hooksett,nhdist76
+3303900,Hopkinton School District,66,Hopkinton,nhdist77
+3303930,Hudson School District,81,Hudson,nhdist78
+3303960,Inter-lakes School District,2,Inter-Lakes Cooperative,nhdist79
+3303990,Jackson School District,9,Conway,nhdist80
+3304030,Jaffrey-Rindge Coop School District,47,Jaffrey-Rindge,nhdist81
+3300003,John Stark Regional School District,24,Henniker,nhdist82
+NA,JUVENILE JUSTICE SERVICES - SYSC,,,
+3304040,Kearsarge Regional School District,65,Kearsarge Regional,nhdist83
+3304050,Keene School District,29,Keene,nhdist84
+3304080,Kensington School District,16,Exeter,nhdist85
+3303308,Kreiva Academy Public Charter School District,432,Kreiva Academy Public Charter School,nhdist86
+3304140,Laconia School District,30,Laconia,nhdist87
+3304150,Lafayette Regional School District,35,SAU #35 Office,nhdist88
+3304170,Landaff School District,35,SAU #35 Office,nhdist89
+3303305,LEAF Charter School,,,nhdist90
+3304230,Lebanon School District,88,Lebanon,nhdist91
+3300043,Ledyard Charter Academy,408,Ledyard Charter School,nhdist92
+3303303,Lempster School District,71,Lempster,nhdist93
+3304260,Lincoln-Woodstock School District,68,Lincoln-Woodstock,nhdist94
+3304290,Lisbon Regional School District,35,SAU #35 Office,nhdist96
+3304350,Litchfield School District,27,Litchfield,nhdist97
+3304380,Littleton School District,84,Littleton,nhdist98
+3304410,Londonderry School District,12,Londonderry,nhdist99
+3304500,Lyme School District,76,Lyme,nhdist100
+3304560,Madison School District,13,Tamworth,nhdist101
+3303289,Making Community Connections Charter School,418,Making Community Connections Charter School,nhdist102
+3304590,Manchester School District,37,Manchester,nhdist103
+3304620,Marlborough School District,29,Keene,nhdist104
+3304650,Marlow School District,29,Keene,nhdist105
+3304670,Mascenic Regional School District,87,Mascenic Regional,nhdist106
+3304680,Mascoma Valley Reg School District,62,Mascoma Valley,nhdist107
+3303276,Mason School District,89,Mason,nhdist108
+3304740,Merrimack School District,26,Merrimack,nhdist109
+3304760,Merrimack Valley School District,46,SAU #46 Office,nhdist110
+3303302,MicroSociety Academy Charter School of Southern NH,430,MicroSociety Academy Charter School Foundation,nhdist111
+3304770,Middleton School District,69,Middleton SAU,nhdist112
+3304800,Milan School District,20,Gorham,nhdist113
+3304830,Milford School District,40,Milford,nhdist114
+3303280,Mill Falls Charter School District,416,Mill Falls Charter School,nhdist115
+3300616,Milton School District,64,Milton,nhdist116
+3304890,Monadnock Regional School District,93,Monadnock Regional,nhdist117
+3304920,Monroe School District,77,Monroe,nhdist118
+3304950,Mont Vernon School District,39,Amherst,nhdist119
+3304960,Moultonborough School District,45,Moultonborough,nhdist120
+3303297,Mountain Village Charter School,427,Mountain Village Charter School,nhdist121
+3304980,Nashua School District,42,Nashua,nhdist122
+3305010,Nelson School District,29,Keene,nhdist123
+3305040,New Boston School District,19,Goffstown,nhdist124
+3305070,New Castle School District,50,Greenland,nhdist125
+3305190,Newfields School District,16,Exeter,nhdist126
+3305220,Newfound Area School District,4,Newfound Area,nhdist127
+3305250,Newington School District,50,Greenland,nhdist128
+3305280,Newmarket School District,31,Newmarket,nhdist129
+3305310,Newport School District,43,Newport,nhdist130
+3303291,Next Charter School District,422,Next Charter School,nhdist131
+3300030,North Country Charter Academy,402,North Country Charter Academy,nhdist132
+3305370,North Hampton School District,21,Winnacunnet,nhdist133
+3303316,Northeast Woodland Chartered Public School,441,Northeast Woodland Chartered Public School,nhdist134
+3305400,Northumberland School District,58,Northumberland,nhdist135
+3305430,Northwood School District,44,Northwood,nhdist136
+3305460,Nottingham School District,107,Nottingham,nhdist137
+3305520,Oyster River Coop School District,5,Oyster River,nhdist138
+3305550,Pelham School District,28,Pelham,nhdist140
+3305580,Pembroke School District,53,Pembroke,nhdist141
+3399965,Pemi-baker Regional School District,48,Plymouth,nhdist142
+3305670,Piermont School District,23,Haverhill Cooperative,nhdist143
+3307360,Pinkerton Academy School District,202,Pinkerton Academy,nhdist144
+3305700,Pittsburg School District,7,Colebrook,nhdist145
+3305730,Pittsfield School District,51,Pittsfield,nhdist146
+3305760,Plainfield School District,32,Plainfield,nhdist147
+3305790,Plymouth School District,48,Plymouth,nhdist148
+3303290,Polaris Charter School,419,Polaris Charter School,nhdist149
+3305820,Portsmouth School District,52,Portsmouth,nhdist150
+3305830,Profile School District,35,SAU #35 Office,nhdist151
+3300049,Prospect Mountain School District,301,Prospect Mountain JMA,nhdist152
+3305880,Raymond School District,33,Raymond,nhdist153
+3303287,Robert Frost Charter School,420,Robert Frost Charter School,nhdist156
+3305940,Rochester School District,54,Rochester,nhdist157
+3305970,Rollinsford School District,104,Rollinsford,nhdist158
+3306000,Rumney School District,48,Plymouth,nhdist159
+3306030,Rye School District,50,Greenland,nhdist160
+3306060,Salem School District,57,Salem,nhdist161
+3306080,Sanborn Regional School District,17,Sanborn Regional,nhdist162
+3306150,Seabrook School District,21,Winnacunnet,nhdist163
+3300031,Seacoast Charter School,403,Seacoast Charter School,nhdist164
+3306180,Shaker Regional School District,80,Shaker Regional,nhdist165
+3306240,Somersworth School District,56,Somersworth,nhdist166
+3306260,Souhegan Cooperative School District,39,Amherst,nhdist167
+3306270,South Hampton School District,21,Winnacunnet,nhdist168
+3303315,Spark Academy of Advanced Technologies,437,Spark Academy of Advanced Technologies,nhdist169
+3306330,Stark School District,58,Northumberland,nhdist170
+3306360,Stewartstown School District,7,Colebrook,nhdist171
+3306390,Stoddard School District,24,Henniker,nhdist172
+3306420,Strafford School District,105,Strafford,nhdist173
+3306450,Stratford School District,58,Northumberland,nhdist174
+3306480,Stratham School District,16,Exeter,nhdist175
+3300042,Strong Foundations Charter School,409,Strong Foundations Charter School,nhdist176
+3306540,Sunapee School District,85,Sunapee,nhdist177
+3300039,Surry Village Charter School,407,Surry Village Charter School,nhdist178
+3306600,Tamworth School District,13,Tamworth,nhdist179
+3303286,The Birches Academy for Academics & Art:A Public Charter Sch,417,The Birches Academy of Academics & Art A Public Charter Sch,nhdist180
+3303298,The Founders Academy Charter School District,423,The Founders Academy Charter School,nhdist181
+3306660,Thornton School District,48,Plymouth,nhdist182
+3306720,Timberlane Regional School District,106,Timberlane Regional,nhdist183
+3306750,Unity School District,6,Claremont,nhdist184
+3303271,Virtual Learning Academy Charter School,412,Virtual Learning Academy Charter School,nhdist185
+3306780,Wakefield School District,101,Wakefield,nhdist186
+3306870,Warren School District,23,Haverhill Cooperative,nhdist187
+3306900,Washington School District,34,Hillsboro-Deering,nhdist188
+3306910,Waterville Valley School District,48,Plymouth,nhdist189
+3306930,Weare School District,24,Henniker,nhdist190
+3306990,Wentworth School District,48,Plymouth,nhdist191
+3307020,Westmoreland School District,29,Keene,nhdist192
+3307050,White Mountain Regional School District,36,White Mountains Regional,nhdist193
+3307115,Wilton-Lyndeboro School District,63,Wilton,nhdist194
+3307140,Winchester School District,94,Winchester,nhdist195
+3303314,Windham Academy Public Charter School,434,Windham Academy Public Charter School,nhdist197
+3307170,Windham School District,95,Windham,nhdist196
+3307230,Winnacunnet Coop School District,21,Winnacunnet,nhdist198
+3307300,Winnisquam Regional School District,59,Winnisquam Regional,nhdist199
+96,Sullivan,96,Sullivan,nhdist200
+91,Surry,91,Surry,nhdist201
+435,Synergy Academy Chartered Public School,435,Synergy Academy Chartered Public School,nhdist202
+433,Seacoast Classical Academy Chartered Public School,433,Seacoast Classical Academy Chartered Public School,nhdist203
+98,Coos County,98,Coos County,nhdist204
+102,Goshen,102,Goshen,nhdist205
+97,Hale's Location c/o Carroll Cty,97,Hale's Location c/o Carroll Cty,nhdist206
+426,Arts Academy of New Hampshire Chartered Public High School,426,Arts Academy of New Hampshire Chartered Public High School,nhdist6
+455,Benjamin Franklin Academy Chartered Public School,455,Benjamin Franklin Academy Chartered Public School,nhdist14
+450,Gathering Waters Charter School,450,Gathering Waters Charter School,nhdist53
+451,Heartwood Public Charter School,,,
+453,Lionheart Classical Academy Chartered Public School,453,Lionheart Classical Academy Chartered Public School,nhdist95
+108,Pasquaney,108,Pasquaney,nhdist139
+78,Rivendell Interstate,78,Rivendell Interstate,nhdist154
+454,River View Chartered Public School,454,River View Chartered Public School,nhdist155

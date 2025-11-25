@@ -221,7 +221,8 @@ enrollment_change <- ct8 %>%
          x2019_20 = as.numeric(x2019_20),
          enrollment_change_6yr_pct = round((x2024_25 - x2019_20)/x2019_20, 2)) %>% 
   select(district, district_code, enrollment_change_6yr_pct) %>% 
-  right_join(ct_crosswalk, by = c("district", "district_code"))
+  right_join(ct_crosswalk, by = c("district", "district_code")) %>% 
+  mutate(enrollment_change_6yr_pct = na_if(enrollment_change_6yr_pct, Inf))
 rm(ct8)
 
 #### RACIAL DEMOGRAPHICS ####
@@ -272,9 +273,11 @@ lowinc <- ct4 %>%
   mutate(across(c(3:6), ~ as.numeric(.))) %>% 
   # fill suppressed data with midpoint (3)
   mutate(across(c(3:6), ~ ifelse(is.na(.), 3, .))) %>% 
+  # merge with enrollment to generate pct
+  left_join(enrollment, by = c("district", "district_code")) %>% 
   #create cols
   mutate(lowinc = free + reduced,
-         pct_lowinc = round(lowinc/total, 2)) %>% 
+         pct_lowinc = round(lowinc/enrollment_2025, 2)) %>% 
   select(district, district_code, pct_lowinc) %>% 
   #filter to districts
   right_join(ct_crosswalk, by = c("district", "district_code"))
@@ -589,3 +592,4 @@ final <- ne_crosswalk %>%
 
 # save
 write.csv(final, "data/clean/final_ct.csv", row.names = FALSE)
+

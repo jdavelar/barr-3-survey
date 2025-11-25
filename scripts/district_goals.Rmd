@@ -9,7 +9,6 @@ output:
     toc_float: yes
     theme: flatly
     highlight: tango
-    code_folding: hide
   word_document:
     toc: yes
   pdf_document:
@@ -99,7 +98,9 @@ table_2.1 <- clean %>%
   mutate(pct = round(n/307, 2)) %>% 
   left_join(labels, by = "vars") %>% 
   select(`Goal selected` = label, N = n, `%` = pct)
-datatable(table_2.1, caption = "Table 2.1")
+datatable(table_2.1, 
+          caption = "Table 2.1",
+          options = list(searchHighlight = TRUE))
 ```
 
 ```{r eval = FALSE, include = FALSE}
@@ -139,7 +140,10 @@ table_2.2b <- clean %>%
   summarize(n = n_distinct(id)) %>% 
   mutate(n_selected = paste0(n_selected, " goal(s) selected")) %>% 
   rename(`N goals` = n_selected, `N districts` = n)
-datatable(table_2.2b, caption = "Table 2.2b", rownames = FALSE)
+datatable(table_2.2b, 
+          caption = "Table 2.2b", 
+          rownames = FALSE,
+          options = list(searchHighlight = TRUE))
 ```
 
 ```{r, eval = FALSE, include = FALSE}
@@ -174,16 +178,40 @@ state <- dat %>%
   left_join(labels, by = "vars") %>% 
   select(`Goal selected` = label, n_CT, pct_CT, n_MA, pct_MA, n_ME, pct_ME, n_NH, pct_NH, n_RI, pct_RI, n_VT, pct_VT) 
 #build display table
-kable(state, 
-      caption = "Table 2.3",
-      col.names = c("Goal selected", rep(c("N", "%"), 6))) %>% 
-  kable_styling(bootstrap_options = "striped",
-                    full_width = F,
-                    position = "left") %>% 
-  add_header_above(
-    header = c(" " = 1, "Connecticut" = 2, "Massachusetts" = 2, "Maine" = 2, "New Hampshire" = 2, "Rhode Island" = 2, "Vermont" = 2),
-    align = "c"
+# kable(state, 
+#       caption = "Table 2.3",
+#       col.names = c("Goal selected", rep(c("N", "%"), 6))) %>% 
+#   kable_styling(bootstrap_options = "striped",
+#                     full_width = F,
+#                     position = "left") %>% 
+#   add_header_above(
+#     header = c(" " = 1, "Connecticut" = 2, "Massachusetts" = 2, "Maine" = 2, "New Hampshire" = 2, "Rhode Island" = 2, "Vermont" = 2),
+#     align = "c"
+#   )
+# Testing DT option
+# a custom table container
+sketch = htmltools::withTags(table(
+  class = 'display',
+  thead(
+    tr(
+      th(colspan = 1, ""),
+      th(colspan = 2, 'Connecticut'),
+      th(colspan = 2, 'Massachusetts'),
+      th(colspan = 2, 'Maine'),
+      th(colspan = 2, "New Hampshire"),
+      th(colspan = 2, "Rhode Island"),
+      th(colspan = 2, "Vermont")
+    ),
+    tr(
+      lapply(c("Goal selected", rep(c('N', '%'), 6)), th)
+    )
   )
+))
+datatable(state,
+          caption = "Table 2.3",
+          colnames = c("Goal selected", rep(c("N", "%"), 6)),
+          container = sketch,
+          rownames = FALSE) 
 ```
 
 ```{r eval = FALSE, include = FALSE}
@@ -243,8 +271,10 @@ co_pct_df <- as.data.frame(round(pct_matrix, 2)) %>%  # 1 decimal place
 datatable(
   co_pct_df,
   caption = "Table 2.4b Co-occurrence (% of respondents selecting both)",
-  options = list(pageLength = nrow(co_pct_df))
-)
+  options = list(pageLength = nrow(co_pct_df),
+                 searchHighlight = TRUE,
+                 filter = 'top')) %>% 
+  formatStyle(columns = 2:10, backgroundColor = styleInterval(.75, c("white", "#F1CE52"))) 
 ```
 
 ```{r eval = FALSE, include = FALSE}
@@ -266,7 +296,9 @@ cond_prop_df <- as.data.frame(round(cond_matrix, 2)) %>%
 datatable(
   cond_prop_df,
   caption = "Table 2.4c Conditional co-occurrence (P(column goal | focal goal), row-wise proportion)",
-  options = list(pageLength = nrow(cond_prop_df))
+  options = list(pageLength = nrow(cond_prop_df),
+                 searchHighlight = TRUE,
+                 filter = 'top')
 )
 ```
 
@@ -300,7 +332,10 @@ table_2.4d <- clean %>%
   rename(`All combined goals` = collapsed_goals,
          N = n,
          `%` = pct)
-datatable(table_2.4d, caption = "Table 2.4d Full co-occurence table")
+datatable(table_2.4d, 
+          caption = "Table 2.4d Full co-occurence table",
+          options = list(searchHighlight = TRUE),
+          filter = 'top')
 ```
 
 ```{r eval = FALSE, include = FALSE}
