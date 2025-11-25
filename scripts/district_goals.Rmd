@@ -274,7 +274,7 @@ datatable(
   options = list(pageLength = nrow(co_pct_df),
                  searchHighlight = TRUE,
                  filter = 'top')) %>% 
-  formatStyle(columns = 2:10, backgroundColor = styleInterval(.75, c("white", "#F1CE52"))) 
+  formatStyle(columns = 2:10, backgroundColor = styleInterval(.74, c("white", "#F1CE52"))) 
 ```
 
 ```{r eval = FALSE, include = FALSE}
