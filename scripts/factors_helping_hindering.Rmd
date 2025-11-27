@@ -1,0 +1,535 @@
+---
+title: "Factors That Help or Hinder Change (Q8-10)"
+author: "Janette Avelar"
+date: "`r Sys.Date()`"
+always_allow_html: true
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: flatly
+    highlight: tango
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,    # hides code
+  message = FALSE, # hides messages
+  warning = FALSE,  # hides warnings
+  fig.width = 10, fig.height = 9
+)
+library(here)
+library(rio)
+library(tidyverse)
+library(DT)
+library(kableExtra)
+dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/JA/Barr_Survey_20251117.dta')
+```
+
+# Survey Questions
+
+The following figures and tables relate to questions #8-10 in the final survey. All 3 questions used a 4-point Likert scale with an N/A option:
+- Definitely helps  
+- Helps more than hinders  
+- Hinders more than it helps  
+- Definitely hinders  
+- Not applicable (this factor does not exist or is not relevant in our context]  
+
+Question 8 asked:  
+Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals?  
+- State testing requirements  
+- State accountability system  
+- Policies that determine how students earn academic credit  
+- State graduation requirements  
+- State funding formulas  
+- State academic standards  
+- State postsecondary pathway programs (e.g., early college, apprenticeships)  
+- School choice policies  
+- State regulatory compliance requirements  
+
+Question 9 asked:  
+Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals?  
+- Teacher union relationship  
+- Family expectations  
+- Local political climate  
+- School board involvement  
+- External partnerships (e.g., local industry, higher ed, city/town, community organizations)  
+- The amount of local public funding your district receives (e.g., local taxes, town budget allocation)  
+
+Question 10 asked:  
+Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals?  
+- Guidance from the state Department of Education  
+- Guidance from the federal Department of Education  
+- Philanthropic funding  
+- State funding to participate in new initiatives  
+- State professional associations  
+- Technical assistance providers  
+- Peer learning through participation in networks or consortia  
+- State political climate  
+
+Out of 307 total districts, 284 respondents answered all 3 questions. A breakdown of the totals is below.
+
+```{r, include=FALSE}
+# Data clean
+clean <- dat %>% 
+  haven::zap_label() %>% 
+  select(id = qcode, starts_with("q8"), starts_with("q9"), starts_with("q10")) %>% 
+  #rename vars
+  rename(state_testing_reqs = q8_1,
+         state_accountability_system = q8_2,
+         state_credit_policies = q8_3,
+         state_grad_reqs = q8_4,
+         state_funding_formula = q8_5,
+         state_academic_standards = q8_6,
+         state_postsecondary_path = q8_7,
+         state_school_choice = q8_8,
+         state_compliance_reqs = q8_9,
+         local_teacher_union = q9_1,
+         local_fam_expectations = q9_2,
+         local_political_climate = q9_3,
+         local_school_board = q9_4,
+         local_external_partnerships = q9_5,
+         local_public_funding = q9_6,
+         external_stdoe_guidance = q10_1,
+         external_federal_guidance = q10_2,
+         external_philanthropic_funding = q10_3,
+         external_funding_initiatives = q10_4,
+         external_professional_assoc = q10_5,
+         external_tech_assistance = q10_6,
+         external_learning_networks = q10_7,
+         external_political_climate = q10_8) %>% 
+  #recode missing values
+  mutate(across(everything(), ~na_if(., -99))) %>% 
+  #categorical likert
+  mutate(across(c(2:24), ~case_when(. == 1 ~ "Definitely helps",
+                                         . == 2 ~ "Helps more than hinders",
+                                         . == 3 ~ "Hinders more than helps",
+                                         . == 4 ~ "Definitely hinders",
+                                         . == 5 ~ "Not relevant")))
+```
+
+```{r, include = FALSE}
+# Create label crosswalks
+labels <- data.frame(
+  vars = c(
+    #Q8
+    "state_testing_reqs", "state_accountability_system", "state_credit_policies", "state_grad_reqs", "state_funding_formula", "state_academic_standards", "state_postsecondary_path", "state_school_choice", "state_compliance_reqs", 
+    #Q9
+    "local_teacher_union", "local_fam_expectations", "local_political_climate", "local_school_board", "local_external_partnerships", "local_public_funding", 
+    #Q10
+    "external_stdoe_guidance", "external_federal_guidance", "external_philanthropic_funding", "external_funding_initiatives", "external_professional_assoc", "external_tech_assistance", "external_learning_networks", "external_political_climate"),
+  label = c(
+    #Q8
+    "State testing requirements", "State accountability system", "Policies that determine how students earn academic credit", "State graduation requirements", "State funding formulas", "State academic standards", "State postsecondary pathway programs", "School choice policies", "State regulatory compliance requirements", 
+    #Q9
+    "Teacher union relationship", "Family expectations", "Local political climate", "School board involvement", "External partnerships", "The amount of local public funding your district receives",
+    #Q10
+    "Guidance from the state Department of Education", "Guidance from the federal Department of Education", "Philanthropic funding", "State funding to participate in new initiatives", "State professional associations", "Technical assistance providers", "Peer learning through participation in networks or consortia", "State political climate")
+)
+```
+
+```{r}
+# N respondents across questions
+clean %>% 
+  mutate(across(c(2:24), ~ifelse(is.na(.), NA, 1))) %>% 
+  mutate(Q8_N = state_testing_reqs+state_accountability_system+state_credit_policies+state_grad_reqs+state_funding_formula+state_academic_standards+state_postsecondary_path+state_school_choice+state_compliance_reqs,
+         Q9_N = local_teacher_union+local_fam_expectations+local_political_climate+local_school_board+local_external_partnerships+local_public_funding,
+         Q10_N = external_stdoe_guidance+external_federal_guidance+external_philanthropic_funding+external_funding_initiatives+external_professional_assoc+external_tech_assistance+external_learning_networks+external_political_climate) %>% 
+  select(starts_with("Q")) %>% 
+  mutate(across(everything(), ~ifelse(is.na(.), 0, 1))) %>% 
+  mutate(All_N = ifelse((Q8_N == 1 & Q9_N == 1 & Q10_N == 1), 1, 0),
+         One_or_more_N = ifelse((Q8_N == 1 | Q9_N == 1 | Q10_N == 1), 1, 0)) %>% 
+  summarize(Q8_N = sum(Q8_N),
+            Q9_N = sum(Q9_N),
+            Q10_N = sum(Q10_N),
+            All_N = sum(All_N),
+            One_or_more_N = sum(One_or_more_N)) %>% 
+  kable(col.names = c("N answering Q8", "N answering Q9", "N answering Q10", "N answering all 3", "N answering at least 1"))
+```
+
+
+# 6.1 State Policy Factors: Frequency  
+
+**Task: % respondents selected each outcome**  
+
+I accidentally combined 6.1-6.3 into one table that displays all 3 types of factors. The column labeled `Q` indicates which question the factor in that row corresponds to, with Q8 relating to state policy factors, Q9 relating to local community factors, and Q10 relating to external factors. The box at the top of that column allows you to filter the table by the factor you're interested in.
+
+```{r}
+freq <- clean %>% 
+  pivot_longer(cols = c(2:24),
+               names_to = "vars",
+               values_to = "Response") %>% 
+  filter(!is.na(Response)) %>% 
+  # calculate Ns/Pcts
+  mutate(rate = 1,
+         Question = case_when(
+           str_detect(vars, "state") ~ 8,
+           str_detect(vars, "local") ~ 9,
+           str_detect(vars, "external") ~ 10
+         )) %>% 
+  group_by(vars, Response, Question) %>% 
+  summarize(n = sum(rate), .groups = "drop") %>% 
+  group_by(vars) %>% 
+  mutate(total = sum(n),
+         pct = round(n/total, 2)) %>% 
+  ungroup() %>% 
+  # bring in labels
+  left_join(labels, by = "vars") %>% 
+  select(Question, Factor = label, Response, N = n, Pct = pct) %>% 
+  # pivot for table
+  pivot_wider(names_from = Response,
+              values_from = c(N, Pct)) %>% 
+  arrange(Question) %>% 
+  # fill in missing values with 0
+  mutate(across(everything(), ~ifelse(is.na(.), 0, .))) %>% 
+  select(Question, Factor, `N_Definitely helps`, `Pct_Definitely helps`, `N_Helps more than hinders`, `Pct_Helps more than hinders`, `N_Hinders more than helps`, `Pct_Hinders more than helps`, `N_Definitely hinders`, `Pct_Definitely hinders`, `N_Not relevant`, `Pct_Not relevant`)
+
+# build out table
+# outline for column subheaders
+sketch = htmltools::withTags(table(
+  class = 'display',
+  thead(
+    tr(
+      th(colspan = 2, ""),
+      th(colspan = 2, 'Definitely helps'),
+      th(colspan = 2, 'Helps more than hinders'),
+      th(colspan = 2, 'Hinders more than helps'),
+      th(colspan = 2, "Definitely hinders"),
+      th(colspan = 2, "Not relevant")
+    ),
+    tr(
+      lapply(c("Q", "Factor", rep(c('N', '%'), 5)), th)
+    )
+  )
+))
+datatable(freq,
+          caption = "Table 6.1",
+          colnames = c("Q", "Factor selected", rep(c("N", "%"), 5)),
+          container = sketch,
+          rownames = FALSE,
+          options = list(searchHighlight = TRUE),
+          filter = 'top')
+```
+
+```{r, include = FALSE, eval = FALSE}
+# pull out just question 8 for CSV
+q8_freq <- freq %>% 
+  filter(Question == 8) %>% 
+  select(-Question)
+# save CSV
+write.csv(q8_freq, "output/tables/table_6.1.csv", row.names = FALSE)
+```
+
+
+# 6.2 Local Community Factors: Frequency
+
+**Task: % respondents selected each outcome**  
+
+See 6.1
+
+```{r, include = FALSE, eval = FALSE}
+# pull out just question 8 for CSV
+q9_freq <- freq %>% 
+  filter(Question == 9) %>% 
+  select(-Question)
+# save CSV
+write.csv(q9_freq, "output/tables/table_6.2.csv", row.names = FALSE)
+```
+
+
+# 6.3 Other External Factors: Frequency
+
+**Task: % respondents selected each outcome**  
+
+See 6.1
+
+```{r, include = FALSE, eval = FALSE}
+# pull out just question 8 for CSV
+q10_freq <- freq %>% 
+  filter(Question == 10) %>% 
+  select(-Question)
+# save CSV
+write.csv(q10_freq, "output/tables/table_6.3.csv", row.names = FALSE)
+```
+
+```{r}
+# clean up everything
+rm(q8_freq, q9_freq, q10_freq, freq, sketch)
+```
+
+
+# 6.4 Factors Helping
+
+**Task: Mean “helpfulness” score by factor after recoding Likert scale to numeric (e.g., 1 = definitely helps → 4 = definitely hinders)**  
+
+Note: A lower mean score means the factor was considered *more* helpful, as "Definitely helps" is coded as 1.
+
+```{r}
+# convert back numeric
+mean_score <- clean %>% 
+  mutate(across(c(2:24), ~case_when(
+    . == "Definitely helps" ~ 1,
+    . == "Helps more than hinders" ~ 2,
+    . == "Hinders more than helps" ~ 3,
+    . == "Definitely hinders" ~ 4,
+    TRUE ~ 0
+  ))) %>% 
+  select(-id) %>% 
+  # calculate mean
+  summarize(across(everything(), ~mean(.))) %>% 
+  round(2) %>% 
+  # pivot long and bring in labels
+  pivot_longer(cols = everything(),
+               names_to = "vars",
+               values_to = "Mean score") %>% 
+  mutate(Question = case_when(
+           str_detect(vars, "state") ~ 8,
+           str_detect(vars, "local") ~ 9,
+           str_detect(vars, "external") ~ 10
+         )) %>% 
+  left_join(labels, by = "vars") %>% 
+  select(Q = Question, Factor = label, `Mean score`)
+# build table
+datatable(mean_score,
+          caption = "Table 6.4",
+          rownames = FALSE)
+```
+
+```{r, include = FALSE, eval = FALSE}
+# save table
+write.csv(mean_score, "output/tables/table_6.4.csv", row.names = FALSE)
+rm(mean_score)
+```
+
+
+# 6.5 Most Helpful vs. Most Hindering
+
+**Task: Sorted list of factors by mean score (within category and across all category) rank ordered**  
+
+The table and figure below displays the same information as 6.4, with a mean score across all categories, an an option to arrange in descending order. It has an additional "Rank" column that shows which factors were deemed most helpful.
+
+```{r}
+overall_mean <- mean_score %>% 
+  select(-Q) %>% 
+  arrange(-`Mean score`) %>% 
+  mutate(Ranking = row_number())
+datatable(overall_mean,
+          caption = "Table 6.5a Across Categories")
+```
+
+```{r, include = FALSE, eval = FALSE}
+write.csv(overall_mean, "output/tables/table_6.5a.csv", row.names = FALSE)
+```
+
+```{r}
+overall_mean %>% 
+  rename(mean_score = `Mean score`) %>% 
+  ggplot(., aes(mean_score, reorder(Factor, -mean_score))) +
+  geom_col(fill = "#1F916F") +
+  theme_bw() +
+  scale_y_discrete(
+      labels = function(x) stringr::str_wrap(x, width = 35),
+      expand = c(0, 0)
+    ) +
+  scale_x_continuous(expand = c(0, 0),
+                     limits = c(0, 4)) +
+  labs(y = "",
+       x = "Mean score") +
+  geom_text(
+      aes(label = mean_score),
+      position = position_nudge(x = -.15),
+      size = 4,
+      color = "white",
+      show.legend = FALSE
+    ) +
+  theme(axis.text = element_text(size = 10))
+```
+
+The tables below display the mean score within each category.  
+
+```{r}
+q8_mean <- mean_score %>% 
+  filter(Q == 8) %>% 
+  select(-Q) %>% 
+  arrange(-`Mean score`) %>% 
+  mutate(Ranking = row_number())
+datatable(q8_mean,
+          caption = "Table 6.5b State Policy Factors")
+```
+
+```{r, include = FALSE, eval = FALSE}
+write.csv(q8_mean, "output/tables/table_6.5b.csv", row.names = FALSE)
+```
+
+```{r}
+q9_mean <- mean_score %>% 
+  filter(Q == 9) %>% 
+  select(-Q) %>% 
+  arrange(-`Mean score`) %>% 
+  mutate(Ranking = row_number())
+datatable(q8_mean,
+          caption = "Table 6.5c Local Community Factors")
+```
+
+```{r, include = FALSE, eval = FALSE}
+write.csv(q9_mean, "output/tables/table_6.5c.csv", row.names = FALSE)
+```
+
+```{r}
+q10_mean <- mean_score %>% 
+  filter(Q == 10) %>% 
+  select(-Q) %>% 
+  arrange(-`Mean score`) %>% 
+  mutate(Ranking = row_number())
+datatable(q10_mean,
+          caption = "Table 6.5d State Policy Factors")
+```
+
+```{r, include = FALSE, eval = FALSE}
+write.csv(q10_mean, "output/tables/table_6.5d.csv", row.names = FALSE)
+```
+
+```{r}
+mean_score %>% 
+  rename(mean_score = `Mean score`) %>% 
+  mutate(Q = case_when(
+    Q == 8 ~ "State Policy Factors",
+    Q == 9 ~ "Local Community Factors",
+    Q == 10 ~ "External Factors"
+  )) %>% 
+  ggplot(., aes(mean_score, reorder(Factor, -mean_score))) +
+  geom_col(fill = "#1F916F") +
+  theme_bw() +
+  scale_y_discrete(
+      labels = function(x) stringr::str_wrap(x, width = 35),
+      expand = c(0, 0)
+    ) +
+  scale_x_continuous(expand = c(0, 0),
+                     limits = c(0, 4)) +
+  labs(y = "",
+       x = "Mean score") +
+  geom_text(
+      aes(label = mean_score),
+      position = position_nudge(x = -.15),
+      size = 4,
+      color = "white",
+      show.legend = FALSE
+    ) +
+  facet_wrap(~Q, scales = "free",
+             nrow = 3) +
+  theme(axis.text = element_text(size = 10))
+```
+
+
+```{r}
+# clean up
+rm(mean_score, overall_mean, q8_mean, q9_mean, q10_mean)
+```
+
+
+# 6.6 N Factors Helping/Hindering
+
+**Task: Count summary (within category and across all category) of factors helping vs. hindering per district**  
+
+The table below (6.6a) displays the number of districts that chose a given number of factors that help or hinder across all categories (state policy factors, local community factors, and external factors). Out of 23 total factors they could choose from, the maximum selected for both hinders and helps was 22 and the minimum was 1.  
+
+```{r}
+# count across all categories
+count <- clean %>% 
+  pivot_longer(cols = c(2:24),
+               names_to = "vars",
+               values_to = "response") %>% 
+  filter(!is.na(response)) %>% 
+  # create binaries
+  mutate(hinders = case_when(
+    response == "Hinders more than helps" ~ 1,
+    response == "Definitely hinders" ~ 1,
+    TRUE ~ 0
+  ),
+  helps = case_when(
+    response == "Helps more than hinders" ~ 1,
+    response == "Definitely helps" ~ 1,
+    TRUE ~ 0)) %>% 
+  # count number of factors each district chose
+  group_by(id) %>% 
+  summarize(helps = sum(helps),
+            hinders = sum(hinders), .groups = "drop") %>% 
+  # count number of districts that chose X number of factors
+  pivot_longer(cols = c(helps, hinders),
+               names_to = "group",
+               values_to = "n_selected") %>% 
+  mutate(rate = 1) %>% 
+  group_by(group, n_selected) %>% 
+  summarize(districts = sum(rate), .groups = "drop") %>% 
+  mutate(label = paste0("Selected ", n_selected, " factor(s)")) %>% 
+  select(-n_selected) %>% 
+  pivot_wider(names_from = group,
+              values_from = districts) %>% 
+  mutate(across(everything(), ~ifelse(is.na(.), 0, .))) 
+# display table
+datatable(count,
+          caption = "Table 6.6a Across all categories",
+          colnames = c("", "Helps", "Hinders"),
+          rownames = FALSE,
+          options = list(searchHighlight = TRUE))
+```
+
+```{r, include = FALSE, eval = FALSE}
+# save table
+write.csv(count, "output/tables/table_6.6a.csv", row.names = FALSE)
+```
+
+```{r}
+# count within
+count <- clean %>% 
+  pivot_longer(cols = -id,
+               names_to = "vars",
+               values_to = "response") %>% 
+  filter(!is.na(response)) %>% 
+  # create binaries and grouping variable
+  mutate(response = case_when(
+    response == "Definitely hinders" ~ "Hinders",
+    response == "Hinders more than helps" ~ "Hinders",
+    response == "Helps more than hinders" ~ "Helps",
+    response == "Definitely helps" ~ "Helps"
+  ),
+  group = case_when(
+           str_detect(vars, "state") ~ "State policy factors",
+           str_detect(vars, "local") ~ "Local community factors",
+           str_detect(vars, "external") ~ "External factors"
+         ),
+  rate = 1) %>% 
+  # count number of factors each district chose
+  group_by(id, group, response) %>% 
+  summarize(n = sum(rate), .groups = "drop") %>% 
+  filter(!is.na(response)) %>% 
+  # count number of districts that chose X number of factors
+  group_by(group, n, response) %>% 
+  summarize(districts = n_distinct(id), .groups = "drop") %>% 
+  mutate(label = case_when(
+    response == "Helps" ~ paste0("Selected ", n, " factor(s) that help"),
+    response == "Hinders" ~ paste0("Selected ", n, " factor(s) that hinder")
+  )) %>% 
+  select(-c(n, response)) %>% 
+  pivot_wider(names_from = group,
+              values_from = districts) %>% 
+  mutate(across(everything(), ~ifelse(is.na(.), 0, .)))
+# Display table
+datatable(count,
+          caption = "Table 6.6b Within each category",
+          colnames = c("", "External factors", "Local community factors", "State policy factors"),
+          rownames = FALSE,
+          filter = 'top')
+```
+
+```{r, include = FALSE, eval = FALSE}
+# Save table
+write.csv(count, "output/tables/table_6.6b.csv", row.names = FALSE)
+```
+
