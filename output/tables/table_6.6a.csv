@@ -1,18 +1,5 @@
-"label","districts","helps","hinders"
-"Selected 0 factor(s)",1,0,0
-"Selected 4 factor(s)",1,4,0
-"Selected 8 factor(s)",2,2,6
-"Selected 10 factor(s)",1,2,8
-"Selected 11 factor(s)",1,5,6
-"Selected 12 factor(s)",1,7,5
-"Selected 13 factor(s)",4,10,4
-"Selected 14 factor(s)",3,6,8
-"Selected 15 factor(s)",9,7,8
-"Selected 16 factor(s)",12,8,8
-"Selected 17 factor(s)",13,10,7
-"Selected 18 factor(s)",17,10,8
-"Selected 19 factor(s)",28,12,7
-"Selected 20 factor(s)",29,12,8
-"Selected 21 factor(s)",53,12,9
-"Selected 22 factor(s)",62,13,9
-"Selected 23 factor(s)",64,14,9
+"domain","mean_helps","mean_hinders"
+"External factors",4,2
+"Local community factors",4,2
+"State policy factors",4,4
+"Across all 3 domains",12,8
