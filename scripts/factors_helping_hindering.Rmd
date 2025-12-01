@@ -158,7 +158,9 @@ clean %>%
 
 **Task: % respondents selected each outcome**  
 
-I accidentally combined 6.1-6.3 into one table that displays all 3 types of factors. The column labeled `Q` indicates which question the factor in that row corresponds to, with Q8 relating to state policy factors, Q9 relating to local community factors, and Q10 relating to external factors. The box at the top of that column allows you to filter the table by the factor you're interested in.
+I combined 6.1-6.3 into one table that displays all 3 types of factors. The column labeled `Q` indicates which question the factor in that row corresponds to, with Q8 relating to state policy factors, Q9 relating to local community factors, and Q10 relating to external factors. The box at the top of that column allows you to filter the table by whichever factor you're interested in.  
+
+*Note* The percentages here are calculated by the number of respondents for each indicator. Even though a set number of superintendents responded to each question, some elected to not provide a response for certain indicators. In those cases, the denominator is the total number of non-missing respondents.  
 
 ```{r}
 freq <- clean %>% 
@@ -268,7 +270,7 @@ rm(q8_freq, q9_freq, q10_freq, freq, sketch)
 
 **Task: Mean “helpfulness” score by factor after recoding Likert scale to numeric (e.g., 1 = definitely helps → 4 = definitely hinders)**  
 
-Note: A lower mean score means the factor was considered *more* helpful, as "Definitely helps" is coded as 1.
+*Note:* A lower mean score means the factor was considered **more** helpful.  
 
 ```{r}
 # convert back numeric
@@ -304,7 +306,6 @@ datatable(mean_score,
 ```{r, include = FALSE, eval = FALSE}
 # save table
 write.csv(mean_score, "output/tables/table_6.4.csv", row.names = FALSE)
-rm(mean_score)
 ```
 
 
@@ -312,7 +313,7 @@ rm(mean_score)
 
 **Task: Sorted list of factors by mean score (within category and across all category) rank ordered**  
 
-The table and figure below displays the same information as 6.4, with a mean score across all categories, an an option to arrange in descending order. It has an additional "Rank" column that shows which factors were deemed most helpful.
+The table and figure below displays the same information as 6.4, with a mean score across all categories, and an option to arrange in descending order. It has an additional `Ranking` column that shows which factors were deemed the most helpful.
 
 ```{r}
 overall_mean <- mean_score %>% 
@@ -320,7 +321,8 @@ overall_mean <- mean_score %>%
   arrange(-`Mean score`) %>% 
   mutate(Ranking = row_number())
 datatable(overall_mean,
-          caption = "Table 6.5a Across Categories")
+          caption = "Table 6.5a Across Categories",
+          rownames = FALSE)
 ```
 
 ```{r, include = FALSE, eval = FALSE}
@@ -340,7 +342,8 @@ overall_mean %>%
   scale_x_continuous(expand = c(0, 0),
                      limits = c(0, 4)) +
   labs(y = "",
-       x = "Mean score") +
+       x = "Mean score",
+       title = "Factors ordered by most helpful to least") +
   geom_text(
       aes(label = mean_score),
       position = position_nudge(x = -.15),
@@ -353,6 +356,8 @@ overall_mean %>%
 
 The tables below display the mean score within each category.  
 
+**State Policy Factors**
+
 ```{r}
 q8_mean <- mean_score %>% 
   filter(Q == 8) %>% 
@@ -360,12 +365,15 @@ q8_mean <- mean_score %>%
   arrange(-`Mean score`) %>% 
   mutate(Ranking = row_number())
 datatable(q8_mean,
-          caption = "Table 6.5b State Policy Factors")
+          caption = "Table 6.5b State Policy Factors",
+          rownames = FALSE)
 ```
 
 ```{r, include = FALSE, eval = FALSE}
 write.csv(q8_mean, "output/tables/table_6.5b.csv", row.names = FALSE)
 ```
+
+**Local Community Factors**
 
 ```{r}
 q9_mean <- mean_score %>% 
@@ -374,12 +382,15 @@ q9_mean <- mean_score %>%
   arrange(-`Mean score`) %>% 
   mutate(Ranking = row_number())
 datatable(q8_mean,
-          caption = "Table 6.5c Local Community Factors")
+          caption = "Table 6.5c Local Community Factors",
+          rownames = FALSE)
 ```
 
 ```{r, include = FALSE, eval = FALSE}
 write.csv(q9_mean, "output/tables/table_6.5c.csv", row.names = FALSE)
 ```
+
+**External Factors**
 
 ```{r}
 q10_mean <- mean_score %>% 
@@ -388,7 +399,8 @@ q10_mean <- mean_score %>%
   arrange(-`Mean score`) %>% 
   mutate(Ranking = row_number())
 datatable(q10_mean,
-          caption = "Table 6.5d State Policy Factors")
+          caption = "Table 6.5d External Factors",
+          rownames = FALSE)
 ```
 
 ```{r, include = FALSE, eval = FALSE}
@@ -413,7 +425,8 @@ mean_score %>%
   scale_x_continuous(expand = c(0, 0),
                      limits = c(0, 4)) +
   labs(y = "",
-       x = "Mean score") +
+       x = "Mean score",
+       title = "Factors ordered by most helpful to least and grouped by type") +
   geom_text(
       aes(label = mean_score),
       position = position_nudge(x = -.15),
@@ -435,9 +448,11 @@ rm(mean_score, overall_mean, q8_mean, q9_mean, q10_mean)
 
 # 6.6 N Factors Helping/Hindering
 
+CURRENTLY IN PROCESS OF UPDATING - N DISTRICTS ARE NOT MATCHING RESPONDENTS
+
 **Task: Count summary (within category and across all category) of factors helping vs. hindering per district**  
 
-The table below (6.6a) displays the number of districts that chose a given number of factors that help or hinder across all categories (state policy factors, local community factors, and external factors). Out of 23 total factors they could choose from, the maximum selected for both hinders and helps was 22 and the minimum was 1.  
+The table below (6.6a) displays the number of districts that chose a given number of factors that help or hinder across all categories (state policy factors, local community factors, and external factors) and the average number of factors they selected that help or hinder their work. Out of 23 total factors they could choose from, the maximum selected for both hinders and helps was 23 (N = 1) and the minimum was 0 (N = 1).  
 
 ```{r}
 # count across all categories
@@ -459,23 +474,25 @@ count <- clean %>%
   # count number of factors each district chose
   group_by(id) %>% 
   summarize(helps = sum(helps),
-            hinders = sum(hinders), .groups = "drop") %>% 
+            hinders = sum(hinders), .groups = "drop",
+            total_selected = helps + hinders) %>% 
   # count number of districts that chose X number of factors
   pivot_longer(cols = c(helps, hinders),
                names_to = "group",
                values_to = "n_selected") %>% 
   mutate(rate = 1) %>% 
-  group_by(group, n_selected) %>% 
-  summarize(districts = sum(rate), .groups = "drop") %>% 
-  mutate(label = paste0("Selected ", n_selected, " factor(s)")) %>% 
-  select(-n_selected) %>% 
+  group_by(group, total_selected) %>% 
+  summarize(districts = sum(rate),
+            mean = round(mean(n_selected)), .groups = "drop") %>% 
+  mutate(label = paste0("Selected ", total_selected, " factor(s)")) %>% 
+  select(-total_selected) %>% 
   pivot_wider(names_from = group,
-              values_from = districts) %>% 
-  mutate(across(everything(), ~ifelse(is.na(.), 0, .))) 
+              values_from = mean) %>% 
+  select(label, districts, helps, hinders)
 # display table
 datatable(count,
           caption = "Table 6.6a Across all categories",
-          colnames = c("", "Helps", "Hinders"),
+          colnames = c("", "N districts", "Helps", "Hinders"),
           rownames = FALSE,
           options = list(searchHighlight = TRUE))
 ```
@@ -485,8 +502,50 @@ datatable(count,
 write.csv(count, "output/tables/table_6.6a.csv", row.names = FALSE)
 ```
 
+The following table is comprehensive, with a row for each district displaying the number of factors selected, and how many they indicate help or hinder.  
+
 ```{r}
-# count within
+# count across all categories
+count <- clean %>% 
+  pivot_longer(cols = c(2:24),
+               names_to = "vars",
+               values_to = "response") %>% 
+  filter(!is.na(response)) %>% 
+  # create binaries
+  mutate(hinders = case_when(
+    response == "Hinders more than helps" ~ 1,
+    response == "Definitely hinders" ~ 1,
+    TRUE ~ 0
+  ),
+  helps = case_when(
+    response == "Helps more than hinders" ~ 1,
+    response == "Definitely helps" ~ 1,
+    TRUE ~ 0)) %>% 
+  # count number of factors each district chose
+  group_by(id) %>% 
+  summarize(helps = sum(helps),
+            hinders = sum(hinders), .groups = "drop",
+            total_selected = helps + hinders) %>% 
+  select(id, total_selected, helps, hinders) %>% 
+  arrange(total_selected)
+  
+# display table
+datatable(count,
+          caption = "Table 6.6b Each district response across all categories",
+          colnames = c("District ID", "N factors selected", "Helps", "Hinders"),
+          rownames = FALSE,
+          options = list(searchHighlight = TRUE))
+```
+
+```{r, include = FALSE, eval = FALSE}
+# save table
+write.csv(count, "output/tables/table_6.6b.csv", row.names = FALSE)
+```
+
+Tables 6.6c-e below display the average number of factors selected as helping or hindering by category and number of total factors selected.  
+
+```{r}
+# count within for all
 count <- clean %>% 
   pivot_longer(cols = -id,
                names_to = "vars",
@@ -509,27 +568,59 @@ count <- clean %>%
   group_by(id, group, response) %>% 
   summarize(n = sum(rate), .groups = "drop") %>% 
   filter(!is.na(response)) %>% 
+  group_by(id, group) %>% 
+  mutate(total = sum(n)) %>% 
   # count number of districts that chose X number of factors
-  group_by(group, n, response) %>% 
-  summarize(districts = n_distinct(id), .groups = "drop") %>% 
-  mutate(label = case_when(
-    response == "Helps" ~ paste0("Selected ", n, " factor(s) that help"),
-    response == "Hinders" ~ paste0("Selected ", n, " factor(s) that hinder")
-  )) %>% 
-  select(-c(n, response)) %>% 
-  pivot_wider(names_from = group,
-              values_from = districts) %>% 
+  group_by(group, total) %>% 
+  mutate(districts = n_distinct(id)) %>% 
+  ungroup() %>% 
+  group_by(group, total, response) %>% 
+  mutate(mean = round(mean(n))) %>% 
+  ungroup() %>% 
+  select(-c(id, n)) %>% 
+  distinct() %>% 
+  pivot_wider(names_from = response,
+              values_from = mean) %>% 
   mutate(across(everything(), ~ifelse(is.na(.), 0, .)))
+# state
+count_state <- count %>% 
+  filter(group == "State policy factors") %>% 
+  select(-group) %>% 
+  arrange(total)
 # Display table
-datatable(count,
-          caption = "Table 6.6b Within each category",
-          colnames = c("", "External factors", "Local community factors", "State policy factors"),
+datatable(count_state,
+          caption = "Table 6.6c Within each category (State policy factors)",
+          colnames = c("Total factors selected", "Number of districts", "Helps", "Hinders"),
+          rownames = FALSE,
+          filter = 'top')
+# local
+count_local <- count %>% 
+  filter(group == "Local community factors") %>% 
+  select(-group) %>% 
+  arrange(total)
+# Display table
+datatable(count_local,
+          caption = "Table 6.6d Within each category (Local community factors)",
+          colnames = c("Total factors selected", "Number of districts", "Helps", "Hinders"),
+          rownames = FALSE,
+          filter = 'top')
+count_external <- count %>% 
+  filter(group == "External factors") %>% 
+  select(-group) %>% 
+  arrange(total)
+# Display table
+datatable(count_external,
+          caption = "Table 6.6e Within each category (External factors)",
+          colnames = c("Total factors selected", "Number of districts", "Helps", "Hinders"),
           rownames = FALSE,
           filter = 'top')
 ```
 
 ```{r, include = FALSE, eval = FALSE}
 # Save table
-write.csv(count, "output/tables/table_6.6b.csv", row.names = FALSE)
+write.csv(count_state, "output/tables/table_6.6c.csv", row.names = FALSE)
+write.csv(count_local, "output/tables/table_6.6d.csv", row.names = FALSE)
+write.csv(count_external, "output/tables/table_6.6e.csv", row.names = FALSE)
+rm(count_external, count_local, count_state)
 ```
 
