@@ -156,7 +156,7 @@ num_schools <- nh6 %>%
   filter(!is.na(district_code)) %>% 
   #final sum with messy version of districts
   group_by(district, district_code) %>% 
-  mutate(num_schools = sum(num_schools)) %>% 
+  mutate(num_schools = sum(num_schools, na.rm = TRUE)) %>% 
   ungroup()
 
 #### NUMBER OF HIGH SCHOOLS IN DISTRICT ####
@@ -189,7 +189,7 @@ num_high_schools <- nh6 %>%
   mutate(num_high_schools = ifelse(is.na(num_high_schools), 0, num_high_schools)) %>% 
   #final sum with messy version of districts
   group_by(district, district_code) %>% 
-  mutate(num_high_schools = sum(num_high_schools)) %>% 
+  mutate(num_high_schools = sum(num_high_schools, na.rm = TRUE)) %>% 
   ungroup()
 
 #### ENROLLMENT IN 2024-25 ####
@@ -237,8 +237,8 @@ enrollment_change <- nh13 %>%
   filter(!is.na(district_code)) %>% 
   # re-calculate at meta-district level
   group_by(district, district_code) %>% 
-  mutate(enrollment_2020 = sum(enrollment_2020),
-         enrollment_2025 = sum(enrollment_2025),
+  mutate(enrollment_2020 = sum(enrollment_2020, na.rm =TRUE),
+         enrollment_2025 = sum(enrollment_2025, na.rm = TRUE),
          enrollment_change_6yr_pct = round((enrollment_2025 - enrollment_2020)/enrollment_2020, 2)) %>% 
   ungroup()
 rm(nh13, nh5)
@@ -285,13 +285,13 @@ race <- nh4 %>%
   filter(!is.na(district_code)) %>% 
   #recalculate at meta-district level
   group_by(district, district_code) %>% 
-  mutate(total = sum(total),
-         n_aian = sum(n_aian),
-         n_aapi = sum(n_aapi),
-         n_hispanic = sum(n_hispanic),
-         n_black = sum(n_black),
-         n_white = sum(n_white),
-         n_multiracial = sum(n_multiracial),
+  mutate(total = sum(total, na.rm = TRUE),
+         n_aian = sum(n_aian, na.rm = TRUE),
+         n_aapi = sum(n_aapi, na.rm = TRUE),
+         n_hispanic = sum(n_hispanic, na.rm = TRUE),
+         n_black = sum(n_black, na.rm = TRUE),
+         n_white = sum(n_white, na.rm = TRUE),
+         n_multiracial = sum(n_multiracial, na.rm = TRUE),
          pct_aian = n_aian/total,
          pct_aapi = n_aapi/total,
          pct_hispanic = n_hispanic/total,
@@ -342,8 +342,8 @@ lowinc <- nh3 %>%
   filter(!is.na(district_code)) %>% 
   #recalculate at meta-district level
   group_by(district) %>% 
-  mutate(n_lowinc = sum(n_lowinc),
-         total = sum(total),
+  mutate(n_lowinc = sum(n_lowinc, na.rm = TRUE),
+         total = sum(total, na.rm = TRUE),
          pct_lowinc = round(n_lowinc/total, 2)) %>% 
   select(district, district_code, pct_lowinc, unique_merge_id) %>% 
   ungroup()
@@ -428,8 +428,8 @@ el <- test_el %>%
   filter(!is.na(district_code)) %>% 
   #recalculate at meta-level
   group_by(district) %>% 
-  mutate(n_el = sum(n_el),
-         n_tot = sum(n_tot),
+  mutate(n_el = sum(n_el, na.rm = TRUE),
+         n_tot = sum(n_tot, na.rm = TRUE),
          pct_el = round(n_el/n_tot, 2)) %>% 
   ungroup() %>% 
   select(district, district_code, n_el, pct_el, unique_merge_id)
@@ -464,8 +464,8 @@ swd <- nh3 %>%
   filter(!is.na(district_code)) %>% 
   #recalculate at meta-district level
   group_by(district) %>% 
-  mutate(n_sped = sum(n_sped),
-         total = sum(total),
+  mutate(n_sped = sum(n_sped, na.rm = TRUE),
+         total = sum(total, na.rm = TRUE),
          pct_sped = round(n_sped/total, 2)) %>% 
   ungroup() %>% 
   select(district, district_code, pct_sped, unique_merge_id)
@@ -508,8 +508,8 @@ achievement <- nh2 %>%
   filter(!is.na(district_code)) %>% 
   # re-calculate at meta-district level
   group_by(district, subject) %>% 
-  mutate(n_prof = round(sum(n_prof)),
-         total = sum(total),
+  mutate(n_prof = round(sum(n_prof, na.rm = TRUE)),
+         total = sum(total, na.rm = TRUE),
          pct_prof = round(n_prof/total, 2)) %>% 
   ungroup() %>% 
   select(-total) %>% 
@@ -653,8 +653,8 @@ pct_turnaround <- nh6 %>%
   filter(!is.na(district_code)) %>% 
   #re-calculate with meta-district
   group_by(district, district_code) %>% 
-  mutate(n_csi_tsi = sum(n_csi_tsi),
-         n_schools = sum(n_schools),
+  mutate(n_csi_tsi = sum(n_csi_tsi, na.rm = TRUE),
+         n_schools = sum(n_schools, na.rm = TRUE),
          pct_csi_tsi = round(n_csi_tsi/n_schools, 2)) %>% 
   ungroup() %>% 
   select(district_code, district, pct_csi_tsi, unique_merge_id)
