@@ -1,9 +1,4 @@
-"race","mean_0 domains","sd_0 domains","mean_1-2 domains","sd_1-2 domains","mean_3-5 domains","sd_3-5 domains","mean_6-9 domains","sd_6-9 domains"
-"White",0.71,0.31,0.73,0.27,0.75,0.22,0.64,0.3
-"Black",0.09,0.19,0.05,0.09,0.05,0.1,0.1,0.11
-"Hispanic",0.13,0.17,0.14,0.2,0.13,0.16,0.18,0.2
-"Asian or Pacific Islander",0.04,0.05,0.03,0.07,0.03,0.05,0.03,0.04
-"American Indian or Alaska Native",0,0.01,0.01,0.01,0,0.01,0,0.01
-"Multiracial",0.04,0.02,0.04,0.03,0.04,0.02,0.04,0.03
-"All BIPOC students",0.29,0.31,0.27,0.27,0.25,0.22,0.36,0.3
-"Combined Black + Hispanic",0.22,0.31,0.19,0.25,0.18,0.21,0.28,0.29
+"urbanicity","n_0 domains","pct_0 domains","n_1-2 domains","pct_1-2 domains","n_3-5 domains","pct_3-5 domains","n_6-9 domains","pct_6-9 domains"
+"Rural",21,0.5,64,0.57,65,0.55,10,0.38
+"Suburban",14,0.33,39,0.35,46,0.39,12,0.46
+"Urban",7,0.17,10,0.09,7,0.06,4,0.15

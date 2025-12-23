@@ -9,6 +9,7 @@ output:
     toc_float: yes
     theme: flatly
     highlight: tango
+    code_folding: hide
   word_document:
     toc: yes
   pdf_document:
@@ -26,10 +27,12 @@ knitr::opts_chunk$set(
 )
 library(rio)
 library(tidyverse)
+library(here)
 library(DT)
 library(kableExtra)
 
 dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/Current Data Files/MergedSurvey_251215.dta')
+source(here("functions/change_groups_functions.R"))
 ```
 
 # Survey Task
@@ -106,7 +109,8 @@ clean <- dat %>%
   serve_hs = case_when(
     serve_hs == 0 ~ "Does not serve high school",
     serve_hs == 1 ~ "Serves high school"
-  ))
+  )) %>% 
+  filter(!is.na(change_group))
 ```
 
 # A1 By state
@@ -125,7 +129,7 @@ The pattern of distributions is fairly even, but there are some differences to n
 - Vermont had the smallest proportion of districts undergoing no change (0 domains - 8%).  
 
 ```{r}
-# generate counts
+# generate counts - distribution of change groups within state (rowwise)
 state <- clean %>% 
   group_by(change_group) %>% 
   count(state) %>% 
@@ -150,41 +154,81 @@ state <- clean %>%
 
 # table
 datatable(state,
-          caption = "Table A1 Change groups by state",
+          caption = "Table A.1 Change groups by state",
           options = list(searchHighlight = TRUE))
+```
 
-# viz
+```{r}
+# viz 1
 state %>% 
   pivot_longer(cols = !state,
                names_to = "change_group",
                values_to = "pct") %>% 
-  filter(change_group != "Missing") %>% 
-  mutate(change_group = factor(change_group, levels = c("6-9 domains", "3-5 domains", "1-2 domains", "0 domains"))) %>% 
-  ggplot(., aes(pct, change_group)) +
-  geom_col(fill = "#1F916F") +
-  scale_x_continuous(expand = c(0, 0),
-                     limits = c(0, 1)) +
-  scale_y_discrete(drop = FALSE) +
+  ggplot(., aes(pct, state, fill = change_group)) +
+  geom_col(position = position_stack(reverse = TRUE), aes(group = change_group)) +
   theme_bw() +
-  labs(title = "Change groups by state",
+  labs(title = "Distribution of change groups by state",
+       x = "Percent of districts",
+       y = "",
+       fill = "Change group") +
+  scale_fill_manual(values = c("#f0b8b8", "#e67f83", "#aecdc2", "#1F916F")) +
+  geom_text(aes(x = ave(pct, state, FUN = cumsum) - pct/2,
+                label = ifelse(!is.na(pct) & pct > 0, scales::percent(pct, accuracy = 1), "")),
+            position = "identity",
+            size = 3.5,
+            show.legend = FALSE) 
+```
+
+When we break out the distribution of states within change group, we see that high change (3-5 domains or 6-9 domains) is concentrated in Massachusetts (37% and 42% respectively). 
+
+```{r results='asis'}
+# generate counts - distribution of states within change group (colwise)
+state_alt <- cat_table(clean, change_group, state, "Table A.1 Distribution of states within change group")
+```
+
+```{r}
+# viz 2
+clean %>% 
+  group_by(change_group) %>% 
+  count(state) %>% 
+  mutate(pct = n/sum(n)) %>% 
+  ungroup() %>% 
+  ggplot(., aes(state, pct)) +
+  geom_col(fill = "#1F916F") +
+  scale_y_continuous(expand = c(0, 0),
+                     limits = c(0, 1)) +
+  scale_x_discrete(drop = FALSE) +
+  theme_bw() +
+  labs(title = "Distribution of states by change group",
        x = "Percent",
        y = "") +
   geom_text(
       aes(label = scales::percent(pct, accuracy = 1)),
-      position = position_nudge(x = 0.08),
+      vjust = -1,
       size = 3,
       show.legend = FALSE
     ) +
-  facet_wrap(~state) +
+  facet_wrap(~change_group) +
   theme(panel.grid.major.y = element_blank(),
         panel.grid.minor.y = element_blank(),
         panel.grid.minor.x = element_blank())
+``` 
+
+We also want to know if these means are statistically significant from one another. Given we are accounting for state, I ran a chi-square test. Although the share of districts in each change group varies across states, there is no evidence the distribution differs significantly by change group across states.
+
+```{r}
+# chi square test
+tab <- table(clean$state, clean$change_group)
+chisq <- chisq.test(tab)
+chisq
+chisq$stdres
 ```
+
 
 ```{r include = FALSE, eval = FALSE}
 # save table
 write.csv(state, "output/tables/table_a1.csv", row.names = FALSE)
-rm(state)
+rm(state, state_alt, tab, chisq)
 ```
 
 # A2 By district size
@@ -203,31 +247,18 @@ psych::describe(clean$enrollment_2025) %>%
 Table A2.1 displays descriptive statistics broken out by the number of domains a given district is working on.
 
 ```{r}
-enroll <- clean %>% 
-  group_by(change_group) %>% 
-  summarize(mean_enroll = mean(enrollment_2025, na.rm = TRUE),
-            sd_enroll = sd(enrollment_2025, na.rm = TRUE),
-            min_enroll = min(enrollment_2025, na.rm = TRUE),
-            max_enroll = max(enrollment_2025, na.rm = TRUE)) %>% 
-  mutate(change_group = ifelse(is.na(change_group), "Missing", change_group)) %>% 
-  mutate(across(c(mean_enroll, sd_enroll), ~round(., 0)))
+enroll <- cont_table(clean, change_group, enrollment_2025, c(mean, sd), "A2.1 Enrollment by Change Group")
+```
 
-# table
-datatable(enroll, 
-          caption = "A2.1 Enrollment by Change Group")
-
+```{r}
 # viz
-ggplot(clean, aes(change_group, enrollment_2025)) +
-  geom_boxplot() +
-  theme_bw() +
-  theme(panel.grid.major.x = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.minor.y = element_blank()) +
-  labs(title = "Distribution of enrollment in 2025 by change group",
-       subtitle = str_wrap("These boxplots represent the median (bold line), 25th percentile (bottom of box), 75th percentile (top of box), and outliers (dots).", 100),
-       x = "",
-       y = "Enrollment")
+cont_boxplot(clean, change_group, enrollment_2025, 
+             title = "Distribution of enrollment in 2025 by change group", 
+             x_lab = "", 
+             y_lab = "Enrollment")
+```
 
+```{r}
 # alt viz
 # SHOULD I ADD PERCENTAGES???
 # If yes, need to think about denominator - do we want it to be among domain group, or among enrollment band?
@@ -263,6 +294,13 @@ clean %>%
        x = "Number of districts",
        y = "Number of students")
 ```
+
+There is not strong statistical evidence that enrollment size differs by change group, although the overall test is marginal (p ≈ .055).
+
+```{r}
+summary(lm(enrollment_2025 ~ change_group, data = clean))
+```
+
 
 ```{r, include = FALSE, eval = FALSE}
 # save table
@@ -312,7 +350,9 @@ n_school <- clean %>%
 # table
 datatable(n_school,
           caption = "A2.2 Distribution of number of total schools and high schools by change group")
+```
 
+```{r}
 # viz
 clean %>% 
   select(change_group, num_schools, num_high_schools) %>% 
@@ -332,7 +372,9 @@ clean %>%
        subtitle = str_wrap("These boxplots represent the median (bold line), 25th percentile (bottom of box), 75th percentile (top of box), and outliers (dots).", 100),
        x = "",
        y = "Number of schools")
+```
 
+```{r}
 # alt viz
 clean %>% 
   group_by(change_group) %>% 
@@ -364,6 +406,12 @@ clean %>%
   labs(title = "Distribution of number of schools by change group",
        x = "Number of districts",
        y = "Number of schools in district")
+```
+
+There is not strong statistical evidence that enrollment size differs by the number of schools in the district (p ≈ .06).
+
+```{r}
+summary(lm(num_schools ~ change_group, data = clean))
 ```
 
 ```{r, include = FALSE, eval = FALSE}
@@ -406,13 +454,19 @@ clean %>%
        y = "Number of high schools in district")
 ```
 
+There is not strong statistical evidence that enrollment size differs by the number of high schools in the district (p ≈ .18).
+
+```{r}
+summary(lm(num_high_schools ~ change_group, data = clean))
+```
+
 ```{r}
 # clean up
 rm(n_school)
 ```
 
 
-# A4 By enrollment change
+## By enrollment change
 
 We have 6-year enrollment data for 296 districts (11 missing) indicating enrollment change over that time. Enrollment is trending downwards in our data, with the average district dropping 3 percentage points (check interpretation) between 2019 and 2025. The majority of districts (74%) had a value below 0, indicating a loss in enrollment.
 
@@ -439,19 +493,10 @@ When we break out enrollment change by change group, we don't see any obvious di
 
 ```{r}
 # generating descriptives by group
-enroll_change <- clean %>% 
-  group_by(change_group) %>% 
-  summarize(mean = mean(enrollment_change_6yr_pct, na.rm = TRUE),
-            sd = sd(enrollment_change_6yr_pct, na.rm = TRUE),
-            min = min(enrollment_change_6yr_pct, na.rm = TRUE),
-            max = max(enrollment_change_6yr_pct, na.rm = TRUE)) %>% 
-  mutate(change_group = ifelse(is.na(change_group), "Missing", change_group)) %>% 
-  mutate(across(c(mean, sd, min, max), ~round(., 2)))
+enroll_change <- cont_table(clean, change_group, enrollment_change_6yr_pct, c(mean, sd, min, max), "A2.3 Distribution of enrollment change by change group")
+```
 
-# table
-datatable(enroll_change,
-          caption = "A4 Distribution of enrollment change by change group")
-
+```{r}
 # first viz
 clean %>% 
   filter(!is.na(change_group)) %>% 
@@ -468,7 +513,9 @@ clean %>%
        x = "6-year enrollment change",
        y = "Number of districts") +
   facet_wrap(~change_group)
+```
 
+```{r}
 # second viz
 clean %>% 
   filter(!is.na(change_group)) %>% 
@@ -499,13 +546,157 @@ clean %>%
         axis.ticks.x = element_blank())
 ```
 
+There is not strong statistical evidence that the 6-year change in enrollment differs by the number of schools in the district (p ≈ .4).
+
+```{r}
+summary(lm(enrollment_change_6yr_pct ~ change_group, data = clean))
+```
+
 ```{r, include = FALSE, eval = FALSE}
-write.csv(enroll_change, "output/tables/table_a4.csv", row.names = FALSE)
+write.csv(enroll_change, "output/tables/table_a2.3.csv", row.names = FALSE)
 rm(enroll_change)
 ```
 
+# A3 By grades served
 
-# A5 By racial composition
+We have data for grades served for 299 districts (0 missing). The categories are broken into:  
+- K-6  
+- K-8  
+- K-12  
+- 6-8  
+- 7-12  
+- 9-12  
+
+Counts by grade band are displayed in the table below:
+
+```{r}
+#overall descriptives
+table(clean$grades_served)
+```
+
+Unsurprisingly, once we break out by change group we see that the majority of districts are falling into the K-12 grade band by change group. This is overwhelmingly the case for those districts implementing a lot of change (3-5 or 6-9 domains). Among districts focusing on just 1 or 2 domains, 1 in 5 is a district that serves only K-8 grades. Among districts that are not currently focusing on any domains, a quarter serve only K-6 or K-8 grades.  
+
+This could indicate that districts serving high school grades, and particularly full K-12 grades, tend to take on more change work while those serving primary and middle school grades focus on far less, if any, change work.  
+
+```{r}
+#generate table & display
+grades <- cat_table(clean, change_group, grades_served, "A.3 Grades served in district by change group")
+```
+
+The chart below breaks out percentages differently than the table above. Here, the distribution of change groups is broken out by grades served (rather than looking at grades served broken out by change group).  
+
+```{r}
+# viz
+cat_stacked_bar(grades, grades_served, 
+                title = "Distribution of change groups by the grades served in the district",
+                x_lab = "Percent of districts", y_lab = "")
+```
+
+According to the chi-square test, the change groups do differ meaningfully based on the grades served in the district (p < .05). My initial thoughts are that this is due to cell sizes with 0 values as well as overlap in the grade bands. For future research, I'd suggest using the "serves high school grades" variable only.  
+
+```{r}
+# chi square test
+tab <- table(clean$grades_served, clean$change_group)
+chisq <- chisq.test(tab)
+chisq
+chisq$stdres
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(grades, "output/tables/table_a3.csv", row.names = FALSE)
+rm(grades, tab, chisq)
+```
+
+
+# A4 By district type
+
+We have district type data for all districts, and counts by type are in the table below:
+
+```{r}
+#overall
+table(clean$district_type)
+```
+
+When we break this out by group, traditional schools make up the largest proportion of each change group. Other notable patterns include:
+- Nearly 15% of districts working on 1-2 domains are regional districts, as are nearly 20% of those working on 1-2 domains  
+- Charters are more highly represented among districts with no or focused efforts: 12% working on 0 domains, and 17% working on 1-2 domains
+
+```{r}
+# pull values
+type <- cat_table(clean, change_group, district_type, "A.4 District type by change group")
+```
+
+The chart below breaks out percentages differently than the table above. Here, the distribution of change groups is broken out by school type (rather than looking at school type broken out by change group).  
+
+```{r}
+# viz
+cat_stacked_bar(type, district_type, 
+                title = "Distribution of change groups by district type", 
+                x_lab = "Percent of districts", 
+                y_lab = "")
+```
+
+There is not evidence that change groups differ meaningfully by district type according to the chi square results below (p = .101). 
+
+```{r}
+# chi square test
+tab <- table(clean$district_type, clean$change_group)
+chisq <- chisq.test(tab)
+chisq
+chisq$stdres
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(type, "output/tables/table_a4.csv", row.names = FALSE)
+rm(type, tab, chisq)
+```
+
+# A5 By urbanicity
+
+We have urbanicity data for all districts, and counts by type are in the table below:
+
+```{r}
+#overall
+table(clean$urbanicity)
+```
+
+When we break this out by group, rural areas make up the highest proportion for all groups except for those with 6-9 domains. Among those with 6-9 domains, nearly half are suburban districts.
+
+```{r}
+# pull values
+urbanicity <- cat_table(clean, change_group, urbanicity, "A.5 Urbanicity by change group")
+```
+
+The chart below breaks out percentages differently than the table above. Here, the distribution of change groups is broken out by urbanicity (rather than looking at urbanicity broken out by change group).  
+
+```{r}
+# viz
+cat_stacked_bar(urbanicity, urbanicity,
+                title = "Distribution of change groups by urbanicity",
+                x_lab = "Percent of districts",
+                y_lab = "")
+```
+
+There is not evidence that change groups differ meaningfully by urbanicity according to the chi square results below (p = .28). 
+
+```{r}
+# chi square test
+tab <- table(clean$urbanicity, clean$change_group)
+chisq <- chisq.test(tab)
+chisq
+chisq$stdres
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(urbanicity, "output/tables/table_a5.csv", row.names = FALSE)
+rm(urbanicity, tab, chisq)
+```
+
+
+# A6 By racial composition
 
 We have racial demographics data for about 304 districts (3 missing overall, 4 missing American Indian and Alaska Native data), including:  
 - % White students  
@@ -585,14 +776,14 @@ sketch = htmltools::withTags(table(
   )
 ))
 datatable(race,
-          caption = "A5 District racial demographics by change group",
+          caption = "A6.1 District racial demographics by change group",
           colnames = c("", rep(c("Mean", "SD"), 4)),
           container = sketch,
           rownames = FALSE)
 ```
 
 ```{r, include = FALSE, eval = FALSE}
-write.csv(race, "output/tables/table_a5.csv", row.names = FALSE)
+write.csv(race, "output/tables/table_a6.1.csv", row.names = FALSE)
 rm(race, sketch)
 ```
 
@@ -637,91 +828,617 @@ clean %>%
   group_by(change_group, race) %>% 
   count(group) %>% 
   ungroup() %>% 
-  group_by(change_group) %>% 
-  mutate(pct = n/sum(n))
-race = case_when(
-    
-  ))
-  ggplot(., aes(change_group, pct, fill = group)) +
+  group_by(change_group, race) %>% 
+  mutate(pct = n/sum(n),
+         race = case_when(
+    race == "aapi" ~ "Asian or Pacific Islander",
+    race == "bipoc" ~ "BIPOC",
+    race == "black" ~ "Black",
+    race == "hispanic" ~ "Hispanic",
+    race == "blackhispanic" ~ "Black or Hispanic",
+    race == "multiracial" ~ "Multiracial",
+    race == "white" ~ "White"
+  ),
+  pct = ifelse(group == "Below average", -1*pct, pct)) %>% 
+  ggplot(., aes(pct, change_group, fill = group)) +
   geom_col() +
-  facet_wrap(~race)
+  facet_wrap(~race) +
+  scale_y_discrete(limits = rev) +
+  theme_bw() +
+  scale_fill_manual(values = c("#1F916F", "#e67f83")) +
+  geom_vline(xintercept = 0, color = "red", linetype = "dashed") +
+  labs(title = "Distribution of districts with racial demographics above or below the sample average",
+       subtitle = "Red dashed line indicates zero change.",
+       x = "Percent of districts",
+       y = "",
+       fill = "Group") +
+  geom_text(
+  aes(
+    label = scales::percent(abs(pct), accuracy = 1)
+    #hjust = ifelse(group == "Below average", .05, -0.7)
+  ),
+  position = position_stack(vjust = .75),
+  size = 3,
+  show.legend = FALSE
+) +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
 ```
 
-
-## % White (BIPOC?)
+There is not strong statistical evidence that racial demographics differ by change group.
 
 ```{r}
+mod <- clean %>% 
+  mutate(pct_bipoc = 1-pct_white,
+         pct_blackhispanic = pct_black+pct_hispanic)
+mod1 <- lm(pct_aapi ~ change_group, data = mod)
+mod2 <- lm(pct_aian ~ change_group, data = mod)
+mod3 <- lm(pct_bipoc ~ change_group, data = mod)
+mod4 <- lm(pct_black ~ change_group, data = mod)
+mod5 <- lm(pct_hispanic ~ change_group, data = mod)
+mod6 <- lm(pct_blackhispanic ~ change_group, data = mod)
+mod7 <- lm(pct_white ~ change_group, data = mod)
+modelsummary::modelsummary(
+  models = list(
+    "% AAPI" = mod1,
+    "% AIAN" = mod2,
+    "% BIPOC" = mod3,
+    "% Black" = mod4,
+    "% Hispanic" = mod5,
+    "% Black & Hispanic" = mod6,
+    "% White" = mod7
+  )
+)
 
+# clean up
+rm(mod, mod1, mod2, mod3, mod4, mod5, mod6, mod7)
 ```
 
-## % Black & Latine
+## By % low income
+
+We have data from 296 districts (3 missing) for the percentage of students considered low income by eligibility for free and reduced-price lunch. Overall descriptives are in the table below:
 
 ```{r}
-
+# overall descriptives
+psych::describe(clean$pct_lowinc) %>% 
+  select(n, mean, sd, min, max) %>% 
+  kable()
 ```
 
-## Specific groups?
+When we break this out by change group there is a slight pattern of increasing low-income students by number of domains adopted, but the difference is quite small.
 
 ```{r}
-
+lowinc <- cont_table(clean, change_group, pct_lowinc, c(mean, sd, min, max), "A6.2 Distribution of the percentage of low-income students in a district by change group")
 ```
-
-# By % low income
 
 ```{r}
-
+# viz
+cont_boxplot(clean, change_group, pct_lowinc,
+             title = "Distribution of low-income students by change group",
+             x_lab = "", y_lab = "Percent low-income")
 ```
-
-# By % EL
 
 ```{r}
-
+# alt viz
+clean %>% 
+  group_by(change_group) %>% 
+  #count(num_schools) %>% 
+  mutate(pct_lowinc_group = case_when(
+    pct_lowinc < .25 ~ "Fewer than 25%",
+    pct_lowinc >= .25 & pct_lowinc < .5 ~ "25-49%",
+    pct_lowinc >= .5 & pct_lowinc < .75 ~ "50-75%",
+    pct_lowinc >= .75 ~ "More than 75%"
+  ),
+  pct_lowinc_group = factor(pct_lowinc_group, levels = c("More than 75%", "50-75%", "25-49%", "Fewer than 25%"))) %>% 
+  count(pct_lowinc_group) %>% 
+  filter(!is.na(pct_lowinc_group)) %>% 
+  ggplot(., aes(n, pct_lowinc_group)) +
+  geom_col(fill = "#1F916F") +
+  theme_bw() +
+  scale_x_continuous(expand = c(0, 0)) +
+  facet_wrap(~change_group) +
+  geom_text(
+      aes(label = n),
+      position = position_nudge(x = 2),
+      size = 3.5,
+      show.legend = FALSE) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  labs(title = "Distribution of number of schools by change group",
+       x = "Number of districts",
+       y = "Number of schools in district")
 ```
 
-# By % SPED
+There is not strong statistical evidence that the change group differs by the percentage of low-income students in the district (p ≈ .06).
 
 ```{r}
-
+summary(lm(pct_lowinc ~ change_group, data = clean))
 ```
 
-# By student outcomes
+```{r, include = FALSE, eval = FALSE}
+write.csv(lowinc, "output/tables/table_a6.2.csv", row.names = FALSE)
+rm(lowinc)
+```
+
+## By % EL 
+
+We have data from 296 districts (3 missing) for the percentage of students currently classified as English learners. Overall descriptives are in the table below:
+
+```{r}
+# overall descriptives
+psych::describe(clean$pct_el) %>% 
+  select(n, mean, sd, min, max) %>% 
+  kable()
+```
+
+When we break this out by change group we see that the average percentage of EL-designated students in districts adopting more change (6-9 domains) is higher. Districts that are not currently working on any domains had a much smaller range--no districts had more than 21% EL-designated students.
+
+```{r}
+# generating descriptives by group
+el <- cont_table(clean, change_group, pct_el, c(mean, sd, min, max), "A6.3 Distribution of the percentage of students designated as ELs in a district by change group")
+```
+
+```{r}
+# viz
+cont_boxplot(clean, change_group, pct_el, 
+             title = "Distribution of EL-designated students by change group",
+             x_lab = "", y_lab = "Percent EL")
+```
+
+```{r}
+# alt viz
+clean %>% 
+  group_by(change_group) %>% 
+  #count(num_schools) %>% 
+  mutate(pct_el_group = case_when(
+    pct_el < .1 ~ "Fewer than 10%",
+    pct_el >= .1 & pct_el < .19 ~ "10-19%",
+    pct_el >= .2 & pct_el < .3 ~ "20-29%",
+    pct_el >= .3 ~ "More than 30%"
+  ),
+  pct_el_group = factor(pct_el_group, levels = c("More than 30%", "20-29%", "10-19%", "Fewer than 10%"))) %>% 
+  count(pct_el_group) %>% 
+  filter(!is.na(pct_el_group)) %>% 
+  ggplot(., aes(n, pct_el_group)) +
+  geom_col(fill = "#1F916F") +
+  theme_bw() +
+  scale_x_continuous(expand = c(0, 0)) +
+  facet_wrap(~change_group) +
+  geom_text(
+      aes(label = n),
+      position = position_nudge(x = 2),
+      size = 3.5,
+      show.legend = FALSE) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  labs(title = "Distribution of number of schools by change group",
+       x = "Number of districts",
+       y = "Number of schools in district")
+```
+
+There is not strong statistical evidence that the change group differs by the percentage of EL-designated students in the district (p ≈ .29).
+
+```{r}
+summary(lm(pct_el ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+write.csv(el, "output/tables/table_a6.3.csv", row.names = FALSE)
+rm(el)
+```
+
+## By % SPED
+
+We have data from 290 districts (9 missing) for the percentage of students with disabilities who are receiving special education services. Overall descriptives are in the table below:
+
+```{r}
+# overall descriptives
+psych::describe(clean$pct_sped) %>% 
+  select(n, mean, sd, min, max) %>% 
+  kable()
+```
+
+When we break this out by change group we don't see notable differences in means or range.
+
+```{r}
+# generating descriptives by group
+sped <- cont_table(clean, change_group, pct_sped, c(mean, sd, min, max), "A6.4 Distribution of the percentage of students with disabilities in a district by change group")
+```
+
+```{r}
+# viz
+cont_boxplot(clean, change_group, pct_sped,
+             title = "Distribution of students with disabilities by change group",
+             x_lab = "", y_lab = "Percent SWD")
+```
+
+```{r}
+# alt viz
+clean %>% 
+  group_by(change_group) %>% 
+  #count(num_schools) %>% 
+  mutate(pct_sped_group = case_when(
+    pct_sped < .1 ~ "Fewer than 10%",
+    pct_sped >= .1 & pct_sped < .19 ~ "10-19%",
+    pct_sped >= .2 & pct_sped < .3 ~ "20-29%",
+    pct_sped >= .3 ~ "More than 30%"
+  ),
+  pct_sped_group = factor(pct_sped_group, levels = c("More than 30%", "20-29%", "10-19%", "Fewer than 10%"))) %>% 
+  count(pct_sped_group) %>% 
+  filter(!is.na(pct_sped_group)) %>% 
+  ggplot(., aes(n, pct_sped_group)) +
+  geom_col(fill = "#1F916F") +
+  theme_bw() +
+  scale_x_continuous(expand = c(0, 0)) +
+  facet_wrap(~change_group) +
+  geom_text(
+      aes(label = n),
+      position = position_nudge(x = 2),
+      size = 3.5,
+      show.legend = FALSE) +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank()) +
+  labs(title = "Distribution of number of schools by change group",
+       x = "Number of districts",
+       y = "Number of schools in district")
+```
+
+There is evidence that the change group differs meaningfully by the percentage of students with disabilities in the district (p < .01). Notably, our tails are cut off for change groups with 0 domains or 6-9 domains. We may consider collapsing categories if we feel that this is an important category to look further into.
+
+```{r}
+summary(lm(pct_sped ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+write.csv(sped, "output/tables/table_a6.4.csv", row.names = FALSE)
+rm(sped)
+```
+
+# A7 By student outcomes
 
 ## Math achievement 3-8
 
-```{r}
+We have data on the percentage of students reaching proficiency in math across grades 3-8 for 266 districts (33 missing). The descriptives for the full sample are presented in the table below:
 
+```{r}
+# overall descriptives
+psych::describe(clean$pct_math_prof_3_8)
+```
+
+When we break out descriptives by change group we see math achievement go down as the number of domains a district is working on increases.
+
+```{r}
+pct_math <- cont_table(clean, change_group, pct_math_prof_3_8, c(mean, sd, min, max), "A7.1 Math proficiency grades 3-8 by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, pct_math_prof_3_8, 
+             title = "Math proficiency grades 3-8 by change group",
+             x_lab = "",
+             y_lab = "Percent proficient in math")
+```
+
+Change groups do seem to differ meaningfully by math proficiency (p < .05). There is statistically lower proficiency rates for districts with more change (3-5 domains or 6-9 domains).
+
+```{r}
+summary(lm(pct_math_prof_3_8 ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(pct_math, "output/tables/table_a7.1.csv", row.names = FALSE)
+rm(pct_math)
 ```
 
 ## Math achievement 9-12
 
-```{r}
+We have data on the percentage of students reaching proficiency in math across grades 9-12 for 187 districts (112 missing). The descriptives for the full sample are presented in the table below:
 
+```{r}
+# overall descriptives
+psych::describe(clean$pct_math_prof_9_12)
+```
+
+When we break out by change group we see the same pattern holds at the secondary level; average math achievement is lower as the number of domains a district is working on increases.
+
+```{r}
+pct_math <- pct_math <- cont_table(clean, change_group, pct_math_prof_9_12, c(mean, sd, min, max), "A7.2 Math proficiency grades 9-12 by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, pct_math_prof_9_12, 
+             title = "Math proficiency grades 9-12 by change group",
+             x_lab = "",
+             y_lab = "Percent proficient in math")
+```
+
+Change groups do not differ meaningfully by math proficiency (p = .28).
+
+```{r}
+summary(lm(pct_math_prof_9_12 ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(pct_math, "output/tables/table_a7.2.csv", row.names = FALSE)
+rm(pct_math)
 ```
 
 ## Reading achievement 3-8
 
-```{r}
+We have data on the percentage of students reaching proficiency in ELA across grades 3-8 for 266 districts (33 missing). The descriptives for the full sample are presented in the table below:
 
+```{r}
+# overall descriptives
+psych::describe(clean$pct_ela_prof_3_8)
+```
+
+When we break out by change group we see the same pattern holds for ELA at the primary level; average reading achievement is lower as the number of domains a district is working on increases, though the magnitude is less severe than it is for math.
+
+```{r}
+pct_ela <- cont_table(clean, change_group, pct_ela_prof_3_8, c(mean, sd, min, max), "A7.3 ELA proficiency grades 3-8 by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, pct_ela_prof_3_8, 
+             title = "ELA proficiency grades 3-8 by change group",
+             x_lab = "",
+             y_lab = "Percent proficient in reading")
+```
+
+Change groups do seem to differ meaningfully by reading proficiency (p < .05). Like with math, districts with more change (3-5 domains and 6-9 domains) are statistically different from those with less change.
+
+```{r}
+summary(lm(pct_ela_prof_3_8 ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(pct_ela, "output/tables/table_a7.3.csv", row.names = FALSE)
+rm(pct_ela)
 ```
 
 ## Reading achievement 9-12
 
-```{r}
-
-```
-
-## Attendance
-
-[NH I think only had chronic absenteeism? Will have to double check]
+We have data on the percentage of students reaching proficiency in ELA across grades 9-12 for 187 districts (112 missing). The descriptives for the full sample are presented in the table below:
 
 ```{r}
-
+# overall descriptives
+psych::describe(clean$pct_ela_prof_9_12)
 ```
 
-## 4-year graduation
+The same pattern again holds for reading achievement at the secondary level.
 
 ```{r}
-
+pct_ela <- cont_table(clean, change_group, pct_ela_prof_9_12, c(mean, sd, min, max), "A7.4 ELA proficiency grades 9-12 by change group")
 ```
+
+```{r}
+cont_boxplot(clean, change_group, pct_ela_prof_9_12, 
+             title = "ELA proficiency grades 9-12 by change group",
+             x_lab = "",
+             y_lab = "Percent proficient in reading")
+```
+
+Change groups do seem to differ meaningfully by reading proficiency for secondary students too (p < .05).
+
+```{r}
+summary(lm(pct_ela_prof_9_12 ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(pct_ela, "output/tables/table_a7.4.csv", row.names = FALSE)
+rm(pct_ela)
+```
+
+# A8 Chronic absenteeism
+
+We have chronic absenteeism data for 253 districts (46 missing). We do not have any data from New Hampshire for this variable (they have a retention variable that is not comparable which we could look at instead to test patterns).
+
+```{r}
+#overview
+psych::describe(clean$pct_chronic_absenteeism)
+```
+
+There are no obvious patterns when we break out chronic absenteeism by change group, though it may be worth noting that the range for districts focusing on 1 or 2 domains is much larger (up to 95%). Rates go up by a hair as a district works on more domains - but the difference is so small this may not be statistically significant.
+
+```{r}
+pct_absent <- cont_table(clean, change_group, pct_chronic_absenteeism, c(mean, sd, min, max), "A.8 Chronic absenteeism rates by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, pct_chronic_absenteeism,
+             title = "Chronic absenteeism rates by change group",
+             x_lab = "",
+             y_lab = "Percent chronically absent")
+```
+
+Change groups do not differ meaningfully by absenteeism rates (p = .39).
+
+```{r}
+summary(lm(pct_chronic_absenteeism ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(pct_absent, "output/tables/table_a8.csv", row.names = FALSE)
+rm(pct_absent)
+```
+
+
+# A9 4-year graduation
+
+We have 4-year graduation rates only among the 230 districts who offer secondary grades (69 missing). The descriptives across the full sample are in the table below:
+
+```{r}
+# overview
+psych::describe(clean$grad_rate)
+```
+
+Graduation rates are slightly lower the more domains a district is working on.
+
+```{r}
+grad_rate <- cont_table(clean, change_group, grad_rate, c(mean, sd, min, max), "A.9 4-year graduation rates by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, grad_rate,
+             title = "4-year graduation rates by change group",
+             x_lab = "",
+             y_lab = "Percent graduating")
+```
+
+The difference in means across change groups is not statistically significant by absenteeism rates, though the effect is marginal (p = .06).
+
+```{r}
+summary(lm(grad_rate ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+# save
+write.csv(grad_rate, "output/tables/table_a9.csv", row.names = FALSE)
+rm(grad_rate)
+```
+
+
+# A10 Other
 
 ## Retention rate
+
+We have retention data for 182 districts in Connecticut, Massachusetts, and Vermont (117 missing; missing entirely for Maine, New Hampshire, and Rhode Island). The descriptive statistics across the subsestted sample are presented in the table below: 
+
+```{r}
+#overview
+psych::describe(clean$retention_rate)
+```
+
+There are no obvious patterns when we break out retention rates by change group.
+
+```{r}
+retention <- cont_table(clean, change_group, retention_rate, c(mean, sd, min, max), "A10.1 Retention rates by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, retention_rate,
+             title = "Retention rates by change group",
+             x_lab = "",
+             y_lab = "Percent retained")
+```
+
+Change groups do not differ meaningfully by retention rates (p = .82).
+
+```{r}
+summary(lm(retention_rate ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(retention, "output/tables/table_a10.1.csv", row.names = FALSE)
+rm(retention)
+```
+
+## Per-pupil expenditure
+
+We have per-pupil expenditure data for 294 districts (5 missing). The descriptive statistics across the sample are presented in the table below: 
+
+```{r}
+#overview
+psych::describe(clean$per_pupil_spending)
+```
+
+Spending seems to be roughly similar across change groups, though the standard deviation gets much smaller as the number of domains a district is working on increases. For districts with 6-9 domains, the standard deviation is only $3,349 compared to $6,077 for districts with 0 domains. This implies there's less variation in spending for the former, while districts may vary much more among other groups with less change.
+
+```{r}
+spending <- cont_table(clean, change_group, per_pupil_spending, c(mean, sd, min, max), "A10.2 Per-pupil expenditure by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, per_pupil_spending,
+             title = "Per pupil spending by change group",
+             x_lab = "",
+             y_lab = "Per pupil spending ($)")
+```
+
+Change groups do not differ meaningfully by spending (p = .64).
+
+```{r}
+summary(lm(per_pupil_spending ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(spending, "output/tables/table_a10.2.csv", row.names = FALSE)
+rm(spending)
+```
+
+## Teacher certification
+
+We have teacher certification data for 285 districts (14 missing). The descriptive statistics across the sample are presented in the table below: 
+
+```{r}
+#overview
+psych::describe(clean$pct_fte_cert)
+```
+
+Teacher certification seems to be roughly similar across change groups.
+
+```{r}
+fte <- cont_table(clean, change_group, pct_fte_cert, c(mean, sd, min, max), "A10.3 Percent of certified teachers (FTE) by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, pct_fte_cert,
+             title = "Percent of certified teachers (FTE) by change group",
+             x_lab = "",
+             y_lab = "Percent certified (FTE)")
+```
+
+Change groups do not differ meaningfully by teacher certification (p = .62).
+
+```{r}
+summary(lm(pct_fte_cert ~ change_group, data = clean))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(fte, "output/tables/table_a10.3.csv", row.names = FALSE)
+rm(fte)
+```
+
+## Percent regularly attending
+
+Since New Hampshire was missing both retention data and chronic absenteeism data, we are using an alternate measure to test the larger trend: percentage of students regularly attending. This variable was not able to be transformed to chronic absenteeism. The descriptive statistics for New Hampshire districts are presented in the table below:
+
+```{r}
+nh <- clean %>% filter(state == "NH")
+psych::describe(nh$pct_reg_attend)
+```
+
+Teacher certification seems to be roughly similar across change groups.
+
+```{r}
+reg_attend <- cont_table(nh, change_group, pct_reg_attend, c(mean, sd, min, max), "A10.4 Percent of students regularly attending by change group in New Hampshire")
+```
+
+```{r}
+cont_boxplot(nh, change_group, pct_reg_attend,
+             title = "Percent of students regularly attending by change group in New Hampshire",
+             x_lab = "",
+             y_lab = "Percent regularly attending")
+```
+
+Change groups do not differ meaningfully by teacher certification (p = .7).
+
+```{r}
+summary(lm(pct_reg_attend ~ change_group, data = nh))
+```
+
+```{r, include = FALSE, eval = FALSE}
+#save
+write.csv(reg_attend, "output/tables/table_a10.4.csv", row.names = FALSE)
+rm(reg_attend)
+```

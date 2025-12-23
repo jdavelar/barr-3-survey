@@ -1,0 +1,5 @@
+"change_group","mean","sd","min","max"
+"0 domains",0.97,0.07,0.7,1
+"1-2 domains",0.95,0.12,0,1
+"3-5 domains",0.96,0.08,0.43,1
+"6-9 domains",0.95,0.08,0.62,1

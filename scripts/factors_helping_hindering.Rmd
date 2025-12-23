@@ -9,6 +9,7 @@ output:
     toc_float: yes
     theme: flatly
     highlight: tango
+    code_folding: hide
   word_document:
     toc: yes
   pdf_document:

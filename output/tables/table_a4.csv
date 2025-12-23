@@ -1,6 +1,6 @@
-"change_group","mean","sd","min","max"
-"0 domains",-0.03,0.11,-0.2,0.26
-"1-2 domains",-0.02,0.17,-0.31,0.87
-"3-5 domains",-0.04,0.08,-0.28,0.31
-"6-9 domains",-0.06,0.07,-0.29,0.04
-"Missing",0.11,0.27,-0.05,0.7
+"district_type","n_0 domains","pct_0 domains","n_1-2 domains","pct_1-2 domains","n_3-5 domains","pct_3-5 domains","n_6-9 domains","pct_6-9 domains"
+"Charter",5,0.12,19,0.17,6,0.05,2,0.08
+"Regional",2,0.05,16,0.14,21,0.18,2,0.08
+"Regional CTE",1,0.02,5,0.04,4,0.03,0,0
+"State agency",1,0.02,1,0.01,0,0,0,0
+"Traditional",33,0.79,72,0.64,87,0.74,22,0.85
