@@ -1101,30 +1101,32 @@ rm(sped)
 
 ## Math achievement 3-8
 
+**UPDATE: This section has been re-run with centered variable 12.30.25**  
+
 We have data on the percentage of students reaching proficiency in math across grades 3-8 for 266 districts (33 missing). The descriptives for the full sample are presented in the table below:
 
 ```{r}
 # overall descriptives
-psych::describe(clean$pct_math_prof_3_8)
+psych::describe(clean$pct_math_prof_3_8_center)
 ```
 
 When we break out descriptives by change group we see math achievement go down as the number of domains a district is working on increases.
 
 ```{r}
-pct_math <- cont_table(clean, change_group, pct_math_prof_3_8, c(mean, sd, min, max), "A7.1 Math proficiency grades 3-8 by change group")
+pct_math <- cont_table(clean, change_group, pct_math_prof_3_8_center, c(mean, sd, min, max), "A7.1 Math proficiency grades 3-8 by change group")
 ```
 
 ```{r}
-cont_boxplot(clean, change_group, pct_math_prof_3_8, 
+cont_boxplot(clean, change_group, pct_math_prof_3_8_center, 
              title = "Math proficiency grades 3-8 by change group",
              x_lab = "",
              y_lab = "Percent proficient in math")
 ```
 
-Change groups do seem to differ meaningfully by math proficiency (p < .05). There is statistically lower proficiency rates for districts with more change (3-5 domains or 6-9 domains).
+Change groups do seem to differ meaningfully by math proficiency with the original variable (p < .05). There is statistically lower proficiency rates for districts with more change (3-5 domains or 6-9 domains). However, this difference goes away when using the centered version (p = .09)
 
 ```{r}
-summary(lm(pct_math_prof_3_8 ~ change_group, data = clean))
+summary(lm(pct_math_prof_3_8_center ~ change_group, data = clean))
 ```
 
 ```{r, include = FALSE, eval = FALSE}
@@ -1139,26 +1141,26 @@ We have data on the percentage of students reaching proficiency in math across g
 
 ```{r}
 # overall descriptives
-psych::describe(clean$pct_math_prof_9_12)
+psych::describe(clean$pct_math_prof_9_12_center)
 ```
 
 When we break out by change group we see the same pattern holds at the secondary level; average math achievement is lower as the number of domains a district is working on increases.
 
 ```{r}
-pct_math <- pct_math <- cont_table(clean, change_group, pct_math_prof_9_12, c(mean, sd, min, max), "A7.2 Math proficiency grades 9-12 by change group")
+pct_math <- pct_math <- cont_table(clean, change_group, pct_math_prof_9_12_center, c(mean, sd, min, max), "A7.2 Math proficiency grades 9-12 by change group")
 ```
 
 ```{r}
-cont_boxplot(clean, change_group, pct_math_prof_9_12, 
+cont_boxplot(clean, change_group, pct_math_prof_9_12_center, 
              title = "Math proficiency grades 9-12 by change group",
              x_lab = "",
              y_lab = "Percent proficient in math")
 ```
 
-Change groups do not differ meaningfully by math proficiency (p = .28).
+Change groups do not differ meaningfully by math proficiency (p = .2).
 
 ```{r}
-summary(lm(pct_math_prof_9_12 ~ change_group, data = clean))
+summary(lm(pct_math_prof_9_12_center ~ change_group, data = clean))
 ```
 
 ```{r, include = FALSE, eval = FALSE}
@@ -1173,26 +1175,26 @@ We have data on the percentage of students reaching proficiency in ELA across gr
 
 ```{r}
 # overall descriptives
-psych::describe(clean$pct_ela_prof_3_8)
+psych::describe(clean$pct_ela_prof_3_8_center)
 ```
 
 When we break out by change group we see the same pattern holds for ELA at the primary level; average reading achievement is lower as the number of domains a district is working on increases, though the magnitude is less severe than it is for math.
 
 ```{r}
-pct_ela <- cont_table(clean, change_group, pct_ela_prof_3_8, c(mean, sd, min, max), "A7.3 ELA proficiency grades 3-8 by change group")
+pct_ela <- cont_table(clean, change_group, pct_ela_prof_3_8_center, c(mean, sd, min, max), "A7.3 ELA proficiency grades 3-8 by change group")
 ```
 
 ```{r}
-cont_boxplot(clean, change_group, pct_ela_prof_3_8, 
+cont_boxplot(clean, change_group, pct_ela_prof_3_8_center, 
              title = "ELA proficiency grades 3-8 by change group",
              x_lab = "",
              y_lab = "Percent proficient in reading")
 ```
 
-Change groups do seem to differ meaningfully by reading proficiency (p < .05). Like with math, districts with more change (3-5 domains and 6-9 domains) are statistically different from those with less change.
+Like with math proficiency in earlier grades, change groups did seem to differ meaningfully by reading proficiency (p < .05). Specifically, districts with more change (3-5 domains and 6-9 domains) are statistically different from those with less change. However, when we use the centered version that difference goes away (p = .12).
 
 ```{r}
-summary(lm(pct_ela_prof_3_8 ~ change_group, data = clean))
+summary(lm(pct_ela_prof_3_8_center ~ change_group, data = clean))
 ```
 
 ```{r, include = FALSE, eval = FALSE}
@@ -1207,26 +1209,26 @@ We have data on the percentage of students reaching proficiency in ELA across gr
 
 ```{r}
 # overall descriptives
-psych::describe(clean$pct_ela_prof_9_12)
+psych::describe(clean$pct_ela_prof_9_12_center)
 ```
 
 The same pattern again holds for reading achievement at the secondary level.
 
 ```{r}
-pct_ela <- cont_table(clean, change_group, pct_ela_prof_9_12, c(mean, sd, min, max), "A7.4 ELA proficiency grades 9-12 by change group")
+pct_ela <- cont_table(clean, change_group, pct_ela_prof_9_12_center, c(mean, sd, min, max), "A7.4 ELA proficiency grades 9-12 by change group")
 ```
 
 ```{r}
-cont_boxplot(clean, change_group, pct_ela_prof_9_12, 
+cont_boxplot(clean, change_group, pct_ela_prof_9_12_center, 
              title = "ELA proficiency grades 9-12 by change group",
              x_lab = "",
              y_lab = "Percent proficient in reading")
 ```
 
-Change groups do seem to differ meaningfully by reading proficiency for secondary students too (p < .05).
+Change groups do seem to differ meaningfully by reading proficiency for secondary students, regardless of the specification (p < .05).
 
 ```{r}
-summary(lm(pct_ela_prof_9_12 ~ change_group, data = clean))
+summary(lm(pct_ela_prof_9_12_center ~ change_group, data = clean))
 ```
 
 ```{r, include = FALSE, eval = FALSE}
