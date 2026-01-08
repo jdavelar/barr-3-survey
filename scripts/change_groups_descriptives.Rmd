@@ -460,6 +460,13 @@ There is not strong statistical evidence that enrollment size differs by the num
 summary(lm(num_high_schools ~ change_group, data = clean))
 ```
 
+When we look at any high school...
+
+```{r}
+any_hs <- cat_table(clean, change_group, serve_hs, "Distribution of districts serving hs by change group")
+```
+
+
 ```{r}
 # clean up
 rm(n_school)
@@ -1281,11 +1288,19 @@ We have 4-year graduation rates only among the 230 districts who offer secondary
 psych::describe(clean$grad_rate)
 ```
 
+Centered version below:
+
+```{r}
+psych::describe(clean$grad_rate_center)
+```
+
+
 Graduation rates are slightly lower the more domains a district is working on.
 
 ```{r}
 grad_rate <- cont_table(clean, change_group, grad_rate, c(mean, sd, min, max), "A.9 4-year graduation rates by change group")
 ```
+
 
 ```{r}
 cont_boxplot(clean, change_group, grad_rate,
@@ -1293,6 +1308,20 @@ cont_boxplot(clean, change_group, grad_rate,
              x_lab = "",
              y_lab = "Percent graduating")
 ```
+
+This pattern holds true with the centered version of the variable.
+
+```{r}
+grad_rate_c <- cont_table(clean, change_group, grad_rate_center, c(mean, sd, min, max), "A.9b 4-year graduation rates (cenered) by change group")
+```
+
+```{r}
+cont_boxplot(clean, change_group, grad_rate_center,
+             title = "4-year graduation rates (centered) by change group",
+             x_lab = "",
+             y_lab = "Percent graduating")
+```
+
 
 The difference in means across change groups is not statistically significant by absenteeism rates, though the effect is marginal (p = .06).
 
