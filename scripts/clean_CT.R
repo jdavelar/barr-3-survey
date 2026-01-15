@@ -139,18 +139,28 @@ urbanicity <- ct_crosswalk %>%
 rm(nces_geo, nces_geo_codes, nces_geo_crosswalk)
 
 #### NUMBER OF SCHOOLS IN DISTRICT ####
-# File = ct9
+# File = ct9 update: ct_alt
+ct_alt <- import(here("data/check_CT_schools.csv"))
 # num_schools is numeric
-num_schools <- ct9 %>% 
+num_schools <- ct_alt %>% 
   # basic cleaning
   janitor::clean_names() %>% 
-  mutate(district_code = as.numeric(str_replace_all(district_code, "[^0-9\\.]", "")),
+  filter(district != "") %>% 
+  mutate(district_code = ifelse(
+    grepl("District", organization_type),
+    as.numeric(str_replace_all(organization_code, "[^0-9\\.]", "")),
+    NA_real_
+  ),
          district = na_if(district, "")) %>% 
-  fill(district, .direction = "down") %>% 
-  fill(district_code, .direction = "down") %>% 
+  arrange(district) %>% 
+  group_by(district) %>% 
+  fill(district_code, .direction = "updown") %>% 
+  filter(grepl("School", organization_type) & !grepl("District", organization_type)) %>% 
+  filter(!grepl("Nonpublic", organization_type)) %>% 
+  #fill(district_code, .direction = "down") %>% 
   # create col
   group_by(district) %>% 
-  mutate(num_schools = n_distinct(school)) %>% 
+  mutate(num_schools = n_distinct(organization_name))  %>% 
   select(district, district_code, num_schools) %>% 
   unique()
 
@@ -170,6 +180,8 @@ num_high_schools <- ct19 %>%
   #basic clean
   janitor::clean_names() %>% 
   filter(!is.na(district)) %>% 
+  filter(grepl("School", org_type) & !grepl("District", org_type)) %>% 
+  filter(!grepl("Nonpublic", org_type)) %>% 
   #create col
   select(school_program_name, district_code = organization_code, low_grade, high_grade) %>% 
   mutate(high_grade = str_remove_all(high_grade, "g"),
@@ -189,7 +201,7 @@ num_high_schools <- ct19 %>%
   ungroup() %>% 
   select(district, district_code, num_high_schools) %>% 
   unique()
-rm(ct9, ct19)
+rm(ct9, ct19, ct_alt)
 
 #### ENROLLMENT IN 2024-25 ####
 # File = ct1
