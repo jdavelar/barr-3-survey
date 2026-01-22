@@ -33,6 +33,7 @@ library(kableExtra)
 library(lme4)
 library(modelsummary)
 library(fixest)
+library(car)
 #library(MASS) #note: masks select()
 
 dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/Current Data Files/MergedSurvey_251215.dta')
@@ -90,7 +91,9 @@ clean <- dat %>%
   ungroup()
 ```
 
-# Continuous
+# V1
+
+## Continuous
 
 Our continuous specification uses original survey responses for Q6, which indicate up to 9 potential areas for change efforts that a district may be taking on, selected from 17 possible responses.  
 
@@ -275,7 +278,7 @@ m4 <- update(m3, . ~ . + c_breadth_goals + c_instructional_change + c_systemic_c
 stepwise_table(m0, m1, m2, m3, m4)
 ```
 
-# Dichotomous
+## Dichotomous
 
 Our dichotomous specification uses original survey responses for Q6, which indicate up to 9 potential areas for change efforts that a district may be taking on, selected from 17 possible responses. We've split them into two categories: fewer change efforts (0-2) and more change efforts (3+).  
 
@@ -306,7 +309,7 @@ Some noticings from the table:
 
 ```{r}
 # Build models
-m0 <- fenegbin(change_group_dich ~ 1, data = mod)
+m0 <- feglm(change_group_dich ~ 1, data = mod, family = binomial())
 m1 <- update(m0, . ~ district_type + c_enrollment + c_enrollment_change +  grades_served)
 m2 <- update(m0, . ~ c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped)
 m3 <- update(m0, . ~ c_ela_3_8 + c_math_3_8 + c_grad)
@@ -335,7 +338,525 @@ m4 <- update(m3, . ~ . + c_breadth_goals + c_instructional_change + c_systemic_c
 stepwise_table(m0, m1, m2, m3, m4)
 ```
 
-**Next steps/to discuss**  
--covs to exclude?  
--composities to modify?  
--state FE?  
+```{r}
+#Clean up
+rm(m0, m1, m2, m3, m4)
+```
+
+
+# V2
+
+## Continuous
+
+Our continuous specification uses original survey responses for Q6, which indicate up to 9 potential areas for change efforts that a district may be taking on, selected from 17 possible responses.  
+
+Like in V1, I'm using a negative binomial model for the continuous outcome to account for it being a count variable with variance larger than the mean. The results of these models are the log of the predicted count, which I have exponentiated so we can interpret them as percent changes in the expected number of efforts, holding other factors constant. In this type of model, 1 is our baseline of "no change" rather than 0. For example, a value of 1.3 would indicate a 30% increase, while a value of .6 would indicate a 40% decrease.  
+
+I'm fitting multiple models with covariate blocks that include...  
+
+Structural/contextual covariates:  
+-urbanicity  
+-district type (disrict/charter/other)  
+-size (centered enrollment)  
+-presence of high school  
+
+Student composition:  
+-centered % black/latine  
+-centered % low-income  
+-centered % EL  
+-centered % SPED  
+
+Academic performance  
+-centered % proficient 3-8 (dropped HS because only grade 11 tested)  
+
+Leadership goals and beliefs:  
+-length of tenure  
+-whether student engagement was selected as a goal  
+-whether instructional quality was selected as a goal  
+-leader confidence that leadership influences outcomes now  
+-reported personal motivation  
+-reported confidence leading change in the district  
+
+**IMPORTANT NOTE:** I used q2 to construct length of tenure but it differs from the codebook. The codebook specifies there should be **two** q2 variables: q2a and q2b. What is q2??  
+
+And state fixed effects once the model is fully specified.  
+
+First, I use a stepwise approach to check how the covariates in each block behave.  
+
+**Structural/contextual**
+
+```{r}
+# Build models
+m0 <- fenegbin(n_efforts ~ 1, data = mod)
+m1 <- update(m0, . ~ . + urbanicity)
+m2 <- update(m0, . ~ . + district_type)
+m3 <- update(m0, . ~ . + c_enrollment)
+m4 <- update(m0, . ~ . + serve_hs)
+```
+
+```{r}
+modelsummary(list(m0, m1, m2, m3, m4),
+             exponentiate = TRUE,
+             coef_map = c(
+               "(Intercept)" = "Intercept",
+               "district_typeOther type" = "Other type",
+               "district_typeTraditional" = "Traditional",
+               "district_typeCharter" = "Charter",
+               "c_enrollment" = "Enrollment",
+               "urbanicitySuburban" = "Suburban",
+               "urbanicityUrban" = "Urban",
+               "urbanicityRural" = "Rural"),
+             coef_omit = "theta",
+             gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+             stars = TRUE,
+             estimate = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             fmt = 2)
+```
+
+```{r}
+rm(m0, m1, m2, m3, m4)
+```
+
+**Student composition**
+
+```{r}
+# Build models
+m0 <- fenegbin(n_efforts ~ 1, data = mod)
+m1 <- update(m0, . ~ . + c_pct_blacklatine)
+m2 <- update(m0, . ~ . + c_pct_lowincome)
+m3 <- update(m0, . ~ . + c_pct_el)
+m4 <- update(m0, . ~ . + c_pct_sped)
+```
+
+```{r}
+modelsummary(list(m0, m1, m2, m3, m4),
+             exponentiate = TRUE,
+             coef_map = c(
+               "(Intercept)" = "Intercept",
+               "c_pct_blacklatine" = "% Black/Latine",
+               "c_pct_lowincome" = "% Low income",
+               "c_pct_el" = "% EL",
+               "c_pct_sped" = "% SPED"),
+             coef_omit = "theta",
+             gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+             stars = TRUE,
+             estimate = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             fmt = 2)
+```
+
+```{r}
+rm(m0, m1, m2, m3, m4)
+```
+
+**Academic performance**  
+
+```{r}
+# Build models
+m0 <- fenegbin(n_efforts ~ 1, data = mod)
+m1 <- update(m0, . ~ . + c_ela_3_8)
+m2 <- update(m1, . ~ . + c_math_3_8)
+```
+
+```{r}
+modelsummary(list(m0, m1, m2),
+             exponentiate = TRUE,
+             coef_map = c(
+               "(Intercept)" = "Intercept",
+               "c_ela_3_8" = "% ELA Proficient",
+               "c_math_3_8" = "% Math Proficient"),
+             coef_omit = "theta",
+             gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+             stars = TRUE,
+             estimate = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             fmt = 2)
+```
+
+```{r}
+rm(m0, m1, m2)
+```
+
+**Leadership goals and beliefs**
+
+```{r}
+# add length of tenure
+mod <- mod %>% 
+  mutate(length_tenure = case_when(
+    q2 == 1 ~ "Less than 1 year",
+    q2 == 2 ~ "1–3 years",
+    q2 == 3 ~ "4-6 years",
+    q2 == 4 ~ "7–10 years",
+    q2 == 5 ~ "More than 10 years"
+  ),
+  leadership_influence = case_when(
+    q11_1 == 1 ~ 1,
+    q11_1 == 2 ~ 1,
+    q11_1 == 3 ~ 0,
+    q11_1 == 4 ~ 0
+  ),
+  personal_motivation = case_when(
+    q12_2 == 1 ~ 1,
+    q12_2 == 2 ~ 1,
+    q12_2 == 3 ~ 0,
+    q12_2 == 4 ~ 0
+  ),
+  confidence_leading_change = case_when(
+    q12_3 == 1 ~ 1,
+    q12_3 == 2 ~ 1,
+    q12_3 == 3 ~ 0,
+    q12_3 == 4 ~ 0
+  )) %>% 
+  rename(student_engagement = q3_1,
+         instructional_quality = q3_8)
+```
+
+```{r}
+# Build models
+m0 <- fenegbin(n_efforts ~ 1, data = mod)
+m1 <- update(m0, . ~ . + length_tenure)
+m2 <- update(m0, . ~ . + student_engagement)
+m3 <- update(m0, . ~ . + instructional_quality)
+m4 <- update(m0, . ~ . + leadership_influence)
+m5 <- update(m0, . ~ . + personal_motivation)
+m6 <- update(m0, . ~ . + confidence_leading_change)
+```
+
+```{r}
+modelsummary(list(m0, m1, m2, m3, m4, m5, m6),
+             exponentiate = TRUE,
+             coef_map = c(
+               "(Intercept)" = "Intercept",
+               "confidence_leading_change" = "Confidence in ability to lead change",
+               "personal_motivation" = "Personal motivation to lead change",
+               "leadership_influence" = "Believes leadership positively influences outcomes now",
+               "instructional_quality" = "Goal to improve academic achievement",
+               "student_engagement" = "Goal to increase student engagement",
+               "length_tenureLess than 1 year" = "Tenure less than 1 year",
+               "length_tenure4-6 years" = "Tenure 4-6 years",
+               "length_tenure7–10 years" = "Tenure 7–10 years",
+               "length_tenureMore than 10 years" = "Tenure more than 10 years"),
+             coef_omit = "theta",
+             gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+             stars = TRUE,
+             estimate = "{estimate}{stars} ({std.error})",
+             statistic = NULL,
+             fmt = 2)
+```
+
+```{r}
+rm(m0, m1, m2, m3, m4, m5, m6)
+```
+
+Checking collinearity:
+
+The only meaningful collinearity in the model is between ELA and math achievement; all other predictors exhibit low variance inflation. We could consider creating an index/composite measure if we want to reduce noise and be able to say something about acheivement, but otherwise should just be cautious with interpretation and use them only as controls/not for interpretation. We could consider the same for % low income and % black/latine, but these are within an acceptable level (<3).
+
+```{r}
+vif_mod <- lm(
+  n_efforts ~ 
+    district_type + c_enrollment + c_enrollment_change + grades_served +
+    c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped +
+    c_ela_3_8 + c_math_3_8 + c_grad +
+    c_breadth_goals + c_instructional_change +
+    c_systemic_change + c_will_confidence,
+  data = mod
+)
+vif(vif_mod)
+```
+
+
+The table below presents the modeling results tests the association between the number of efforts a district is working on with each block of covariates one at a time.   
+
+Some noticings from the table:  
+-longer tenure is associated with slightly lower odds (n.s.)  
+-goal to increase student engagement is associated with higher odds (sig) as is improving academic achievement (n.s.)  
+-believing that leadership positively influences change reduced the odds by half (marginally sig.)  
+-ELA proficiency associated with lower odds (n.s.) but note that math and ELA are highly correlated (.94) so we should be cautious of interpretation  
+-% SPED has a very slight increase in odds (sig.)  
+
+```{r}
+# Build models
+m0 <- fenegbin(n_efforts ~ 1, data = mod)
+m1 <- update(m0, . ~ + urbanicity + district_type + c_enrollment + serve_hs)
+m2 <- update(m0, . ~ + c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped)
+m3 <- update(m0, . ~ + c_ela_3_8 + c_math_3_8)
+m4 <- update(m0, . ~ + length_tenure + student_engagement + instructional_quality + leadership_influence + personal_motivation + confidence_leading_change)
+```
+
+```{r}
+# Display results function
+stepwise_table <- function(m0 = m0, m1 = m1, m2 = m2, m3 = m3, m4 = m4){
+  table <- modelsummary(list(
+  "Null" = m0,
+  "Structural/ Contextual" = m1,
+  "Student composition" = m2,
+  "Academic performance" = m3,
+  "Leader attitude" = m4
+),
+exponentiate = TRUE,
+coef_map = c(
+  "(Intercept)" = "Intercept",
+  "district_typeOther type" = "Other type",
+  "district_typeTraditional" = "Traditional",
+  "district_typeCharter" = "Charter",
+  "c_enrollment" = "Enrollment",
+  "urbanicitySuburban" = "Suburban",
+  "urbanicityUrban" = "Urban",
+  "urbanicityRural" = "Rural",
+  "c_pct_blacklatine" = "% Black/Latine",
+  "c_pct_lowincome" = "% Low income",
+  "c_pct_el" = "% EL",
+  "c_pct_sped" = "% SPED",
+  "c_ela_3_8" = "% ELA Proficient",
+  "c_math_3_8" = "% Math Proficient",
+  "confidence_leading_change" = "Confidence in ability to lead change",
+  "personal_motivation" = "Personal motivation to lead change",
+  "leadership_influence" = "Believes leadership positively influences outcomes now",
+   "instructional_quality" = "Goal to improve academic achievement",
+   "student_engagement" = "Goal to increase student engagement",
+   "length_tenureLess than 1 year" = "Tenure less than 1 year",
+   "length_tenure4-6 years" = "Tenure 4-6 years",
+   "length_tenure7–10 years" = "Tenure 7–10 years",
+   "length_tenureMore than 10 years" = "Tenure more than 10 years"
+),
+coef_omit = "theta",
+gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+stars = TRUE,
+estimate = "{estimate}{stars} ({std.error})",
+statistic = NULL,
+fmt = 2)
+  
+  return(table)
+}
+```
+
+```{r}
+stepwise_table(m0, m1, m2, m3, m4)
+```
+
+Next, I've integrated the composites into a single model in the table below, again using a stepwise approach. For this model, to be able to compare model fit, I've limited the sample to the 262 districts with complete data on all covariates.  
+
+Noticings:  
+-nearly all stat. sig. goes away  
+-traditional/other districts have more change (n.s.)  
+-urban have slightly fewer changes (n.s.)  
+-goals slightly increase change (n.s./marginally sig.)  
+-belief in leadership influencing outcomes decreases change (n.s.)  
+-longer tenure is associated with fewer changes (only sig. at 10+ years)  
+
+```{r}
+# Ensure sample is the same
+vars <- c(
+  "n_efforts",
+  "urbanicity", "district_type", "c_enrollment", "serve_hs",
+  "c_pct_blacklatine", "c_pct_lowincome", "c_pct_el", "c_pct_sped",
+  "c_ela_3_8", "c_math_3_8",
+  "length_tenure", "student_engagement", "instructional_quality", "leadership_influence", "personal_motivation", "confidence_leading_change",
+  "state"
+)
+mod_cc <- mod %>%
+  select(all_of(vars)) %>%
+  filter(complete.cases(.))
+```
+
+```{r}
+# Build stepwise models
+m0 <- fenegbin(n_efforts ~ 1, data = mod_cc)
+m1 <- update(m0, . ~ . + urbanicity + district_type + c_enrollment + serve_hs)
+m2 <- update(m1, . ~ . +  c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped)
+m3 <- update(m2, . ~ . + c_ela_3_8 + c_math_3_8)
+m4 <- update(m3, . ~ . + length_tenure + student_engagement + instructional_quality + leadership_influence + personal_motivation + confidence_leading_change)
+```
+
+```{r}
+# display table
+stepwise_table(m0, m1, m2, m3, m4)
+```
+
+And finally, I run the fully specified model once more with state fixed effects to control for variation across context.
+
+```{r}
+m5 <- update(m4, . ~ . | state)
+```
+
+```{r}
+modelsummary(list(
+  "Fully specified" = m4,
+  "+ State FE" = m5
+),
+exponentiate = TRUE,
+coef_map = c(
+  "(Intercept)" = "Intercept",
+  "district_typeOther type" = "Other type",
+  "district_typeTraditional" = "Traditional",
+  "district_typeCharter" = "Charter",
+  "c_enrollment" = "Enrollment",
+  "urbanicitySuburban" = "Suburban",
+  "urbanicityUrban" = "Urban",
+  "urbanicityRural" = "Rural",
+  "c_pct_blacklatine" = "% Black/Latine",
+  "c_pct_lowincome" = "% Low income",
+  "c_pct_el" = "% EL",
+  "c_pct_sped" = "% SPED",
+  "c_ela_3_8" = "% ELA Proficient",
+  "c_math_3_8" = "% Math Proficient",
+  "confidence_leading_change" = "Confidence in ability to lead change",
+  "personal_motivation" = "Personal motivation to lead change",
+  "leadership_influence" = "Believes leadership positively influences outcomes now",
+   "instructional_quality" = "Goal to improve academic achievement",
+   "student_engagement" = "Goal to increase student engagement",
+   "length_tenureLess than 1 year" = "Tenure less than 1 year",
+   "length_tenure4-6 years" = "Tenure 4-6 years",
+   "length_tenure7–10 years" = "Tenure 7–10 years",
+   "length_tenureMore than 10 years" = "Tenure more than 10 years"
+),
+coef_omit = "theta",
+gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+stars = TRUE,
+estimate = "{estimate}{stars} ({std.error})",
+statistic = NULL,
+fmt = 2)
+```
+
+## Dichotomous
+
+Our dichotomous specification uses original survey responses for Q6, which indicate up to 9 potential areas for change efforts that a district may be taking on, selected from 17 possible responses. We've split them into two categories: fewer change efforts (0-2) and more change efforts (3+).  
+
+I use a logistic regression model to account for the binary outcome, with results presented in exponentiated form similarly to the negative binomial models above, but in odds ratios (rather than as a log of the expected count). In this type of model, a value of 1 indicates no difference in the odds. Values greater than 1 indicate higher odds of reporting high levels of change, while values less than 1 indicate lower odds. For example, a value of 2 indicates that the odds are twice as high, whereas a value of 0.5 indicates that the odds are half as high, holding other factors constant.    
+
+The table below shows the descriptive statistics for this specification of the outcome variable.  
+
+```{r}
+desc <- psych::describe(clean$change_group_dich) %>% as_tibble()
+variance <- round(var(clean$change_group_dich), 3)
+desc %>% 
+  mutate(
+    variable = "N change efforts",
+    variance = variance) %>% 
+  select(variable, n, mean, sd, min, max, se, variance) %>% 
+  mutate(across(where(is.numeric), ~ round(.x, 3))) %>% 
+  DT::datatable()
+```
+
+Checking collinearity before modeling:
+
+Checking collinearity:
+
+Again, for the binary model the only meaningful collinearity in the model is between ELA and math achievement; all other predictors exhibit low variance inflation. We could consider creating an index/composite measure if we want to reduce noise and be able to say something about acheivement, but otherwise should just be cautious with interpretation and use them only as controls/not for interpretation. We could consider the same for % low income and % black/latine, but these are within an acceptable level (<3).
+
+```{r}
+vif_mod <- lm(
+  change_group_dich ~ 
+    district_type + c_enrollment + c_enrollment_change + grades_served +
+    c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped +
+    c_ela_3_8 + c_math_3_8 + c_grad +
+    c_breadth_goals + c_instructional_change +
+    c_systemic_change + c_will_confidence,
+  data = mod
+)
+vif(vif_mod)
+```
+
+The table below presents the modeling results tests the association between the number of efforts a district is working on with each block of covariates one at a time.   
+
+Some noticings from the table:  
+-other/traditional twice as likely to be in the high change category  
+-higher % black/latine students lowers odds a bit (n.s.)  
+-higher % EL/SPED increases odds a bit (n.s.)  
+-goal to increase student engagement doubles odds (sig.)  
+-tenure is interesting again - less than 1 year nearly doubles the odds, then that goes down until 10+ years halves the odds (n.s.)  
+
+```{r}
+# Build models
+m0 <- feglm(change_group_dich ~ 1, data = mod, family = binomial())
+m1 <- update(m0, . ~ + urbanicity + district_type + c_enrollment + serve_hs)
+m2 <- update(m0, . ~ + c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped)
+m3 <- update(m0, . ~ + c_ela_3_8 + c_math_3_8)
+m4 <- update(m0, . ~ + length_tenure + student_engagement + instructional_quality + leadership_influence + personal_motivation + confidence_leading_change)
+```
+
+```{r}
+stepwise_table(m0, m1, m2, m3, m4)
+```
+
+Next, I've integrated the composites into a single model in the table below, again using a stepwise approach. For this model, to be able to compare model fit, I've limited the sample to the 204 districts with complete data on all covariates. The fully specified model had the strongest fit.  
+
+In this version, the associations are even more exaggerated. Notably, other/traditional districts have WAY higher odds of being in the high-change group and the relationship with tenure is still not significant but the coefficients are bigger.  
+
+```{r}
+# Ensure sample is the same
+vars <- c(
+  "change_group_dich",
+  "urbanicity", "district_type", "c_enrollment", "serve_hs",
+  "c_pct_blacklatine", "c_pct_lowincome", "c_pct_el", "c_pct_sped",
+  "c_ela_3_8", "c_math_3_8",
+  "length_tenure", "student_engagement", "instructional_quality", "leadership_influence", "personal_motivation", "confidence_leading_change", 
+  "state"
+)
+mod_cc <- mod %>%
+  select(all_of(vars)) %>%
+  filter(complete.cases(.))
+```
+
+
+```{r}
+# Build stepwise models
+m0 <- feglm(change_group_dich ~ 1, data = mod_cc, family = binomial())
+m1 <- update(m0, . ~ . + urbanicity + district_type + c_enrollment + serve_hs)
+m2 <- update(m1, . ~ . + c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped)
+m3 <- update(m2, . ~ . + c_ela_3_8 + c_math_3_8)
+m4 <- update(m3, . ~ . + length_tenure + student_engagement + instructional_quality + leadership_influence + personal_motivation + confidence_leading_change)
+```
+
+```{r}
+# display table
+stepwise_table(m0, m1, m2, m3, m4)
+```
+
+And finally, I run the fully specified model once more with state fixed effects to control for variation across context.
+
+```{r}
+m5 <- update(m4, . ~ . | state)
+```
+
+```{r}
+modelsummary(list(
+  "Fully specified" = m4,
+  "+ State FE" = m5
+),
+exponentiate = TRUE,
+coef_map = c(
+  "(Intercept)" = "Intercept",
+  "district_typeOther type" = "Other type",
+  "district_typeTraditional" = "Traditional",
+  "district_typeCharter" = "Charter",
+  "c_enrollment" = "Enrollment",
+  "urbanicitySuburban" = "Suburban",
+  "urbanicityUrban" = "Urban",
+  "urbanicityRural" = "Rural",
+  "c_pct_blacklatine" = "% Black/Latine",
+  "c_pct_lowincome" = "% Low income",
+  "c_pct_el" = "% EL",
+  "c_pct_sped" = "% SPED",
+  "c_ela_3_8" = "% ELA Proficient",
+  "c_math_3_8" = "% Math Proficient",
+  "confidence_leading_change" = "Confidence in ability to lead change",
+  "personal_motivation" = "Personal motivation to lead change",
+  "leadership_influence" = "Believes leadership positively influences outcomes now",
+   "instructional_quality" = "Goal to improve academic achievement",
+   "student_engagement" = "Goal to increase student engagement",
+   "length_tenureLess than 1 year" = "Tenure less than 1 year",
+   "length_tenure4-6 years" = "Tenure 4-6 years",
+   "length_tenure7–10 years" = "Tenure 7–10 years",
+   "length_tenureMore than 10 years" = "Tenure more than 10 years"
+),
+coef_omit = "theta",
+gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
+stars = TRUE,
+estimate = "{estimate}{stars} ({std.error})",
+statistic = NULL,
+fmt = 2)
+```
+
