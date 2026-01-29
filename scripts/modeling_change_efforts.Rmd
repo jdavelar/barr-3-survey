@@ -34,6 +34,8 @@ library(lme4)
 library(modelsummary)
 library(fixest)
 library(car)
+library(stringr)
+library(marginaleffects)
 #library(MASS) #note: masks select()
 
 dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/Current Data Files/MergedSurvey_251215.dta')
@@ -564,6 +566,7 @@ vif_mod <- lm(
   data = mod
 )
 vif(vif_mod)
+rm(vif_mod)
 ```
 
 
@@ -720,6 +723,65 @@ statistic = NULL,
 fmt = 2)
 ```
 
+### Key takeaway
+
+**Context:** The preferred model was a negative binomial model with number of change efforts as the outcome, including a set of covariates related to structural/contextual elements, student composition, academic performance, and leader attitude. It further incorporated state fixed effects, which allows us to explore within-state differences. Key coefficients were stable across the different model specifications.  
+
+**Finding:** The scope of change efforts underway in districts appears closely linked to district type, leadership tenure, and organizational focus. Districts with long-tenured leaders generally pursue fewer change efforts, whereas districts that prioritize student engagement tend to engage in a larger number of concurrent change efforts. These patterns hold even after accounting for differences in district context and demographics. This suggests that leadership stability and district priorities shape how districts approach change, particularly in terms of pace and breadth.  
+
+I've created one last table to highlight this pattern - the table below provides the predicted number of change efforts based on these characteristics.  
+
+```{r}
+# Pull AME predictions
+pred_dist <- avg_predictions(
+  m5,
+  by = "district_type",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = district_type)
+pred_tenure <- avg_predictions(
+  m5,
+  by = "length_tenure",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = length_tenure)
+pred_engage <- avg_predictions(
+  m5,
+  by = "student_engagement",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = student_engagement) %>% 
+  mutate(var = ifelse(var == 1, "Selected increase student engagement", "Did not select increase student engagement"))
+pred_quality <- avg_predictions(
+  m5,
+  by = "instructional_quality",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = instructional_quality) %>% 
+    mutate(var = ifelse(var == 1, "Selected improve academic achievement", "Did not select improve academic achievement"))
+combine <- bind_rows(pred_dist, pred_tenure, pred_engage, pred_quality) %>% 
+  select(-df) %>% 
+  mutate(estimate = round(estimate, 2))
+# Table
+datatable(
+  combine,
+  caption = "Table X. Predicted number of change efforts by district characteristics and reported priorities. 
+  Values are model-based average predictions of the expected number of change efforts for each group, 
+  holding other factors constant on average.",
+  colnames = c("Group", "Predicted number of change efforts"),
+  rownames = FALSE
+)
+```
+
+```{r}
+# Clean up
+rm(combine, m0, m1, m2, m3, m4, m5, desc, pred_dist, pred_engage, pred_quality, pred_tenure, variance, vars, mod_cc)
+```
+
 ## Dichotomous
 
 Our dichotomous specification uses original survey responses for Q6, which indicate up to 9 potential areas for change efforts that a district may be taking on, selected from 17 possible responses. We've split them into two categories: fewer change efforts (0-2) and more change efforts (3+).  
@@ -858,5 +920,66 @@ stars = TRUE,
 estimate = "{estimate}{stars} ({std.error})",
 statistic = NULL,
 fmt = 2)
+```
+
+### Key takeaway
+
+**Context:** The preferred model was a logistic regression model with a dichotomous measure of number of change efforts as the outcome (1 = 3+ change efforts), including a set of covariates related to structural/contextual elements, student composition, academic performance, and leader attitude. It further incorporated state fixed effects (FE), which allows us to explore within-state differences. Key coefficients were roughly stable across model specifications with a little shrinking once we add state FE, which is to be expected.  
+
+**Finding:** Districts that are undertaking a larger number of simultaneous change efforts differ systematically in district type, leader tenure, and organizational priorities. Districts led by long-tenured leaders are less likely to pursue three or more concurrent change efforts, while districts that prioritize student engagement and academic improvement are more likely to report higher levels of change activity. These patterns hold even after accounting for district context, demographics, and state-level differences.  
+
+We have one weird estimate for the belief that leadership currently influences outcomes. This produced an estimated association of zero in the state fixed effects model (and the one without FE). This reflects extreme imbalance in the underlying measure, with nearly all respondents expressing agreement, and only 2 who disagreed. As a result, this estimate should be interpreted as lacking sufficient variation to reliably estimate a relationship.  
+
+I've created one last table to highlight this pattern - the table below provides the predicted probability that a district would fall into our "high change effort" group based on these characteristics.  
+
+```{r}
+# Pull AME predictions
+pred_dist <- avg_predictions(
+  m5,
+  by = "district_type",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = district_type)
+pred_tenure <- avg_predictions(
+  m5,
+  by = "length_tenure",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = length_tenure)
+pred_engage <- avg_predictions(
+  m5,
+  by = "student_engagement",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = student_engagement) %>% 
+  mutate(var = ifelse(var == 1, "Selected increase student engagement", "Did not select increase student engagement"))
+pred_quality <- avg_predictions(
+  m5,
+  by = "instructional_quality",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = instructional_quality) %>% 
+    mutate(var = ifelse(var == 1, "Selected improve academic achievement", "Did not select improve academic achievement"))
+combine <- bind_rows(pred_dist, pred_tenure, pred_engage, pred_quality) %>% 
+  select(-df) %>% 
+  mutate(estimate = round(estimate, 2))
+# Table
+datatable(
+  combine,
+  caption = "Table X. Predicted probability of high change efforts by district characteristics and reported priorities. 
+  Values are model-based average predictions of the expected number of change efforts for each group, 
+  holding other factors constant on average.",
+  colnames = c("Group", "Predicted probability"),
+  rownames = FALSE
+)
+```
+
+```{r}
+# Clean up
+rm(combine, desc, m0, m1, m2, m3, m4, m5, mod_cc, pred_dist, pred_engage, pred_quality, pred_tenure, vif_mod, variance)
 ```
 
