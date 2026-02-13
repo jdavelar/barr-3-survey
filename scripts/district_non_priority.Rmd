@@ -117,11 +117,48 @@ n_tab <- clean %>%
 ```
 
 ```{r}
+# create viz
+clean %>% 
+  select(starts_with("need") & !ends_with("other")) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "var_name",
+               values_to = "selected") %>% 
+  filter(!is.na(selected)) %>% 
+  group_by(var_name, selected) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(var_name) %>% 
+  mutate(total = sum(n),
+         pct = n/total) %>% 
+  filter(selected == 1) %>% 
+  ungroup() %>% 
+  left_join(labs, by = "var_name") %>% 
+  mutate(nice_label = paste0(nice_label, " (N = ", n, ")")) %>% 
+  select(nice_label, n, total, pct) %>% 
+  ggplot(., aes(pct, reorder(nice_label, pct))) +
+  geom_col(fill = "#004B72") +
+  geom_text(
+      aes(label = ifelse(pct > 0, scales::percent(pct, accuracy = 1), "")),
+      hjust = 1.1,
+      size = 4,
+      color = "white"
+    ) +
+    scale_y_discrete(labels = function(x) stringr::str_wrap(x, width = 40)) +
+    scale_x_continuous(expand = expansion(mult = c(0, .02)),
+                       limits = c(0, .5)) +
+    labs(x = "Percent indicating item does not need substantial change", 
+         y = "", 
+         title = stringr::str_wrap("Distribution of goals superintendents don't feel need substantial change", 65)) +
+    theme_bw()
+```
+
+
+# Stacked bars
+
+```{r}
 # Pull in functions
 source(here("functions/plot_non_priority.R"))
 ```
-
-# Stacked bars
 
 ## By tenure
 
@@ -365,6 +402,8 @@ group <- clean %>%
 source(here("functions/build_index_df.R"))
 ```
 
+## Co-occurence with other responses
+
 ```{r}
 # Clean up remaining cat variables
 expanded <- clean %>% 
@@ -395,7 +434,7 @@ index_df <- build_index_df(
 
 Cells show the percentage-point difference between each group’s share among non-selectors and its share in the full sample. For example, a value of +3.4 means the group is 3.4 percentage points more common among non-selectors than in the overall sample. Positive values indicate overrepresentation; negative values indicate underrepresentation. Green cells mark values that were in the top percentile.  
 
-[i.e., % that did not select a specific priority area (col) - % of the full sample in this group * 100]
+[e.g., diff_pp= (% of people who did NOT select “safe, welcoming” and who DID select “strengthen career prep”) − (% of the full sample who selected “strengthen career prep”)]
 
 ```{r}
 # Create display table
@@ -427,13 +466,15 @@ index_tab <- index_df %>%
 # Identify numeric columns (all diff_pp columns)
 num_cols <- names(index_tab)[sapply(index_tab, is.numeric)]
 
-# Get 90th percentile across all numeric values
-top_10_cutoff <- quantile(
+# Get 99th percentile across all numeric values
+top_cutoff <- quantile(
   unlist(index_tab[num_cols]),
   probs = 0.99,
   na.rm = TRUE
 )
 ```
+
+(This is the full table for reference but it can be hard to read due to size so below I've included a version highlighting where there were notable differences)
 
 ```{r}
 # Display table
@@ -449,26 +490,292 @@ datatable(
   formatStyle(
     columns = num_cols,
     backgroundColor = styleInterval(
-      top_10_cutoff,
+      top_cutoff,
       c("transparent", "#A5CE41")
     )
   )
 ```
 
+This version zooms in on rows and goals where there were notable differences:
+
+```{r}
+# Identify numeric columns (all diff_pp columns)
+num_cols <- names(index_tab)[sapply(index_tab, is.numeric)]
+
+# Cutoff for "green" (you used 0.99 earlier; change to 0.90 for top 10%)
+top_cutoff <- quantile(
+  unlist(index_tab[num_cols]),
+  probs = 0.99,
+  na.rm = TRUE
+)
+
+# ---- Keep only rows that have at least one cell above the cutoff ----
+index_tab_hi <- index_tab %>%
+  rowwise() %>%
+  mutate(has_hi = any(c_across(all_of(num_cols)) > top_cutoff, na.rm = TRUE)) %>%
+  ungroup() %>%
+  filter(has_hi) %>%
+  select(-has_hi)
+
+# ---- Keep only columns that have at least one "green" value (within the filtered rows) ----
+num_cols_hi <- names(index_tab_hi)[sapply(index_tab_hi, is.numeric)]
+
+cols_with_hi <- num_cols_hi[
+  sapply(index_tab_hi[num_cols_hi], function(x) any(x > top_cutoff, na.rm = TRUE))
+]
+
+index_tab_hi <- index_tab_hi %>%
+  select(row_label, all_of(cols_with_hi))
+
+# ---- Display table ----
+datatable(
+  index_tab_hi,
+  rownames = FALSE,
+  options = list(
+    pageLength = 25,
+    scrollX = TRUE
+  )
+) %>%
+  formatRound(columns = cols_with_hi, digits = 1) %>%
+  formatStyle(
+    columns = cols_with_hi,
+    backgroundColor = styleInterval(
+      top_cutoff,
+      c("transparent", "#A5CE41")
+    )
+  )
+```
+
+
 ```{r}
 # Clean up
-rm(expanded, index_df, index_tab, num_cols, top_10_cutoff, build_index_df)
+rm(expanded, index_df, index_tab, num_cols, top_10_cutoff, index_tab_hi, cols_with_hi, group, num_cols_hi, top_cutoff)
+```
+
+## Demographic patterns
+
+```{r}
+# bring in demographic data
+merged_dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/Current Data Files/MergedSurvey_251215.dta')
+```
+
+```{r}
+# create vector of everything already cleaned except id
+subset <- labs %>% filter(var != "qcode") %>% pull(var)
+# clean
+clean_merged <- merged_dat %>% 
+  # strip labels
+  haven::zap_label() %>% 
+  # recode all missing values to NA
+  mutate(across(where(is.numeric), ~na_if(., -99))) %>% 
+  # drop already cleaned cols to merge back in
+  select(!c(any_of(subset), grades_served, num_schools, num_high_schools,)) %>% 
+  # back to cat...
+  mutate(district_type = case_when(
+      district_type == 1 ~ "Traditional",
+      district_type == 2 ~ "Regional",
+      district_type == 3 ~ "Other", #Regional CTE
+      district_type == 4 ~ "Charter",
+      district_type == 5 ~ "Other" #State agency
+      ),
+    urbanicity = case_when(
+      urbanicity == 1 ~ "Urban",
+      urbanicity == 2 ~ "Suburban",
+      urbanicity == 3 ~ "Rural"),
+    change_group = case_when(
+      change_group == 1 ~ "0 domains",
+      change_group == 2 ~ "1-2 domains",
+      change_group == 3 ~ "3-5 domains",
+      change_group == 4 ~ "6-9 domains"),
+    enrollment_cat = ntile(enrollment_2025, 3),
+    enrollment_cat = case_when(
+      enrollment_cat == 1 ~ "Low",
+      enrollment_cat == 2 ~ "Average",
+      enrollment_cat == 3 ~ "High"
+    ),
+    enrollment_change_cat = ntile(enrollment_change_6yr_pct, 3),
+    enrollment_change_cat = case_when(
+      enrollment_change_cat == 1 ~ "Low",
+      enrollment_change_cat == 2 ~ "Average",
+      enrollment_change_cat == 3 ~ "High"
+    ),
+    pct_bipoc = 1 - pct_white,
+    pct_bipoc_cat = ntile(pct_bipoc, 3),
+    pct_bipoc_cat = case_when(
+      pct_bipoc_cat == 1 ~ "Low",
+      pct_bipoc_cat == 2 ~ "Average",
+      pct_bipoc_cat == 3 ~ "High"
+    ),
+    pct_lowinc_cat = ntile(pct_lowinc, 3),
+    pct_lowinc_cat = case_when(
+      pct_lowinc_cat == 1 ~ "Low",
+      pct_lowinc_cat == 2 ~ "Average",
+      pct_lowinc_cat == 3 ~ "High"
+    ),
+    pct_el_cat = ntile(pct_el, 3),
+    pct_el_cat = case_when(
+      pct_el_cat == 1 ~ "Low",
+      pct_el_cat == 2 ~ "Average",
+      pct_el_cat == 3 ~ "High"
+    ),
+    pct_sped_cat = ntile(pct_sped, 3),
+    pct_sped_cat = case_when(
+      pct_sped_cat == 1 ~ "Low",
+      pct_sped_cat == 2 ~ "Average",
+      pct_sped_cat == 3 ~ "High"
+    ),
+    pct_math_cat = ntile(pct_math_prof_3_8, 3),
+    pct_math_cat = case_when(
+      pct_math_cat == 1 ~ "Low",
+      pct_math_cat == 2 ~ "Average",
+      pct_math_cat == 3 ~ "High"
+    ),
+    pct_ela_cat = ntile(pct_ela_prof_3_8, 3),
+    pct_math_cat = case_when(
+      pct_ela_cat == 1 ~ "Low",
+      pct_ela_cat == 2 ~ "Average",
+      pct_ela_cat == 3 ~ "High"
+    ),
+    pct_grad_cat = ntile(grad_rate, 3),
+    pct_grad_cat = case_when(
+      pct_grad_cat == 1 ~ "Low",
+      pct_grad_cat == 2 ~ "Average",
+      pct_grad_cat == 3 ~ "High"
+    ),
+    serve_hs = ifelse(serve_hs == 1, "Serves high school", "Does not serve high school"))
+# set grouping vars you're interested in
+group <- clean_merged %>% select(district_type, urbanicity, serve_hs, change_group, ends_with("cat")) %>% colnames()
+
+#merge with main dataset
+clean_merged <- clean_merged %>% 
+  right_join(clean, by = c("qcode" = "id"))
+```
+
+```{r}
+# Create index df
+index_df <- build_index_df(
+  data = clean_merged,
+  priority_cols = priority,
+  group_vars = group,
+  min_n_non = 5
+)
+```
+
+```{r}
+# Create display table
+index_tab <- index_df %>% 
+  select(group_var, group_level, priority, diff_pp) %>%
+  mutate(row_label = paste(group_var, group_level, sep = ": ")) %>%
+  left_join(n_tab, by = c("priority" = "var_name")) %>% 
+  left_join(labs, by = c("priority" = "var_name"), suffix = c("", "_priority")) %>%
+  transmute(
+    row_label,
+    col_label = paste0(nice_label, " (N = ", n, ")"),
+    diff_pp
+  ) %>%
+  group_by(row_label, col_label) %>%
+  summarize(diff_pp = mean(diff_pp, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = col_label, values_from = diff_pp)
+
+
+
+# Identify numeric columns (all diff_pp columns)
+num_cols <- names(index_tab)[sapply(index_tab, is.numeric)]
+
+# Upper tail (top 1%)
+upper_cutoff <- quantile(
+  unlist(index_tab[num_cols]),
+  probs = 0.99,
+  na.rm = TRUE
+)
+
+# Lower tail (bottom 1%)
+lower_cutoff <- quantile(
+  unlist(index_tab[num_cols]),
+  probs = 0.01,
+  na.rm = TRUE
+)
+```
+
+(This is the full table for reference but it can be hard to read due to size so below I've included a version highlighting where there were notable differences)
+
+```{r}
+# Display table
+datatable(index_tab, rownames = FALSE) %>%
+  formatRound(columns = num_cols, digits = 1) %>%
+  formatStyle(
+    columns = num_cols,
+    backgroundColor = styleInterval(
+      c(lower_cutoff, upper_cutoff),
+      c("#D73027", "transparent", "#A5CE41")  # red for low, green for high
+    )
+  )
+```
+
+This version zooms in on rows and goals where there were notable differences:
+
+```{r}
+# ---- Keep only rows that have at least one cell above the cutoff ----
+index_tab_hi <- index_tab %>%
+  rowwise() %>%
+  mutate(
+    has_extreme = any(
+      c_across(all_of(num_cols)) > upper_cutoff |
+      c_across(all_of(num_cols)) < lower_cutoff,
+      na.rm = TRUE
+    )
+  ) %>%
+  ungroup() %>%
+  filter(has_extreme) %>%
+  select(-has_extreme)
+
+# Identify numeric columns after row filtering
+num_cols_hi <- names(index_tab_hi)[sapply(index_tab_hi, is.numeric)]
+
+# Keep columns that contain at least one extreme (upper OR lower tail)
+cols_with_hi <- num_cols_hi[
+  sapply(index_tab_hi[num_cols_hi], function(x)
+    any(x > upper_cutoff | x < lower_cutoff, na.rm = TRUE)
+  )
+]
+
+# Keep only row_label + extreme columns
+index_tab_hi <- index_tab_hi %>%
+  select(row_label, all_of(cols_with_hi))
+
+# ---- Display table ----
+datatable(
+  index_tab_hi,
+  rownames = FALSE,
+  options = list(pageLength = 25, scrollX = TRUE)
+) %>%
+  formatRound(columns = cols_with_hi, digits = 1) %>%
+  formatStyle(
+    columns = cols_with_hi,
+    backgroundColor = styleInterval(
+      c(lower_cutoff, upper_cutoff),
+      c("#D73027", "transparent", "#A5CE41")  # red for low, green for high
+    )
+  )
 ```
 
 # TLDR
 
-Most subgroup differences in "deprioritization" were modest, typically within ±1–2 percentage points. However, a small number of cells fell in the top 1% of observed differences (marked in green). Several of these occurred within priority areas with moderate respondent counts (generally N ≈ 30–80), suggesting that they are not solely artifacts of small sample size.  
+**Response patterns**
+Most subgroup differences in goals that were "deprioritized" (i.e., indicated as *not* needing substantial change) were modest, typically within ±1–2 percentage points. However, some cells fell in the top 1% of observed differences (marked in green). Surprisingly, these occurred within priority areas that had more respondents (N somewhere between ~25 and ~90), suggesting that they are not solely artifacts of small sample size.  
 
-The largest differences did not cluster primarily around tenure or structural demographic characteristics. Instead, they were more closely associated with leaders’ stated reform orientations. In particular, superintendents who selected “Increase student engagement” as a priority were more likely than the overall sample to deprioritize several structural or system-level goals, including:  
+The largest differences did not cluster primarily around tenure or structural demographic characteristics. Instead, they were more closely associated with leaders’ stated goals. In particular, superintendents who selected “Increase student engagement” as a priority were more likely than the overall sample to think certain goals did not need significant change, including:  
 -how adults treat students
 -budget alignment to strategic goals
 -course placement practices  
 
-While the magnitude of these differences was moderate (generally in the 3–6 percentage-point range), their recurrence across multiple priorities suggests a coherent emphasis pattern rather than isolated variation.  
+While the magnitude of these differences was moderate (generally in the 3–6 percentage-point range), their recurrence across multiple priorities suggests a slight pattern rather than isolated variation.  
 
-Notably, there was no evidence of sharp divides along tenure or other structural categories. The outliers reflect variation in emphasis and framing of change strategies rather than clear polarization across leader characteristics.  
+There was no evidence of sharp divides along tenure or other structural categories. The outliers seem to reflect variation in goals and strategies rather than clear polarization across leader characteristics, as far as we can observe them from other survey questions.  
+
+**Demographics**
+When demographic and district characteristics are incorporated, clearer structural patterns emerge and there are more pronounced subgroup differences. Larger deviations are associated with district size, enrollment changes, whether or not the district has a high school, and overall breadth of perceived change needs (i.e., change group).  
+
+Low-enrollment and growing districts are more likely to view areas such as course placement, budget alignment, and how adults treat students as requiring substantial change. In contrast, districts that serve high school grades and those in one of the high change groups (3-5) are more likely to indicate that course placement, budget alignment, and how adults treat students do not need substantial change.  
+
+These patterns suggest that perceptions of need are shaped by district context, specifically related to size, growth, and grade spans which appear to influence how leaders assess the urgency of these goals.  

@@ -1,0 +1,226 @@
+---
+title: "Additional viz"
+author: "Janette Avelar"
+date: "`r Sys.Date()`"
+always_allow_html: true
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: flatly
+    highlight: tango
+    code_folding: hide
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,    # hides code
+  message = FALSE, # hides messages
+  warning = FALSE,  # hides warnings
+  fig.width = 10, fig.height = 9
+)
+library(here)
+library(rio)
+library(tidyverse)
+library(DT)
+library(kableExtra)
+dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/JA/Barr_Survey_20251117.dta')
+labs <- import(here("data/clean", "survey_labs.csv")) %>% 
+  mutate(var = str_to_lower(var))
+```
+
+```{r}
+# Create vector for renaming columns
+name_map <- setNames(labs$var, labs$var_name)
+
+# Data prep
+clean <- dat %>% 
+  # strip labels
+  haven::zap_label() %>% 
+  # recode all missing values to NA
+  mutate(across(where(is.numeric), ~na_if(., -99))) %>% 
+  # select and rename relevant cols
+  rename(any_of(name_map)) %>% 
+  # swap cat
+  mutate(supt_tenure = case_when(
+    supt_tenure == 1 ~ "Less than 1 year",
+    supt_tenure == 2 ~ "1–3 years",
+    supt_tenure == 3 ~ "4–6 years",
+    supt_tenure == 4 ~ "7–10 years",
+    supt_tenure == 5 ~ "More than 10 years"
+  )) %>% 
+  # backwards code "need" questions (Q4 & 5) so 1 = substantial change required
+  mutate(across(starts_with("need"), ~ifelse(. == 3, 1, 0))) %>%
+  # recode helps/hinders columns to cat
+  mutate(across(starts_with("helps"), ~case_when(
+    .x == 1 ~ "Definitely helps", 
+    .x == 2 ~ "Helps more than hinders", 
+    .x == 3 ~ "Hinders more then helps", 
+    .x == 4 ~ "Definitely hinders" 
+  ))) %>% 
+  # recode personal opinion/belief questions to cat
+  mutate(across(starts_with("op"), ~case_when(
+    .x == 1 ~ "Definitely true",
+    .x == 2 ~ "Mostly true",
+    .x == 3 ~ "Mostly false",
+    .x == 4 ~ "Definitely false"
+  ))) 
+```
+
+```{r}
+# Create a df of N sizes
+n_tab <- clean %>% 
+  select(starts_with("need") & !ends_with("other")) %>% 
+  summarize(across(everything(), ~sum(., na.rm = TRUE))) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "var_name",
+               values_to = "n")
+```
+
+# Significant change plot alternatives
+
+Highlight substantial change + working on it
+
+```{r}
+# create viz
+clean %>%
+  select(id,
+    starts_with("need") & !ends_with("other"),
+    starts_with("progress") & !ends_with("other")
+  ) %>%
+  pivot_longer(
+    cols = -id,
+    names_to = c("type", "item"),
+    names_pattern = "(need|progress)_(.*)",
+    values_to = "selected"
+  ) %>%
+  pivot_wider(
+    id_cols = c(id, item),
+    names_from = type,
+    values_from = selected
+  ) %>%
+  mutate(
+    both_selected = if_else(need == 1 & progress == 1, 1, 0)
+  ) %>% 
+  filter(!is.na(both_selected)) %>% 
+  select(id, var_name = item, both_selected) %>% 
+  distinct() %>% 
+  mutate(var_name = paste0("need_", var_name)) %>% 
+  left_join(labs,  by = "var_name") %>% 
+  left_join(n_tab, by = "var_name") %>% 
+  mutate(nice_label = paste0(nice_label, "(N = ", n, ")")) %>% 
+  select(nice_label, both_selected) %>% 
+  group_by(nice_label, both_selected) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(nice_label) %>% 
+  mutate(total = sum(n),
+         pct = n/sum(n)) %>% 
+  filter(both_selected == 1) %>% 
+  # viz
+  ggplot(., aes(pct, reorder(nice_label, pct))) +
+  geom_col(fill = "#004B72") +
+  geom_text(
+      aes(label = ifelse(pct > 0, scales::percent(pct, accuracy = 1), "")),
+      hjust = 1.1,
+      size = 4,
+      color = "white"
+    ) +
+    scale_y_discrete(labels = function(x) stringr::str_wrap(x, width = 40)) +
+    scale_x_continuous(expand = expansion(mult = c(0, .02)),
+                       limits = c(0, 1)) +
+    labs(x = "Percent actively working on", 
+         y = "", 
+         title = stringr::str_wrap("Distribution of goals superintendents feel need substantial change that they are actively working on", 65)) +
+    theme_bw()
+```
+
+Highlighting difference
+
+```{r}
+# create viz
+clean %>%
+  select(id,
+    starts_with("need") & !ends_with("other"),
+    starts_with("progress") & !ends_with("other")
+  ) %>%
+  pivot_longer(
+    cols = -id,
+    names_to = c("type", "item"),
+    names_pattern = "(need|progress)_(.*)",
+    values_to = "selected"
+  ) %>%
+  pivot_wider(
+    id_cols = c(id, item),
+    names_from = type,
+    values_from = selected
+  ) %>%
+  mutate(
+    both_selected = if_else(need == 1 & progress == 1, 1, 0)
+  ) %>% 
+  filter(!is.na(both_selected)) %>% 
+  select(id, var_name = item, both_selected) %>% 
+  distinct() %>% 
+  mutate(var_name = paste0("need_", var_name)) %>% 
+  left_join(labs,  by = "var_name") %>% 
+  left_join(n_tab, by = "var_name") %>% 
+  mutate(nice_label = paste0(nice_label, "(N = ", n, ")")) %>% 
+  select(nice_label, both_selected) %>% 
+  group_by(nice_label, both_selected) %>% 
+  count() %>% 
+  ungroup() %>% 
+  group_by(nice_label) %>% 
+  mutate(total = sum(n),
+         pct = n/sum(n)) %>% 
+  mutate(
+  both_selected = factor(
+    both_selected,
+    levels = c(0, 1),
+    labels = c("Not working on it", "Working on it")
+  )
+) %>% 
+  # viz
+  ggplot(., aes(x = pct,
+              y = reorder(nice_label, pct),
+              fill = both_selected)) +
+  geom_col() +
+  geom_text(
+    aes(label = ifelse(pct > 0,
+                       scales::percent(pct, accuracy = 1),
+                       "")),
+    position = position_stack(vjust = 0.5),
+    size = 4,
+    color = "white"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Working on it" = "#004B72",
+      "Not working on it" = "#F2AD4B"
+    )
+  ) +
+  scale_y_discrete(
+    labels = function(x) stringr::str_wrap(x, width = 40)
+  ) +
+  scale_x_continuous(
+    expand = expansion(mult = c(0, .02)),
+    limits = c(0, 1),
+    labels = scales::percent_format(accuracy = 1)
+  ) +
+  labs(
+    x = "Percent actively working on",
+    y = "",
+    title = stringr::str_wrap(
+      "Distribution of goals superintendents feel need substantial change and whether they are actively working on it",
+      65
+    ),
+    fill = NULL
+  ) +
+  theme_bw()
+```
+
