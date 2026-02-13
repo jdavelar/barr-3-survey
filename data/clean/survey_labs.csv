@@ -1,0 +1,479 @@
+var,question,var_name,nice_label,codes
+QCODE,CSR Identification number,id,ID,RANGE
+Q1,What is your position in your district?,role,District role,"1 – Superintendent
+2 – Assistant Superintendent
+3 – Other"
+Q1_3_Text,Other Text response,role_text,District role (Other),Text response (Separate file)
+Q2,"To the best of your knowledge, how long has your current superintendent been in their position?",supt_tenure,Superintendent tenure,"1 – Less than 1 year
+2 – 1–3 years
+3 – 4–6 years
+4 – 7–10 years
+5 – More than 10 years
+Missing System"
+Q3_1,What are your district’s long-term goals? - Increase student engagement in school,goal_engagement,Increase student engagement,"0 – Not checked 
+1 – Increase student engagement in school"
+Q3_2,"What are your district’s long-term goals? - Create a safe, welcoming school community",goal_safe_community,"Create safe, welcoming school community","0 – Not checked
+1 – Create a safe, welcoming school community"
+Q3_3,What are your district’s long-term goals? - Improve academic achievement,goal_academics,Improve academic achievement,"0 – Not checked 
+1 – Improve academic achievement"
+Q3_4,What are your district’s long-term goals? - Eliminate disparities in outcomes between student groups,goal_eliminate_disparities,Eliminate disparities in outcomes,"0 – Not checked 
+1 – Eliminate disparities in outcomes between student groups"
+Q3_5,"What are your district’s long-term goals? - Develop students’ durable skills (e.g., collaboration, resilience, leadership, civic engagement)",goal_durable_skills,Develop students' durable skills,"0 – Not checked 
+1 – Develop students’ durable skills"
+Q3_6,What are your district’s long-term goals? - Expand access to postsecondary education,goal_postsecondary,Expand access to postsecondary education,"0 – Not checked 
+1 – Expand access to postsecondary education"
+Q3_7,What are your district’s long-term goals? - Strengthen career preparation,goal_career,Strengthen career preparation,"0 – Not checked 
+1 – Strengthen career preparation"
+Q3_8,What are your district’s long-term goals? - Improve instructional quality,goal_instruction,Improve instructional quality,"0 – Not checked 
+1 – Improve instructional quality"
+Q3_9,What are your district’s long-term goals? - Other,goal_other,Some other goal,"0 – Not checked 
+1 – Other"
+Q3_9_Text,Other Text,goal_other_text,Some other goal (text),Text response (Separate file)
+Q4_1,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - What teachers teach",need_support_instructional_content,What teachers teach,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_2,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - How teachers teach",need_support_instructional_quality,How teachers teach,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_3,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - How your district assesses student learning",need_support_assessment,How your district assesses student learning,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_4,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - How your district addresses students’ non-academic needs",need_support_non_academics,How your district addresses students' non-academic needs,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_5,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - How the adults in your district treat students",need_support_adult_respect,How the adults in your district treat students,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_6,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - What the adults in your district think students are capable of",need_support_high_expectations,What the adults in your district think students are capable of,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA"
+Q4_7,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - What decisions students can make about their learning",need_support_student_autonomy,What decisions students can make about their learning,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_8,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - How your district places students in courses",need_support_placement_structures,How your district places students in courses,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_9,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support? - Other",need_support_other,"Some other change teaching, learning, or student support need required","1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q4_9_Text,Other Text,need_support_other_text,"Some other change teaching, learning, or student support need required (text)",Text response (Separate file)
+Q5_1,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district supports teachers to improve their practice",need_system_teacher_pd,How your district supports teachers to improve their practice,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_2,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district supports principals to improve their practice",need_system_admin_pd,How your district supports principals to improve their practice,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_3,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district organizes staffing, including teachers, to support student learning",need_system_org_structures,How your district organizes staffing to support student learning,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_4,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district aligns its budget to strategic goals",need_system_budget_alignment,How your district aligns its budget to strategic goals,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_5,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district uses data for continuous improvement",need_system_data,How your district uses data for continuous improvement,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_6,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district engages families",need_system_family_engagement,How your district engages families,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_7,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - How your district uses artificial intelligence",need_system_ai,How your district uses AI,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_8,"In order to achieve your district’s long-term goals, how much change is needed in the following areas related to systems and structures? - Other",need_system_other,Some other systems/structures need,"1 – No change required
+2 – Small changes required
+3 – Substantial changes required
+-99 – NA
+Missing System"
+Q5_8_Text,Other Text,need_system_other_text,Some other systems/structures need (text),Text response (Separate file)
+Q6_1,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_instructional_content,What teachers teach,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_2,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_instructional_quality,How teachers teach,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_3,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_assessment,How your district assesses student learning,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_4,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_non_academics,How your district addresses students' non-academic needs,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_5,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_adult_respect,How the adults in your district treat students,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_6,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_high_expectations,What the adults in your district think students are capable of,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_7,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_student_autonomy,What decisions students can make about their learning,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_8,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_placement_structures,How your district places students in courses,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_9,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_support_other,"Some other change teaching, learning, or student support need required","1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_10,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_teacher_pd,How your district supports teachers to improve their practice,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_11,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_admin_pd,How your district supports principals to improve their practice,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_12,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_org_structures,How your district organizes staffing to support student learning,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_13,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_budget_alignment,How your district aligns its budget to strategic goals,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_14,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_data,How your district uses data for continuous improvement,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_15,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_family_engagement,How your district engages families,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_16,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_ai,How your district uses AI,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q6_17,Which of the areas you rated as “substantial changes required” are you actively working to change this school year?,progress_system_other,Some other systems/structures need,"1 – Filled in answer checked
+0 – Not checked
+-99 – NA
+Missing System"
+Q8_1,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State testing requirements",help_policy_testing_reqs,State testing requirements,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_2,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State accountability system",help_policy_accountability_system,State accountability system,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_3,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Policies that determine how students earn academic credit",help_policy_credit_policies,Policies that determine how students earn academic credit,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_4,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State graduation requirements",help_policy_grad_reqs,State graduation requirements,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_5,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State funding formulas",help_policy_funding_formula,State funding formulas,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_6,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State academic standards",help_policy_standards,State academic standards,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_7,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State postsecondary pathway programs (e.g., early college, apprenticeships)",help_policy_posecondary_pathways,State postsecondary pathway programs,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_8,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - School choice policies",help_policy_school_choice,School choice policies,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q8_9,"Thinking about state policy factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State regulatory compliance requirements",help_policy_compliance,State regulatory compliance requirements,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q9_1,"Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Teacher union relationship",help_local_union,Teacher union relationship,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q9_2,"Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Family expectations",help_local_family,Family expectations,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q9_3,"Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Local political climate",help_local_politics,Local political climate,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q9_4,"Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - School board involvement",help_local_school_board,School board involvement,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q9_5,"Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - External partnerships (e.g., local industry, higher ed, city/town, community organizations)",help_local_external_partners,External partnerships,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q9_6,"Thinking about local/community factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - The amount of local public funding your district receives (e.g., local taxes, town budget allocation)",help_local_public_funding,The amount of local public funding your district receives,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_1,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Guidance from the state Department of Education",help_external_state_guidance,Guidance from the state Department of Education,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_2,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Guidance from the federal Department of Education",help_external_fed_guidance,Guidance from the federal Department of Education,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_3,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Philanthropic funding",help_external_philanthropic,Philanthropic funding,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_4,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State funding to participate in new initiatives",help_external_state_funding,State funding to participate in new initiatives,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_5,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State professional associations",help_external_networks,State professional associations,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_6,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Technical assistance providers",help_external_tech,Technical assistance providers,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q10_7,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - Peer learning through participation in networks or consortia",help_external_peer_learning,Peer learning through participation in networks or consortia,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable 
+-99 – NA
+Missing System"
+Q10_8,"Thinking about other external factors, how much does each of the following currently affect your work to achieve your district’s long-term goals? - State political climate",help_external_politics,State political climate,"1 – Definitely helps
+2 – Helps more than hinders 
+3 – Hinders more than helps 
+4 – Definitely hinders 
+5 – Not applicable (this
+factor does not exist or is
+not relevant in our context)
+-99 – NA
+Missing System"
+Q11_1,"Please rate the following statements about your views on the role of district leadership. 
+I believe my leadership positively influences outcomes for students in my district today.",op_positive_now,I believe my leadership positively influences outcomes for students in my district today.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q11_2,"Please rate the following statements about your views on the role of district leadership. 
+I believe my leadership will positively influence outcomes for students in my district even after I retire or move on.",op_positive_later,I believe my leadership will positively influence outcomes for students in my district even after I retire or move on.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q11_3,"Please rate the following statements about your views on the role of district leadership. 
+Addressing educational inequities is an essential part of my leadership responsibilities.",op_inequities,Addressing educational inequities is an essential part of my leadership responsibilities.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q11_4,"Please rate the following statements about your views on the role of district leadership. 
+I feel enough job security to take strategic risks.",op_job_security,I feel enough job security to take strategic risks.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q11_5,"Please rate the following statements about your views on the role of district leadership. 
+I notice a strong desire among district/central office staff to take on new challenges.",op_district_support,I notice a strong desire among district/central office staff to take on new challenges.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q12_1,"Please rate the following statements about your experience leading change. 
+I feel strong expectations from stakeholders to lead transformational change in my district.",op_expectations,I feel strong expectations from stakeholders to lead transformational change in my district.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q12_2,"Please rate the following statements about your experience leading change. 
+I feel personally motivated to lead transformational change in my district.",op_personal_motivation,I feel personally motivated to lead transformational change in my district.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q12_3,"Please rate the following statements about your experience leading change. 
+I feel confident in my ability to lead transformational change in my current district.",op_leadership_ability,I feel confident in my ability to lead transformational change in my current district.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q12_4,"Please rate the following statements about your experience leading change. 
+My formal education (e.g., degree or certificate programs) prepared me to lead change efforts.",op_preparation,My formal education prepared me to lead change efforts.,"1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q12_5,"Please rate the following statements about your experience leading change. 
+In the past, I have been part of successful change efforts in a public school or district.",op_prior_success,"In the past, I have been part of successful change efforts in a public school or district.","1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+Q12_6,"Please rate the following statements about your experience leading change. 
+In the past, I have been part of stalled or failed change efforts in a public school or district.",op_prior_failure,"In the past, I have been part of stalled or failed change efforts in a public school or district.","1 – Definitely true
+2 – Mostly true 
+3 – Mostly false 
+4 – Definitely false
+-99 – NA
+Missing System"
+STATE,State,state,State,"Connecticut
+Maine
+Massachusetts
+New Hampshire
+Rhode Island
+Vermont"
+Partial,Partial complete,partial_response,Partial complete,"0 – No
+1 - Yes"
+FOLLOW_UP,Willing to participate in a follow-up interview,iv_follow_up,Willing to participate in a follow-up interview,"1 – Yes
+2 – No
+Missing System"
+DISTRICT,District name,district,District name,Text

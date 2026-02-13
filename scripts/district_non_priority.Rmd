@@ -1,0 +1,474 @@
+---
+title: "Non-Prioritized Goals in NE Districts"
+author: "Janette Avelar"
+date: "`r Sys.Date()`"
+always_allow_html: true
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    theme: flatly
+    highlight: tango
+    code_folding: hide
+  word_document:
+    toc: yes
+  pdf_document:
+    toc: yes
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,    # hides code
+  message = FALSE, # hides messages
+  warning = FALSE,  # hides warnings
+  fig.width = 10, fig.height = 9
+)
+library(here)
+library(rio)
+library(tidyverse)
+library(DT)
+library(kableExtra)
+dat <- import('/Users/janetteavelar/Library/CloudStorage/GoogleDrive-javelar3@asu.edu/.shortcut-targets-by-id/1NdfrCmhAW0NpUV47ruVeKThD8M3arhRq/DATA: Barr 3.0/Survey/Analysis/JA/Barr_Survey_20251117.dta')
+labs <- import(here("data/clean", "survey_labs.csv")) %>% 
+  mutate(var = str_to_lower(var))
+```
+
+The goal of this analysis is to understand the goals district superintendents did *not* select as needing substantial change, and whether there are similarities across these districts that might help explain their selection patterns. The analysis focuses on questions 4 & 5:
+
+**In order to achieve your district’s long-term goals, how much change is needed in the following areas related to teaching, learning, and student support?**
+
+I'm specifically interested in the response option *no change required*, thus responses are coded to 1 and 0 for any other response (except `NA`).
+
+```{r}
+# Create vector for renaming columns
+name_map <- setNames(labs$var, labs$var_name)
+
+# Data prep
+clean <- dat %>% 
+  # strip labels
+  haven::zap_label() %>% 
+  # recode all missing values to NA
+  mutate(across(where(is.numeric), ~na_if(., -99))) %>% 
+  # select and rename relevant cols
+  rename(any_of(name_map)) %>% 
+  # swap cat
+  mutate(supt_tenure = case_when(
+    supt_tenure == 1 ~ "Less than 1 year",
+    supt_tenure == 2 ~ "1–3 years",
+    supt_tenure == 3 ~ "4–6 years",
+    supt_tenure == 4 ~ "7–10 years",
+    supt_tenure == 5 ~ "More than 10 years"
+  )) %>% 
+  # backwards code "need" questions (Q4 & 5) so 1 = not selected
+  mutate(across(starts_with("need"), ~ifelse(. == 1, 1, 0))) %>% 
+  # recode helps/hinders columns to cat
+  mutate(across(starts_with("helps"), ~case_when(
+    .x == 1 ~ "Definitely helps", 
+    .x == 2 ~ "Helps more than hinders", 
+    .x == 3 ~ "Hinders more then helps", 
+    .x == 4 ~ "Definitely hinders" 
+  ))) %>% 
+  # recode personal opinion/belief questions to cat
+  mutate(across(starts_with("op"), ~case_when(
+    .x == 1 ~ "Definitely true",
+    .x == 2 ~ "Mostly true",
+    .x == 3 ~ "Mostly false",
+    .x == 4 ~ "Definitely false"
+  ))) 
+# %>% 
+#   # TEMPORARY ZOOMING IN
+#   select(
+#     -starts_with("need"),
+#     any_of(c(
+#       "need_support_adult_respect",
+#       "need_system_budget_alignment",
+#       "need_support_placement_structures"
+#     ))
+#   )
+```
+
+# Basic descriptives
+
+```{r}
+# create desc df
+desc <- clean %>% 
+  select(starts_with("need") & !ends_with("other")) %>% 
+  psych::describe() %>% 
+  rownames_to_column(var = "var_name") %>%
+  select(-vars) %>% 
+  left_join(labs, by = "var_name") %>% 
+  select(var = nice_label, n, mean, sd, min, max) %>% 
+  mutate(across(mean:max, ~round(., 2)))
+# display table
+datatable(desc,
+          colnames = c("Goals not being prioritized", "Total respondents", "% Not prioritizing", "SD", "Min", "Max"))
+```
+
+```{r}
+# Create a df of N sizes
+n_tab <- clean %>% 
+  select(starts_with("need") & !ends_with("other")) %>% 
+  summarize(across(everything(), ~sum(., na.rm = TRUE))) %>% 
+  pivot_longer(cols = everything(),
+               names_to = "var_name",
+               values_to = "n")
+```
+
+```{r}
+# Pull in functions
+source(here("functions/plot_non_priority.R"))
+```
+
+# Stacked bars
+
+## By tenure
+
+```{r}
+not_priority_cat(
+  clean,
+  supt_tenure,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by tenure",
+  recode_map = c("More than 10 years" = "10+ years"),
+  var_levels = c("10+ years", "7–10 years", "4–6 years", "1–3 years", "Less than 1 year")
+)
+```
+
+## By goal: Student engagement
+
+```{r}
+not_priority_binary(clean, goal_engagement, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected increasing student engagement as a long-term goal", n_tab)
+```
+
+## By goal: Create a safe and welcoming school community
+
+```{r}
+not_priority_binary(clean, goal_safe_community, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected creating a safe and welcoming school community as a long-term goal", n_tab)
+```
+
+## By goal: Improve academic achievement
+
+```{r}
+not_priority_binary(clean, goal_academics, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected improving academic achievement as a long-term goal", n_tab)
+```
+
+## By goal: Eliminate disparities in outcomes
+
+```{r}
+not_priority_binary(clean, goal_eliminate_disparities, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected eliminating disparities in student outcomes as a long-term goal", n_tab)
+```
+
+## By goal: Develop students' durable skills
+
+```{r}
+not_priority_binary(clean, goal_durable_skills, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected developing students' durable skills as a long-term goal", n_tab)
+```
+
+## By goal: Expand access to postsecondary education
+
+```{r}
+not_priority_binary(clean, goal_postsecondary, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected expanding access to postsecondary education as a long-term goal", n_tab)
+```
+
+## By goal: Strengthen career preparation
+
+```{r}
+not_priority_binary(clean, goal_career, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected strengthening career preparation as a long-term goal", n_tab)
+```
+
+## By goal: Improve instructional quality
+
+```{r}
+not_priority_binary(clean, goal_instruction, "Distribution of superintendents who did not indicate a goal needed substantial change, by whether they selected improving instructional quality as a long-term goal", n_tab)
+```
+
+## By belief: I believe my leadership positively influences outcomes for students in my district today.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_positive_now,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I believe my leadership positively influences outcomes for students in my district today.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: I believe my leadership will positively influence outcomes for students in my district even after I retire or move on.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_positive_later,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I believe my leadership will positively influence outcomes for students in my district even after I retire or move on.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: Addressing educational inequities is an essential part of my leadership responsibilities.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_inequities,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: Addressing educational inequities is an essential part of my leadership responsibilities.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: I feel enough job security to take strategic risks.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_job_security,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I feel enough job security to take strategic risks.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: I notice a strong desire among district/central office staff to take on new challenges.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_district_support,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I notice a strong desire among district/central office staff to take on new challenges.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: I feel strong expectations from stakeholders to lead transformational change in my district.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_expectations,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I feel strong expectations from stakeholders to lead transformational change in my district.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: I feel personally motivated to lead transformational change in my district.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_personal_motivation,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I feel personally motivated to lead transformational change in my district.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: I feel confident in my ability to lead transformational change in my current district.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_leadership_ability,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: I feel confident in my ability to lead transformational change in my current district.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: My formal education prepared me to lead change efforts.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_preparation,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: My formal education prepared me to lead change efforts.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: In the past, I have been part of successful change efforts in a public school or district.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_prior_success,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: In the past, I have been part of successful change efforts in a public school or district.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By belief: In the past, I have been part of stalled or failed change efforts in a public school or district.
+
+```{r}
+not_priority_cat(
+  clean,
+  op_prior_failure,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by response to: In the past, I have been part of stalled or failed change efforts in a public school or district.",
+  recode_map = NULL,
+  var_levels = c("Definitely true", "Mostly true", "Mostly false", "Definitely false")
+)
+```
+
+## By state
+
+```{r}
+not_priority_cat(
+  clean,
+  state,
+  n_tab,
+  title = "Distribution of superintendents who did not indicate a goal needed substantial change, by state",
+  recode_map = NULL,
+  var_levels = c("CT", "MA", "ME", "NH", "RI", "VT")
+)
+```
+
+```{r}
+# Clean up
+rm(not_priority_binary, not_priority_cat, name_map, desc)
+```
+
+# Percentage-point difference
+
+Because some groups are larger than others in the overall sample, raw percentages like in the prior section can be misleading. To account for baseline group size, I looked at percentage-point differences between each group’s share among those who said some goal did not need significant change and its share in the full sample.  
+
+```{r}
+# set priority vars
+priority <- clean %>% 
+  select(starts_with("need") & !ends_with("other")) %>% 
+  colnames()
+# set grouping vars
+group <- clean %>% 
+  select(!c(starts_with("need"), ends_with("other"), id, role, partial_response)) %>% 
+  colnames()
+```
+
+```{r}
+# pull in function
+source(here("functions/build_index_df.R"))
+```
+
+```{r}
+# Clean up remaining cat variables
+expanded <- clean %>% 
+  mutate(across(starts_with("help"), ~case_when(
+    . == 1 ~ "Definitely helps",
+    . == 2 ~ "Helps more than hinders",
+    . == 3 ~ "Hinders more than helps",
+    . == 4 ~ "Definitely hinders"
+  ))) %>% 
+  mutate(across(starts_with("op"), ~case_when(
+    . == 1 ~ "Definitely true",
+    . == 2 ~ "Mostly true",
+    . == 3 ~ "Mostly false",
+    . == 4 ~ "Definitely false"
+  ))) 
+```
+
+
+```{r}
+# Create index df
+index_df <- build_index_df(
+  data = expanded,
+  priority_cols = priority,
+  group_vars = group,
+  min_n_non = 5
+)
+```
+
+Cells show the percentage-point difference between each group’s share among non-selectors and its share in the full sample. For example, a value of +3.4 means the group is 3.4 percentage points more common among non-selectors than in the overall sample. Positive values indicate overrepresentation; negative values indicate underrepresentation. Green cells mark values that were in the top percentile.  
+
+[i.e., % that did not select a specific priority area (col) - % of the full sample in this group * 100]
+
+```{r}
+# Create display table
+index_tab <- index_df %>% 
+  select(group_var, group_level, priority, diff_pp) %>%
+  left_join(labs, by = c("group_var" = "var_name")) %>% 
+  mutate(
+    group = nice_label,
+    group_level = case_when(
+      group_level == "1" ~ "Selected",
+      group_level == "0" ~ "Did not select",
+      TRUE ~ group_level
+    ),
+    row_label = paste(group, group_level, sep = ": ")
+  ) %>%
+  left_join(n_tab, by = c("priority" = "var_name")) %>% 
+  left_join(labs, by = c("priority" = "var_name"), suffix = c("", "_priority")) %>%
+  transmute(
+    row_label,
+    col_label = paste0(nice_label_priority, " (N = ", n, ")"),
+    diff_pp
+  ) %>%
+  group_by(row_label, col_label) %>%
+  summarize(diff_pp = mean(diff_pp, na.rm = TRUE), .groups = "drop") %>%
+  pivot_wider(names_from = col_label, values_from = diff_pp)
+
+
+
+# Identify numeric columns (all diff_pp columns)
+num_cols <- names(index_tab)[sapply(index_tab, is.numeric)]
+
+# Get 90th percentile across all numeric values
+top_10_cutoff <- quantile(
+  unlist(index_tab[num_cols]),
+  probs = 0.99,
+  na.rm = TRUE
+)
+```
+
+```{r}
+# Display table
+datatable(
+  index_tab,
+  rownames = FALSE,
+  options = list(
+    pageLength = 25,
+    scrollX = TRUE
+  )
+) %>%
+  formatRound(columns = num_cols, digits = 1) %>%
+  formatStyle(
+    columns = num_cols,
+    backgroundColor = styleInterval(
+      top_10_cutoff,
+      c("transparent", "#A5CE41")
+    )
+  )
+```
+
+```{r}
+# Clean up
+rm(expanded, index_df, index_tab, num_cols, top_10_cutoff, build_index_df)
+```
+
+# TLDR
+
+Most subgroup differences in "deprioritization" were modest, typically within ±1–2 percentage points. However, a small number of cells fell in the top 1% of observed differences (marked in green). Several of these occurred within priority areas with moderate respondent counts (generally N ≈ 30–80), suggesting that they are not solely artifacts of small sample size.  
+
+The largest differences did not cluster primarily around tenure or structural demographic characteristics. Instead, they were more closely associated with leaders’ stated reform orientations. In particular, superintendents who selected “Increase student engagement” as a priority were more likely than the overall sample to deprioritize several structural or system-level goals, including:  
+-how adults treat students
+-budget alignment to strategic goals
+-course placement practices  
+
+While the magnitude of these differences was moderate (generally in the 3–6 percentage-point range), their recurrence across multiple priorities suggests a coherent emphasis pattern rather than isolated variation.  
+
+Notably, there was no evidence of sharp divides along tenure or other structural categories. The outliers reflect variation in emphasis and framing of change strategies rather than clear polarization across leader characteristics.  

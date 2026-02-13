@@ -401,13 +401,14 @@ modelsummary(list(m0, m1, m2, m3, m4),
              exponentiate = TRUE,
              coef_map = c(
                "(Intercept)" = "Intercept",
+               "urbanicitySuburban" = "Suburban",
+               "urbanicityUrban" = "Urban",
                "district_typeOther type" = "Other type",
                "district_typeTraditional" = "Traditional",
                "district_typeCharter" = "Charter",
                "c_enrollment" = "Enrollment",
-               "urbanicitySuburban" = "Suburban",
-               "urbanicityUrban" = "Urban",
-               "urbanicityRural" = "Rural"),
+               "urbanicityRural" = "Rural",
+               "serve_hsServes high school" = "Serves high school grades"),
              coef_omit = "theta",
              gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
              stars = TRUE,
@@ -530,15 +531,15 @@ modelsummary(list(m0, m1, m2, m3, m4, m5, m6),
              exponentiate = TRUE,
              coef_map = c(
                "(Intercept)" = "Intercept",
-               "confidence_leading_change" = "Confidence in ability to lead change",
-               "personal_motivation" = "Personal motivation to lead change",
-               "leadership_influence" = "Believes leadership positively influences outcomes now",
-               "instructional_quality" = "Goal to improve academic achievement",
-               "student_engagement" = "Goal to increase student engagement",
                "length_tenureLess than 1 year" = "Tenure less than 1 year",
                "length_tenure4-6 years" = "Tenure 4-6 years",
                "length_tenure7–10 years" = "Tenure 7–10 years",
-               "length_tenureMore than 10 years" = "Tenure more than 10 years"),
+               "length_tenureMore than 10 years" = "Tenure more than 10 years",
+               "student_engagement" = "Goal to increase student engagement",
+               "instructional_quality" = "Goal to improve academic achievement",
+               "leadership_influence" = "Believes leadership positively influences outcomes now",
+               "personal_motivation" = "Personal motivation to lead change",
+               "confidence_leading_change" = "Confidence in ability to lead change"),
              coef_omit = "theta",
              gof_omit = "BIC|Log\\.Lik\\.|R2|Adj\\.|Pseudo|RMSE",
              stars = TRUE,
@@ -558,7 +559,7 @@ The only meaningful collinearity in the model is between ELA and math achievemen
 ```{r}
 vif_mod <- lm(
   n_efforts ~ 
-    district_type + c_enrollment + c_enrollment_change + grades_served +
+    district_type + c_enrollment + c_enrollment_change + serve_hs +
     c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped +
     c_ela_3_8 + c_math_3_8 + c_grad +
     c_breadth_goals + c_instructional_change +
@@ -607,6 +608,7 @@ coef_map = c(
   "c_enrollment" = "Enrollment",
   "urbanicitySuburban" = "Suburban",
   "urbanicityUrban" = "Urban",
+  "serve_hsServes high school" = "Serves high school grades",
   "urbanicityRural" = "Rural",
   "c_pct_blacklatine" = "% Black/Latine",
   "c_pct_lowincome" = "% Low income",
@@ -699,6 +701,7 @@ coef_map = c(
   "urbanicitySuburban" = "Suburban",
   "urbanicityUrban" = "Urban",
   "urbanicityRural" = "Rural",
+  "serve_hsServes high school" = "Serves high school grades",
   "c_pct_blacklatine" = "% Black/Latine",
   "c_pct_lowincome" = "% Low income",
   "c_pct_el" = "% EL",
@@ -727,7 +730,7 @@ fmt = 2)
 
 **Context:** The preferred model was a negative binomial model with number of change efforts as the outcome, including a set of covariates related to structural/contextual elements, student composition, academic performance, and leader attitude. It further incorporated state fixed effects, which allows us to explore within-state differences. Key coefficients were stable across the different model specifications.  
 
-**Finding:** The scope of change efforts underway in districts appears closely linked to district type, leadership tenure, and organizational focus. Districts with long-tenured leaders generally pursue fewer change efforts, whereas districts that prioritize student engagement tend to engage in a larger number of concurrent change efforts. These patterns hold even after accounting for differences in district context and demographics. This suggests that leadership stability and district priorities shape how districts approach change, particularly in terms of pace and breadth.  
+**Finding:** The scope of change efforts underway in districts appears closely linked to district type, leadership tenure (though not significant once we add state FE), whether districts serve high school grades (though not significant once we add state FE), and organizational focus. Districts with long-tenured leaders generally pursue fewer change efforts, whereas districts that prioritize student engagement tend to engage in a larger number of concurrent change efforts. These patterns hold even after accounting for differences in district context and demographics. This suggests that leadership stability and district priorities shape how districts approach change, particularly in terms of pace and breadth.  
 
 I've created one last table to highlight this pattern - the table below provides the predicted number of change efforts based on these characteristics.  
 
@@ -763,7 +766,13 @@ pred_quality <- avg_predictions(
 ) %>% 
   rename(var = instructional_quality) %>% 
     mutate(var = ifelse(var == 1, "Selected improve academic achievement", "Did not select improve academic achievement"))
-combine <- bind_rows(pred_dist, pred_tenure, pred_engage, pred_quality) %>% 
+pred_hs <- avg_predictions(
+  m5, by = "serve_hs",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = serve_hs)
+combine <- bind_rows(pred_dist, pred_tenure, pred_engage, pred_quality, pred_hs) %>% 
   select(-df) %>% 
   mutate(estimate = round(estimate, 2))
 # Table
@@ -811,7 +820,7 @@ Again, for the binary model the only meaningful collinearity in the model is bet
 ```{r}
 vif_mod <- lm(
   change_group_dich ~ 
-    district_type + c_enrollment + c_enrollment_change + grades_served +
+    district_type + c_enrollment + c_enrollment_change + serve_hs +
     c_pct_blacklatine + c_pct_lowincome + c_pct_el + c_pct_sped +
     c_ela_3_8 + c_math_3_8 + c_grad +
     c_breadth_goals + c_instructional_change +
@@ -898,6 +907,7 @@ coef_map = c(
   "urbanicitySuburban" = "Suburban",
   "urbanicityUrban" = "Urban",
   "urbanicityRural" = "Rural",
+  "serve_hsServes high school" = "Serves high school grades",
   "c_pct_blacklatine" = "% Black/Latine",
   "c_pct_lowincome" = "% Low income",
   "c_pct_el" = "% EL",
@@ -926,7 +936,7 @@ fmt = 2)
 
 **Context:** The preferred model was a logistic regression model with a dichotomous measure of number of change efforts as the outcome (1 = 3+ change efforts), including a set of covariates related to structural/contextual elements, student composition, academic performance, and leader attitude. It further incorporated state fixed effects (FE), which allows us to explore within-state differences. Key coefficients were roughly stable across model specifications with a little shrinking once we add state FE, which is to be expected.  
 
-**Finding:** Districts that are undertaking a larger number of simultaneous change efforts differ systematically in district type, leader tenure, and organizational priorities. Districts led by long-tenured leaders are less likely to pursue three or more concurrent change efforts, while districts that prioritize student engagement and academic improvement are more likely to report higher levels of change activity. These patterns hold even after accounting for district context, demographics, and state-level differences.  
+**Finding:** Districts that are undertaking a larger number of simultaneous change efforts differ systematically in district type, leader tenure, level (specifically, whether or not they serve high school grades), and organizational priorities. Districts led by long-tenured leaders are less likely to pursue three or more concurrent change efforts, while districts that prioritize student engagement and academic improvement are more likely to report higher levels of change activity. These patterns hold even after accounting for district context, demographics, and state-level differences.  
 
 We have one weird estimate for the belief that leadership currently influences outcomes. This produced an estimated association of zero in the state fixed effects model (and the one without FE). This reflects extreme imbalance in the underlying measure, with nearly all respondents expressing agreement, and only 2 who disagreed. As a result, this estimate should be interpreted as lacking sufficient variation to reliably estimate a relationship.  
 
@@ -964,7 +974,14 @@ pred_quality <- avg_predictions(
 ) %>% 
   rename(var = instructional_quality) %>% 
     mutate(var = ifelse(var == 1, "Selected improve academic achievement", "Did not select improve academic achievement"))
-combine <- bind_rows(pred_dist, pred_tenure, pred_engage, pred_quality) %>% 
+pred_hs <- avg_predictions(
+  m5, 
+  by = "serve_hs",
+  type = "response",
+  vcov = FALSE
+) %>% 
+  rename(var = serve_hs)
+combine <- bind_rows(pred_dist, pred_tenure, pred_engage, pred_quality, pred_hs) %>% 
   select(-df) %>% 
   mutate(estimate = round(estimate, 2))
 # Table
